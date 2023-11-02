@@ -1,0 +1,11 @@
+﻿<Page x:Class="wmsApp.pages.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mui="http://schemas.microsoft.com/winfx/2006/xaml/presentation/controls"
+      Title="Warehouse Management System"
+      xmlns:ui="http://schemas.modernwpf.com/2019">
+    <Grid>
+        <TextBlock Text="欢迎使用仓库管理系统" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+    </Grid>
+</Page>

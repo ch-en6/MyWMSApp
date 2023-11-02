@@ -1,0 +1,29 @@
+﻿<Window x:Class="wmsApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wmsApp"
+        mc:Ignorable="d"
+        Title="仓库管理系统" Height="450" Width="800"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+         WindowStartupLocation="CenterScreen"
+    ui:WindowHelper.UseModernWindowStyle="True">
+    <Grid>
+        <ui:NavigationView PaneDisplayMode="Top" x:Name="NavigationView" IsSettingsVisible="True"  IsBackButtonVisible="Collapsed">
+            <ui:NavigationView.MenuItems >
+                <ui:NavigationViewItem Margin="0,0,0,0" Content=""  Icon="Contact" Tag="pages/UserPage.xaml" Width="48"/>
+                <ui:NavigationViewItem Content="首页" Tag="pages/HomePage.xaml"/>
+                <ui:NavigationViewItem Content="权限管理" Tag="pages/PermissionPage.xaml"/>
+                <ui:NavigationViewItem Content="人员管理" Tag="pages/PersonnelPage.xaml"/>
+                <ui:NavigationViewItem Content="进仓管理" Tag="pages/PersonnelPage.xaml"/>
+                <ui:NavigationViewItem Content="出仓管理" Tag="pages/PersonnelPage.xaml"/>
+                
+            </ui:NavigationView.MenuItems>
+
+            <Frame x:Name="ContentFrame"/>
+
+           
+        </ui:NavigationView>
+    </Grid>
+</Window>
