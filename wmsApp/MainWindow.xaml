@@ -16,6 +16,7 @@
                 <ui:NavigationViewItem Content="首页" Tag="pages/HomePage.xaml"/>
                 <ui:NavigationViewItem Content="权限管理" Tag="pages/PermissionPage.xaml"/>
                 <ui:NavigationViewItem Content="人员管理" Tag="pages/PersonnelPage.xaml"/>
+                <ui:NavigationViewItem Content="物料管理" Tag="pages/MaterialPage.xaml"/>
                 <ui:NavigationViewItem Content="进仓管理" Tag="pages/PersonnelPage.xaml"/>
                 <ui:NavigationViewItem Content="出仓管理" Tag="pages/PersonnelPage.xaml"/>
                 

@@ -78,6 +78,9 @@
     <Compile Include="pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pages\MaterialPage.xaml.cs">
+      <DependentUpon>MaterialPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pages\PermissionPage.xaml.cs">
       <DependentUpon>PermissionPage.xaml</DependentUpon>
     </Compile>
@@ -90,6 +93,7 @@
     <Compile Include="param\LoginParams.cs" />
     <Compile Include="param\SearchPermissionParams.cs" />
     <Compile Include="param\UpdatePermissionParams.cs" />
+    <Compile Include="pojo\Material.cs" />
     <Compile Include="pojo\PermissionType.cs" />
     <Compile Include="utils\HttpHelper.cs" />
     <Compile Include="utils\JsonHelper.cs" />
@@ -122,6 +126,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="pages\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\MaterialPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -622,6 +622,11 @@ namespace wmsApp.pages
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void NextPageButton_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
 }

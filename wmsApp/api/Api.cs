@@ -28,6 +28,18 @@ namespace wms
             return;
         }
     }
+
+    class MaterialApi
+    {
+        public static HttpHelper http = new HttpHelper();
+
+        public static Result search(int page)
+        {
+
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/search/{page}"));
+        }
+    }
+
     class PermissionTypesApi
     {
         public static HttpHelper http = new HttpHelper();

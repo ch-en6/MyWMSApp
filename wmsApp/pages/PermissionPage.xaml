@@ -79,7 +79,7 @@
                 <TextBlock Text="第" Margin="5"/>
                 <TextBlock x:Name="PageNumberTextBlock" Margin="5"/>
                 <TextBlock Text="页" Margin="5"/>
-                <Button x:Name="NextPageButton" Content="下一页" Margin="5"/>
+                <Button x:Name="NextPageButton" Content="下一页" Margin="5" Click="NextPageButton_Click_1"/>
             </StackPanel>
         </Grid>
     </ui:NavigationView>
