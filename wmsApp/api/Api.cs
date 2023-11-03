@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Linq;
 using WindowsFormsApp1.dto;
 using wms.param;
 using wms.pojo;
@@ -12,6 +13,7 @@ using wmsApp.param;
 
 namespace wms
 {
+
     class LoginApi
     {
         public static HttpHelper http = new HttpHelper();
@@ -25,7 +27,7 @@ namespace wms
         public static void logout()
         {
             JsonHelper.JSONToObject<Result>(http.Get("/logout"));
-            return;
+            return ;
         }
     }
 
@@ -35,8 +37,31 @@ namespace wms
 
         public static Result search(int page)
         {
-
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/search/{page}"));
+        }
+
+        public static Result searchById(int page, long id)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchById/{page}/{id}"));
+        }
+
+        public static Result searchByName(int page, string name) 
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByName/{page}/{name}"));
+        }
+        public static Result searchByHouseId(int page, long house_id)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByHouseId/{page}/{house_id}"));
+        }
+        
+        public static Result searchByType(int page, string type)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByType/{page}/{type}"));
+        }
+
+        public static Result searchByComments(int page, string comments)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByComments/{page}/{comments}"));
         }
     }
 

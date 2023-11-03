@@ -66,6 +66,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="controls\ModernMessageBox.cs" />
     <Compile Include="dialog\DelPermissionTypeDialog.xaml.cs">
       <DependentUpon>DelPermissionTypeDialog.xaml</DependentUpon>
     </Compile>
@@ -183,9 +184,7 @@
       <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="controls\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="assets\icon.ico" />
   </ItemGroup>
