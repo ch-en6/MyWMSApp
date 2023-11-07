@@ -34,34 +34,47 @@ namespace wms
     class MaterialApi
     {
         public static HttpHelper http = new HttpHelper();
-
+        
+        //显示
         public static Result search(int page)
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/search/{page}"));
         }
 
+        //通过id查询
         public static Result searchById(int page, long id)
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchById/{page}/{id}"));
         }
 
+        //通过名称查询
         public static Result searchByName(int page, string name) 
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByName/{page}/{name}"));
         }
+
+        //通过仓库id查询
         public static Result searchByHouseId(int page, long house_id)
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByHouseId/{page}/{house_id}"));
         }
         
+        //通过类型查询
         public static Result searchByType(int page, string type)
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByType/{page}/{type}"));
         }
 
+        //通过备注查询
         public static Result searchByComments(int page, string comments)
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByComments/{page}/{comments}"));
+        }
+
+        //修改
+        public static Result updateMaterial(Material material)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Post("/material/update", JsonHelper.ObjectToJSON(material)));
         }
     }
 

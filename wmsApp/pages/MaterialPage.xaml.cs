@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using System.Windows.Media.Animation;
 using WindowsFormsApp1.dto;
@@ -67,41 +68,6 @@ namespace wmsApp.pages
             PageNumberTextBlock.Text = currentPage.ToString();
             datagrid.ItemsSource = materialList;
         }
-        private void dataGrid_CurrentCellChanged(object sender, EventArgs e)
-        {
-            // 处理 CurrentCellChanged 事件的逻辑
-
-            if (datagrid.CurrentCell != null)
-            {
-                int rowIndex = datagrid.SelectedIndex;
-                int columnIndex = datagrid.CurrentCell.Column.DisplayIndex;
-
-                if (rowIndex >= 0 && rowIndex < datagrid.Items.Count)
-                {
-                    object rowItem = datagrid.Items[rowIndex];
-                    var cellContent = datagrid.Columns[columnIndex].GetCellContent(rowItem);
-
-                    if (cellContent is TextBlock textBlock)
-                    {
-                        string cellValue = textBlock.Text;
-
-                        // 在消息框中显示单元格的值
-                        System.Windows.MessageBox.Show(cellValue);
-                    }
-                    else
-                    {
-                        // 单元格不包含 TextBlock，处理其他情况
-                        // ...
-                    }
-                }
-                else
-                {
-                    // 没有选中任何行
-                    System.Windows.MessageBox.Show("没有选定单元格");
-                }
-            }
-        }
-
 
         private void PreviousPageButton_Click(object sender, RoutedEventArgs e)
         {
@@ -204,6 +170,26 @@ namespace wmsApp.pages
 
             PageNumberTextBlock.Text = currentPage.ToString();
             datagrid.ItemsSource = materialList;
+        }
+
+        private void dataGrid_CurrentCellChanged(object sender, EventArgs e)
+        {
+            if (datagrid.SelectedCells.Count > 0)
+            {
+                // 获取当前选中的单元格的行和列索引
+                int rowIndex = datagrid.Items.IndexOf(datagrid.CurrentItem);
+                int columnIndex = datagrid.CurrentColumn.DisplayIndex;
+
+                // 根据行和列索引获取单元格的值
+                var cellInfo = datagrid.SelectedCells[0];
+                var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                if (content != null)
+                {
+                    string cellValue = content.Text;
+                    // 在这里可以对获取到的单元格值进行处理
+                    
+                }
+            }
         }
     }
 }
