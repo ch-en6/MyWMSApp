@@ -15,6 +15,8 @@
 
     using Newtonsoft.Json.Converters;
     using System.Runtime.Serialization;
+    using wmsApp.controls;
+    using System.Windows;
 
 
     //JSON方法
@@ -235,7 +237,7 @@
         /// <typeparam name="T">对象类</typeparam>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static T JSONToObject<T>(string obj)
+        public  static T JSONToObject<T>(string obj)
         {
             var settings = new JsonSerializerSettings
             {
@@ -243,7 +245,7 @@
             };
             if (obj == null)
             {
-                System.Windows.MessageBox.Show("数据为空！");
+                MessageBox.Show("应用发生错误！");
                 return default(T);
             }
             return JsonConvert.DeserializeObject<T>(obj,settings);
