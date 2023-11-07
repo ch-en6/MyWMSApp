@@ -13,7 +13,15 @@ using wmsApp.param;
 
 namespace wms
 {
+    class ResourceApi
+    {
+        public static HttpHelper http = new HttpHelper();
+        public static Result getResources()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get("/resource/all"));
+        }
 
+    }
     class LoginApi
     {
         public static HttpHelper http = new HttpHelper();
@@ -82,7 +90,14 @@ namespace wms
     class PermissionApi
     {
         public static HttpHelper http = new HttpHelper();
-        
+        /**
+         * 访问权限
+         */
+        public static Result enter(String uri)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get(uri));
+        }
+
 
         /*获取所有用户的姓名和id*/
         public static Result getUserNamesAndIds()
