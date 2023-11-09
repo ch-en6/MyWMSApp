@@ -6,9 +6,82 @@
       xmlns:local="clr-namespace:wmsApp.pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="PersonnelPage">
-
+      Title="PersonnelPage"
+      xmlns:ui="http://schemas.modernwpf.com/2019">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="42"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Margin="9,-10,1,21">
+            <Button Content="增加人员"  Margin="0,0,10,0" Click="Button_Click" />
+            <Button Content="删除人员"  Margin="0,6,10,5.333" VerticalAlignment="Stretch" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox Grid.Column="0" Width="100" Margin="5" x:Name="comboBox" SelectedValue="user">
+                    <!-- 下拉选择框内容 -->
+                    <ComboBoxItem x:Name="user" Content="按用户查询"/>
+                    <ComboBoxItem x:Name="role" Content="按角色查询"/>
+                </ComboBox>
+
+                <TextBox Grid.Column="1" Width="200" Margin="5" x:Name="textBox"  PreviewKeyDown="TextBox_PreviewKeyDown"/>
+
+                <Button Grid.Column="2" Width="39" Margin="1,5,0,5.333" Click="Button_Click" Height="33">
+                    <ui:SymbolIcon Symbol="Find" Height="20" Width="20" RenderTransformOrigin="0.5,0.5"/>
+                </Button>
+
+                <Button x:Name="btnBack"  Click="btnBack_Click" Grid.Column="2" Margin="150,5,-105,5.333" Height="33" >
+                    <ui:SymbolIcon Symbol="Forward"/>
+                </Button>
+
+
+            </Grid>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="26,0.333,-1,0" >
+            <DataGrid x:Name="dataGrid" 
+                          Margin="-17,-11,-0.333,0.333"
+                          HorizontalAlignment="Right"
+                          Width="743" 
+                        
+                          CanUserAddRows="False"
+                          IsReadOnly="True"
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="人员ID" Binding="{Binding id}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="姓名" Binding="{Binding name}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="角色"  Binding="{Binding role}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="性别"  Binding="{Binding sex}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="出生日期"  Binding="{Binding birthDate, StringFormat=\{0:yyyy-MM-dd\}}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="身份证号"  Binding="{Binding idNumber}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="籍贯"  Binding="{Binding nativePlace}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="家庭住址"  Binding="{Binding address}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="联系电话"  Binding="{Binding phone}"></DataGridTextColumn>
+                    <DataGridTemplateColumn Header="操作">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="cancel" Content="取消全部" Margin="3,3,3,3" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button x:Name="PreviousPageButton" Content="上一页" Margin="5"/>
+            <TextBlock Text="第" Margin="5"/>
+            <TextBlock x:Name="PageNumberTextBlock" Margin="5"/>
+            <TextBlock Text="页" Margin="5"/>
+            <Button x:Name="NextPageButton" Content="下一页" Margin="5"/>
+        </StackPanel>
     </Grid>
 </Page>

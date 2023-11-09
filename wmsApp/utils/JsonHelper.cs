@@ -48,6 +48,14 @@
 
             return map;
         }
+        public static string DateObjectToJson<T>(T t)
+        {
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                DateFormatString = "yyyy-MM-dd"
+            };
+            return JsonConvert.SerializeObject(t, settings);
+        }
 
 
         /// <summary>
