@@ -8,10 +8,10 @@ namespace wms.param
 {
     class AddPermissionParams
     {
-        public AddPermissionParams(List<long> userIds, long resourceId, string type)
+        public AddPermissionParams(List<long> userIds, long permissionId, string type)
         {
             this.userIds = userIds;
-            this.resourceId = resourceId;
+            this.permissionId = permissionId;
             this.type = type;
         }
 
@@ -24,7 +24,7 @@ namespace wms.param
         /**
          * 资源id
          */
-        public long resourceId { get; set; }
+        public long permissionId { get; set; }
 
         /**
          * 权限类型

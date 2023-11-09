@@ -9,29 +9,27 @@
     PrimaryButtonText="Save"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonText="Close"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick" >
 
-    <Grid>
+    <Grid Width="439">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" MinWidth="97.333"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Margin="0,0,0.333,0.333">
+        <StackPanel Grid.Column="0" Margin="0,0,-31,0" Grid.ColumnSpan="2">
             <TextBlock Text="资源名称"/>
-            <ComboBox x:Name="resourceComboBox" Width="96"/>
+            <TextBox x:Name="resourceComboBox" IsEnabled="False" Margin="1,0,0,0" HorizontalAlignment="Left" Width="127"/>
 
             <TextBlock Text="权限名称"/>
-            <TextBox x:Name="typeTextBox"/>
+            <ComboBox x:Name="typeTextBox" Width="128"/>
 
             <TextBlock Text="人员"/>
-            <Button Content="选择人员" Click="Button_Click" Width="96" />
+            <Button Content="选择人员" Click="Button_Click" Width="127" />
 
-            <TextBlock Text="URI"/>
-            <TextBox x:Name="uri" />
         </StackPanel>
 
-        <Grid Grid.Column="1" Margin="8.667,2,1.333,-1.667">
+        <Grid Grid.Column="1" Margin="55.667,2,23.667,-2" >
             <ListView x:Name="userListView" SelectionMode="Multiple" ItemsSource="{Binding People}" Visibility="Hidden">
                 <ListView.ItemTemplate>
                     <DataTemplate>

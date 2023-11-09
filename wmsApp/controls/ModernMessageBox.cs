@@ -21,6 +21,12 @@ namespace wmsApp.controls
 
             await messageDialog.ShowAsync();
         }
+
+        public static async void showMessage(string msg)
+        {
+            await ModernMessageBox.Show("提示", msg);
+            return;
+        }
     }
 
 }

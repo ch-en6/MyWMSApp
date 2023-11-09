@@ -99,6 +99,11 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/permissiontype/del/{resourceId}/{type}"));
         }
+
+        public static Result getSelectMap(long resourceId)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/permissiontype/select/map/{resourceId}"));
+        }
     }
     class PermissionApi
     {

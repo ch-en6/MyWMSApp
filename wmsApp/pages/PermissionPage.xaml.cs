@@ -35,6 +35,7 @@ using wmsApp.param;
 using ModernWpf.Controls;
 using wmsApp.dialog;
 using Button = System.Windows.Controls.Button;
+using wmsApp.controls;
 
 namespace wmsApp.pages
 
@@ -97,7 +98,7 @@ namespace wmsApp.pages
             Result result = PermissionApi.get_resources();
             if (!result.success)
             {
-                MessageBox.Show(result.errorMsg.ToString());
+                ModernMessageBox.showMessage(result.errorMsg.ToString());
                 return;
             }
             resources = JsonHelper.ConvertToMap<String, String>(result.data.ToString());
@@ -106,7 +107,7 @@ namespace wmsApp.pages
             Result result1 = PermissionApi.get_resourcetypesMap();
             if (!result1.success)
             {
-                MessageBox.Show(result1.errorMsg.ToString());
+                ModernMessageBox.showMessage(result.errorMsg.ToString());
                 return;
             }
             resourceTypes = JsonHelper.ConvertToMap<String, String>(result.data.ToString());
@@ -115,7 +116,7 @@ namespace wmsApp.pages
             Result result2 = PermissionTypesApi.getPermissionTypesMap();
             if (!result2.success)
             {
-                MessageBox.Show(result2.errorMsg.ToString());
+                ModernMessageBox.showMessage(result.errorMsg.ToString());
                 return;
             }
             permissionTypes = JsonHelper.ConvertToMap<long, List<String>>(result2.data.ToString());
@@ -154,7 +155,7 @@ namespace wmsApp.pages
 
         }
 
-
+   
         private void GenerateMenuItems()
         {
             foreach (KeyValuePair<string, string> kvp in resources)
@@ -228,7 +229,7 @@ namespace wmsApp.pages
                 Result permissons = PermissionApi.get_permissions(currentPage, resourceId);
                 if (permissons == null||!permissons.success)
                 {
-                    MessageBox.Show(permissons.errorMsg.ToString());
+                    ModernMessageBox.showMessage(permissons.errorMsg.ToString());
                     userPermissionList = new List<UserPermission>();
                     return;
                 }
@@ -450,7 +451,7 @@ namespace wmsApp.pages
    
 
 
-        private void OnCheckBoxClick(object sender, RoutedEventArgs e)
+        private  void OnCheckBoxClick(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = (CheckBox)sender;
             bool isChecked = checkBox.IsChecked ?? false;
@@ -477,7 +478,12 @@ namespace wmsApp.pages
 
                     Result result = PermissionApi.updatePermission(isChecked, param);
 
-                    if (!result.success) MessageBox.Show(result.errorMsg);
+                    if (!result.success)
+                    {
+                        checkBox.IsChecked = !isChecked;
+                        ModernMessageBox.showMessage(result.errorMsg);
+                   
+                    }
 
                 }
             }
@@ -486,7 +492,7 @@ namespace wmsApp.pages
             // ...
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private  void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             // 获取点击的按钮
             Button button = (Button)sender;
@@ -501,8 +507,8 @@ namespace wmsApp.pages
             var userId = (dataGrid.Columns[0].GetCellContent(dataGrid.Items[rowIndex]) as TextBlock).Text;
 
             Result result = PermissionApi.delPermissionByuserId(long.Parse(userId), resourceId);
-            if (!result.success) MessageBox.Show(result.errorMsg);
-            else MessageBox.Show("已取消");
+            if (!result.success) ModernMessageBox.showMessage(result.errorMsg);
+            else ModernMessageBox.showMessage("已取消");
             UpdatePageNumber();
         }
 
@@ -595,7 +601,7 @@ namespace wmsApp.pages
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                ModernMessageBox.showMessage(ex.Message);
             }
         }
 
@@ -619,7 +625,7 @@ namespace wmsApp.pages
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                ModernMessageBox.showMessage(ex.Message);
             }
         }
 

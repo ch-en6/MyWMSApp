@@ -49,7 +49,7 @@ namespace wmsApp
             {
                 Content = "",  // 设置内容
                 Icon = new SymbolIcon(Symbol.Contact),  // 设置图标
-                Tag = "pages/UserPage.xaml",  // 设置标签
+                //Tag = "pages/UserPage.xaml",  // 设置标签
                 Width = 48 , // 设置宽度
                 Uri = ""
             };
@@ -78,6 +78,13 @@ namespace wmsApp
                     Tag = value.page,
                     Uri = value.uriName
                 };
+                if (value.name == "用户中心")
+                {
+                    item1.Tag = value.page;
+                    item1.Uri = value.uriName; 
+                  
+                    continue;
+                }
                 menuItems.Add(item);
 
             }
@@ -106,7 +113,7 @@ namespace wmsApp
                     Result result = PermissionApi.enter(uri);
                     // 根据Tag更改Frame的导航
                     if (result.success) ContentFrame.Navigate(new Uri(selectedPage, UriKind.Relative));
-                    else await ModernMessageBox.Show("提示",result.errorMsg);
+                    else ModernMessageBox.showMessage(result.errorMsg);
                     
                 }
             }
