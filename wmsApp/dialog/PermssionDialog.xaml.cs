@@ -46,6 +46,8 @@ namespace wmsApp.dialog
 
             types = JsonHelper.ConvertToMap<String, long>(result1.data.ToString());
 
+            types = JsonHelper.ConvertToMap<String, long>(result1.data.ToString());
+
             userList = JsonHelper.JsonToList<User>(result.data.ToString());
             InitializeComponent();
            
