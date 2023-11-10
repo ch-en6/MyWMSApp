@@ -110,31 +110,37 @@ namespace wmsApp
                 {
                     string uri = selectedItem.Uri;
                     if (uri == "")return ;
+                    try {
                     Result result = PermissionApi.enter(uri);
-                    // 根据Tag更改Frame的导航
-                    if (result.success) ContentFrame.Navigate(new Uri(selectedPage, UriKind.Relative));
-                    else ModernMessageBox.showMessage(result.errorMsg);
-                    
+                        if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
+                        // 根据Tag更改Frame的导航
+                        if (result.success) ContentFrame.Navigate(new Uri(selectedPage, UriKind.Relative));
+                        else ModernMessageBox.showMessage(result.errorMsg);
+                    }catch(TokenExpiredException ex) {
+                        Close();
+                    };
+
+
                 }
             }
         }
+       
+        /*        private void NavigationView_ItemInvoked(ModernWpf.Controls.NavigationView sender, ModernWpf.Controls.NavigationViewItemInvokedEventArgs args)
+                {
+                    if (args.IsSettingsInvoked)
+                    {
+                        // 处理“设置”项的点击事件
+                        // ...
+                    }
+                    else
+                    {
+                        // 获取点击的导航菜单项的Tag
+                        string selectedPage = args.InvokedItemContainer.Tag.ToString();
 
-/*        private void NavigationView_ItemInvoked(ModernWpf.Controls.NavigationView sender, ModernWpf.Controls.NavigationViewItemInvokedEventArgs args)
-        {
-            if (args.IsSettingsInvoked)
-            {
-                // 处理“设置”项的点击事件
-                // ...
-            }
-            else
-            {
-                // 获取点击的导航菜单项的Tag
-                string selectedPage = args.InvokedItemContainer.Tag.ToString();
-              
-                // 根据Tag更改Frame的导航
-                ContentFrame.Navigate(new Uri(selectedPage, UriKind.Relative));
-            }
-        }*/
+                        // 根据Tag更改Frame的导航
+                        ContentFrame.Navigate(new Uri(selectedPage, UriKind.Relative));
+                    }
+                }*/
 
     }
 }

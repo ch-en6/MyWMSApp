@@ -74,6 +74,7 @@
     <Compile Include="dialog\PermssionDialog.xaml.cs">
       <DependentUpon>PermssionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dto\Constants.cs" />
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -100,6 +101,7 @@
     <Compile Include="pojo\Resource.cs" />
     <Compile Include="utils\HttpHelper.cs" />
     <Compile Include="utils\JsonHelper.cs" />
+    <Compile Include="utils\TokenExpiredException.cs" />
     <Compile Include="utils\TokenManager.cs" />
     <Page Include="dialog\DelPermissionTypeDialog.xaml">
       <SubType>Designer</SubType>

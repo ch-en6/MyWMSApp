@@ -36,6 +36,7 @@ using ModernWpf.Controls;
 using wmsApp.dialog;
 using Button = System.Windows.Controls.Button;
 using wmsApp.controls;
+using wmsApp.utils;
 
 namespace wmsApp.pages
 
@@ -94,33 +95,41 @@ namespace wmsApp.pages
         public PermissionPage()
             
         {
-            //请求返回资源
-            Result result = PermissionApi.get_resources();
-            if (!result.success)
+            try
             {
-                ModernMessageBox.showMessage(result.errorMsg.ToString());
-                return;
-            }
-            resources = JsonHelper.ConvertToMap<String, String>(result.data.ToString());
+                //请求返回资源
+                Result result = PermissionApi.get_resources();
+                if (!result.success)
+                {
+                    if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
+                    ModernMessageBox.showMessage(result.errorMsg.ToString());
+                    return;
+                }
+                resources = JsonHelper.ConvertToMap<String, String>(result.data.ToString());
 
-            //请求返回资源类型
-            Result result1 = PermissionApi.get_resourcetypesMap();
-            if (!result1.success)
-            {
-                ModernMessageBox.showMessage(result.errorMsg.ToString());
-                return;
+                //请求返回资源类型
+                Result result1 = PermissionApi.get_resourcetypesMap();
+                if (!result1.success)
+                {
+                    if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
+                    ModernMessageBox.showMessage(result.errorMsg.ToString());
+                    return;
+                }
+                resourceTypes = JsonHelper.ConvertToMap<String, String>(result.data.ToString());
+
+                //请求返回
+                Result result2 = PermissionTypesApi.getPermissionTypesMap();
+                if (!result2.success)
+                {
+                    if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
+                    ModernMessageBox.showMessage(result.errorMsg.ToString());
+                    return;
+                }
+                permissionTypes = JsonHelper.ConvertToMap<long, List<String>>(result2.data.ToString());
             }
-            resourceTypes = JsonHelper.ConvertToMap<String, String>(result.data.ToString());
-          
-            //请求返回
-            Result result2 = PermissionTypesApi.getPermissionTypesMap();
-            if (!result2.success)
-            {
-                ModernMessageBox.showMessage(result.errorMsg.ToString());
-                return;
-            }
-            permissionTypes = JsonHelper.ConvertToMap<long, List<String>>(result2.data.ToString());
-           
+            catch(TokenExpiredException ex){ 
+                
+            };
 
 
             InitializeComponent();
@@ -220,92 +229,98 @@ namespace wmsApp.pages
 
         private void UpdatePageNumber()
         {
-
-            if (!IsSearching)
+            try
             {
-                // 计算总页数
-                totalPage = CalculateTotalPages();
-                // 更新当前页数
-                Result permissons = PermissionApi.get_permissions(currentPage, resourceId);
-                if (permissons == null||!permissons.success)
+                if (!IsSearching)
                 {
-                    ModernMessageBox.showMessage(permissons.errorMsg.ToString());
-                    userPermissionList = new List<UserPermission>();
-                    return;
-                }
-                userPermissionList = JsonHelper.JsonToList<UserPermission>(permissons.data.ToString());
-            }
-            else
-            {
-                string condition = textBox.Text;
-                long parsedValue;
-                SearchPermissionParams param;
-                
-
-                if (long.TryParse(condition, out parsedValue))
-                {
-                    // 转换成功，可以使用 parsedValue 进行后续操作
-                    param = new SearchPermissionParams(
-                        parsedValue, condition, condition, resourceId, currentPage);
+                    // 计算总页数
+                    totalPage = CalculateTotalPages();
+                    // 更新当前页数
+                    Result permissons = PermissionApi.get_permissions(currentPage, resourceId);
+                    if (permissons.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
+                    if (permissons == null || !permissons.success)
+                    {
+                        ModernMessageBox.showMessage(permissons.errorMsg.ToString());
+                        userPermissionList = new List<UserPermission>();
+                        return;
+                    }
+                    userPermissionList = JsonHelper.JsonToList<UserPermission>(permissons.data.ToString());
                 }
                 else
                 {
-                    // 转换失败，可以根据需要进行处理
-                    param = new SearchPermissionParams(null, condition, condition, resourceId, currentPage);
-                }
-                Result result;
-                Dictionary<String, Object> map;
-                List<UserPermission> list;
-                switch (currentOption)
-                {
-                    case "user":
-                        result = PermissionApi.searchByUser(param);
-                        if (result.data != null)
-                        {
-                            map = JsonHelper.ConvertToMap<String, Object>(result.data.ToString());
-                            list = JsonHelper.JsonToList<UserPermission>(map["records"].ToString());
-                            totalPage = int.Parse(map["totalPage"].ToString());
-                        }
-                        else
-                        {
-                            list = new List<UserPermission>();
-                            totalPage = 1;
-                        }
-                        usersearchPermissionList = list;
-                        break;
-                    case "role":
-                        result = PermissionApi.searchByRole(param);
-                        if (result.data != null)
-                        {
-                            map = JsonHelper.ConvertToMap<String, Object>(result.data.ToString());
-                            list = JsonHelper.JsonToList<UserPermission>(map["records"].ToString());
-                            totalPage = int.Parse(map["totalPage"].ToString());
-                        }
-                        else
-                        {
-                            list = new List<UserPermission>();
-                            totalPage = 1;
+                    string condition = textBox.Text;
+                    long parsedValue;
+                    SearchPermissionParams param;
 
-                        }
-                        usersearchPermissionList = list;
-                        //UpdateSearchPageNumber();
-                        break;
+
+                    if (long.TryParse(condition, out parsedValue))
+                    {
+                        // 转换成功，可以使用 parsedValue 进行后续操作
+                        param = new SearchPermissionParams(
+                            parsedValue, condition, condition, resourceId, currentPage);
+                    }
+                    else
+                    {
+                        // 转换失败，可以根据需要进行处理
+                        param = new SearchPermissionParams(null, condition, condition, resourceId, currentPage);
+                    }
+                    Result result;
+                    Dictionary<String, Object> map;
+                    List<UserPermission> list;
+                    switch (currentOption)
+                    {
+                        case "user":
+                            result = PermissionApi.searchByUser(param);
+                            if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
+                            if (result.data != null)
+                            {
+                                map = JsonHelper.ConvertToMap<String, Object>(result.data.ToString());
+                                list = JsonHelper.JsonToList<UserPermission>(map["records"].ToString());
+                                totalPage = int.Parse(map["totalPage"].ToString());
+                            }
+                            else
+                            {
+                                list = new List<UserPermission>();
+                                totalPage = 1;
+                            }
+                            usersearchPermissionList = list;
+                            break;
+                        case "role":
+                            result = PermissionApi.searchByRole(param);
+                            if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
+                            if (result.data != null)
+                            {
+                                map = JsonHelper.ConvertToMap<String, Object>(result.data.ToString());
+                                list = JsonHelper.JsonToList<UserPermission>(map["records"].ToString());
+                                totalPage = int.Parse(map["totalPage"].ToString());
+                            }
+                            else
+                            {
+                                list = new List<UserPermission>();
+                                totalPage = 1;
+
+                            }
+                            usersearchPermissionList = list;
+                            //UpdateSearchPageNumber();
+                            break;
+                    }
+
                 }
-                
+
+
+                // 更新页码显示
+                PageNumberTextBlock.Text = currentPage.ToString();
+
+                // 更新数据源
+                dataGrid.ItemsSource = IsSearching ? usersearchPermissionList : userPermissionList;
+
+                // 更新布局
+                dataGrid.UpdateLayout();
+
+                // 设置权限列的值
+                setCheckBoxValue();
             }
-
-
-            // 更新页码显示
-            PageNumberTextBlock.Text = currentPage.ToString();
-
-            // 更新数据源
-            dataGrid.ItemsSource = IsSearching ? usersearchPermissionList : userPermissionList;
-         
-            // 更新布局
-            dataGrid.UpdateLayout();
-
-            // 设置权限列的值
-            setCheckBoxValue();
+            catch (TokenExpiredException) { };
 
         }
 
@@ -342,41 +357,45 @@ namespace wmsApp.pages
 
         public void AddPermissionColumns()
         {
-            //请求返回
-            Result result2 = PermissionTypesApi.getPermissionTypesMap();
-            if (result2.data == null) return;
-            permissionTypes = JsonHelper.ConvertToMap<long, List<String>>(result2.data.ToString());
-
-            if (permissionTypes == null || resourceId == null || !permissionTypes.ContainsKey(resourceId))
-                return;
-
-            List<string> types = permissionTypes[resourceId];
-         
-            int count = types.Count;
-
-            for (int i = 0; i < count; i++)
+            try
             {
-                string permissionName = types[i];
+                //请求返回
+                Result result2 = PermissionTypesApi.getPermissionTypesMap();
+                if (result2.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
+                if (result2.data == null) return;
+                permissionTypes = JsonHelper.ConvertToMap<long, List<String>>(result2.data.ToString());
 
-                // 创建一个DataGridTemplateColumn列
-                DataGridTemplateColumn column = new DataGridTemplateColumn();
-                column.Header = permissionName;
-                column.Width = 60; // 设置单元格宽度
-                column.IsReadOnly = false; //设置为可修改
+                if (permissionTypes == null || resourceId == null || !permissionTypes.ContainsKey(resourceId))
+                    return;
 
-                // 创建一个数据模板，包含一个CheckBox
-                FrameworkElementFactory factory = new FrameworkElementFactory(typeof(CheckBox));
-                factory.AddHandler(CheckBox.ClickEvent, new RoutedEventHandler(OnCheckBoxClick));
-                 //factory.SetValue(CheckBox.VerticalAlignmentProperty, VerticalAlignment.Center); // 设置复选框垂直居中
-                factory.SetValue(CheckBox.MarginProperty, new Thickness(20, 0, 0, 0)); // 设置内容水平居中
+                List<string> types = permissionTypes[resourceId];
 
-                DataTemplate cellTemplate = new DataTemplate();
-                cellTemplate.VisualTree = factory;
-                column.CellTemplate = cellTemplate;
+                int count = types.Count;
 
-                // 将列添加到DataGrid中
-                dataGrid.Columns.Add(column);
-            }
+                for (int i = 0; i < count; i++)
+                {
+                    string permissionName = types[i];
+
+                    // 创建一个DataGridTemplateColumn列
+                    DataGridTemplateColumn column = new DataGridTemplateColumn();
+                    column.Header = permissionName;
+                    column.Width = 60; // 设置单元格宽度
+                    column.IsReadOnly = false; //设置为可修改
+
+                    // 创建一个数据模板，包含一个CheckBox
+                    FrameworkElementFactory factory = new FrameworkElementFactory(typeof(CheckBox));
+                    factory.AddHandler(CheckBox.ClickEvent, new RoutedEventHandler(OnCheckBoxClick));
+                    //factory.SetValue(CheckBox.VerticalAlignmentProperty, VerticalAlignment.Center); // 设置复选框垂直居中
+                    factory.SetValue(CheckBox.MarginProperty, new Thickness(20, 0, 0, 0)); // 设置内容水平居中
+
+                    DataTemplate cellTemplate = new DataTemplate();
+                    cellTemplate.VisualTree = factory;
+                    column.CellTemplate = cellTemplate;
+
+                    // 将列添加到DataGrid中
+                    dataGrid.Columns.Add(column);
+                }
+            }catch(TokenExpiredException ex) { }
 
         }
 
@@ -475,15 +494,17 @@ namespace wmsApp.pages
                     var userId = (dataGrid.Columns[0].GetCellContent(dataGrid.Items[rowIndex]) as TextBlock).Text;
 
                     UpdatePermissionParams param = new UpdatePermissionParams(long.Parse(userId),resourceId,columnName);
-
-                    Result result = PermissionApi.updatePermission(isChecked, param);
-
-                    if (!result.success)
+                    try
                     {
-                        checkBox.IsChecked = !isChecked;
-                        ModernMessageBox.showMessage(result.errorMsg);
-                   
-                    }
+                        Result result = PermissionApi.updatePermission(isChecked, param);
+                        if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
+                        if (!result.success)
+                        {
+                            checkBox.IsChecked = !isChecked;
+                            ModernMessageBox.showMessage(result.errorMsg);
+
+                        }
+                    }catch(TokenExpiredException ex) { }
 
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using WindowsFormsApp1.dto;
 using wms;
@@ -13,36 +14,68 @@ namespace wmsApp
         {
             InitializeComponent();
         }
+        private async Task<Result> PerformLogin(long userId, string password)
+        {
+         
+                ShowLoadingOverlay(); // 显示蒙版和设置 ProgressRing 的 IsActive 属性为 true
+
+                return await Task.Run(() => LoginApi.login(userId, password));
+        
+        }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string username = UsernameTextBox.Text;
             string password = PasswordBox.Password;
 
-            // 在这里执行登录逻辑
-            if (IsValidCredentials(username, password))
+            long userId;
+            if (long.TryParse(username, out userId))
             {
-                long userId = long.Parse(username);
-                Result result = LoginApi.login(userId, password);
-                if (!result.success)
+                Task<Result> loginTask = PerformLogin(userId, password);
+
+                // 等待登录结果
+                loginTask.ContinueWith(task =>
                 {
-                    MessageBox.Show(result.errorMsg.ToString());
-                    return;
-                }
-                string token = result.data.ToString();
-                TokenManager.token = token;
-                TokenManager.userId = userId;
-                MessageBox.Show(token);
-                // 登录成功，打开主窗口或执行其他操作
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
-                Close();
+                    Result result = task.Result;
+                    if (result != null && result.success)
+                    {
+                        string token = result.data.ToString();
+                        TokenManager.token = token;
+                        TokenManager.userId = userId;
+
+                        // 登录成功，打开主窗口或执行其他操作
+                        Dispatcher.Invoke(() =>
+                        {
+                            MainWindow mainWindow = new MainWindow();
+                            mainWindow.Show();
+                            Close();
+                        });
+                    }
+                    HideLoadingOverlay(); // 隐藏蒙版和设置 ProgressRing 的 IsActive 属性为 false
+                });
             }
             else
             {
-                // 登录失败，显示错误提示
-                MessageBox.Show("Invalid username or password.", "Login Failed");
+                MessageBox.Show("用户名格式不正确");
             }
+        }
+
+        private void ShowLoadingOverlay()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                loadingGrid.Visibility = Visibility.Visible;
+                ring.IsActive = true;
+            });
+        }
+
+        private void HideLoadingOverlay()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                loadingGrid.Visibility = Visibility.Collapsed;
+                ring.IsActive = false;
+            });
         }
 
         private bool IsValidCredentials(string username, string password)
