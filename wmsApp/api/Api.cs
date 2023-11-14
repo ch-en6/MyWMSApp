@@ -16,17 +16,38 @@ namespace wms
     class UserApi
     {
         public static HttpHelper http = new HttpHelper();
+
         /* 获取所有资源下的所有用户 */
-        public static Result getUserMap(int currentPage)
+        /*public static Result getUserMap(int currentPage)
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/user/list/{currentPage}"));
+        }
+        */
+        public static Result search(int page)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/user/search/{page}"));
         }
 
         public static Result save(User user)
         {
             return JsonHelper.JSONToObject<Result>(http.Post("/user/save", JsonHelper.DateObjectToJson<User>(user)));
         }
+        //通过名称查询
+        public static Result searchByName(int page, string name)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/user/searchByName/{page}/{name}"));
+        }
 
+        //通过id查询
+        public static Result searchById(int page, long id)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/user/searchById/{page}/{id}"));
+        }
+
+        public static Result delete(long id)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/user/delete/{id}"));
+        }
     }
 
     class ResourceApi
@@ -41,9 +62,9 @@ namespace wms
     class LoginApi
     {
         public static HttpHelper http = new HttpHelper();
-        public static Result login(long userId,string password)
+        public static Result login(long userId, string password)
         {
-            LoginParams loginParams=new LoginParams(userId, password);
+            LoginParams loginParams = new LoginParams(userId, password);
             Result result = JsonHelper.JSONToObject<Result>(http.Post("/login", JsonHelper.ObjectToJSON(loginParams)));
             if (!result.success) MessageBox.Show(result.errorMsg);
             return result;
@@ -51,14 +72,14 @@ namespace wms
         public static void logout()
         {
             JsonHelper.JSONToObject<Result>(http.Get("/logout"));
-            return ;
+            return;
         }
     }
 
     class MaterialApi
     {
         public static HttpHelper http = new HttpHelper();
-        
+
         //显示
         public static Result search(int page)
         {
@@ -72,7 +93,7 @@ namespace wms
         }
 
         //通过名称查询
-        public static Result searchByName(int page, string name) 
+        public static Result searchByName(int page, string name)
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByName/{page}/{name}"));
         }
@@ -82,7 +103,7 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByHouseId/{page}/{house_id}"));
         }
-        
+
         //通过类型查询
         public static Result searchByType(int page, string type)
         {
@@ -111,7 +132,7 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get("/permissiontype/types/map"));
         }
 
-        public static Result delPermissionType(long resourceId,string type)
+        public static Result delPermissionType(long resourceId, string type)
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/permissiontype/del/{resourceId}/{type}"));
         }
@@ -164,7 +185,7 @@ namespace wms
 
         internal static int get_totalpage()
         {
-            string str=http.Get("/user/totalpage");
+            string str = http.Get("/user/totalpage");
             if (str == null) return 0;
             return int.Parse(http.Get("/user/totalpage"));
         }
@@ -181,7 +202,7 @@ namespace wms
 
         internal static Result searchByUser(SearchPermissionParams condition)
         {
-           
+
             return JsonHelper.JSONToObject<Result>(http.Post("/permission/search", JsonHelper.ObjectToJSON(condition)));
         }
 

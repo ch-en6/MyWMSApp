@@ -68,6 +68,9 @@
     </ApplicationDefinition>
     <Compile Include="controls\ModernMessageBox.cs" />
     <Compile Include="controls\MyNavigationViewItem.cs" />
+    <Compile Include="dialog\AddUserDialog.xaml.cs">
+      <DependentUpon>AddUserDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="dialog\DelPermissionTypeDialog.xaml.cs">
       <DependentUpon>DelPermissionTypeDialog.xaml</DependentUpon>
     </Compile>
@@ -101,6 +104,10 @@
     <Compile Include="utils\HttpHelper.cs" />
     <Compile Include="utils\JsonHelper.cs" />
     <Compile Include="utils\TokenManager.cs" />
+    <Page Include="dialog\AddUserDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="dialog\DelPermissionTypeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
