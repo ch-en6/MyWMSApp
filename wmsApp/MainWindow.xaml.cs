@@ -19,6 +19,7 @@ using wmsApp;
 using wms.utils;
 using wmsApp.pojo;
 using wmsApp.controls;
+using wmsApp.utils;
 
 namespace wmsApp
 {
@@ -35,9 +36,37 @@ namespace wmsApp
             GenerateItems();
             // 添加导航菜单项的点击事件处理程序
             NavigationView.ItemInvoked += NavigationView_ItemInvoked;
+            NavigationView navigation;
 
             // 设置初始导航页面
             ContentFrame.Navigate(new Uri("pages/HomePage.xaml", UriKind.Relative));
+
+            // 注册Closing事件处理程序
+            Closing += MainWindow_Closing;
+        }
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // 显示提示框询问用户是否确认关闭窗口
+            MessageBoxResult result = MessageBox.Show("确定要关闭窗口吗？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            // 如果用户点击“是”，则关闭窗口；否则取消关闭操作
+            if (result == MessageBoxResult.No)
+            {
+                e.Cancel = true; // 取消关闭操作
+            }
+            else
+            {
+               
+                Result result1 = LoginApi.logout();
+                if (result1.success) MessageBox.Show("退出成功"); 
+                TokenManager.token = "null";
+                TokenManager.userId = 0;
+                Application.Current.Shutdown(); // 触发应用程序的 Exit
+            }
+        }
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+             Close();
         }
 
         private void GenerateItems()
@@ -50,8 +79,9 @@ namespace wmsApp
                 Content = "",  // 设置内容
                 Icon = new SymbolIcon(Symbol.Contact),  // 设置图标
                 //Tag = "pages/UserPage.xaml",  // 设置标签
-                Width = 48 , // 设置宽度
-                Uri = ""
+                Width = 60 , // 设置宽度
+                Uri = "",
+                FontSize = 22
             };
 
             // 创建第二个 NavigationViewItem
@@ -59,7 +89,8 @@ namespace wmsApp
             {
                 Content = "首页",  // 设置内容
                 Tag = "pages/HomePage.xaml",  // 设置标签
-                Uri=""
+                Uri="",
+                FontSize = 22
             };
             menuItems.Add(item1);
             menuItems.Add(item2);
@@ -76,7 +107,8 @@ namespace wmsApp
                 {
                     Content = value.name,
                     Tag = value.page,
-                    Uri = value.uriName
+                    Uri = value.uriName,
+                    FontSize =22
                 };
                 if (value.name == "用户中心")
                 {
@@ -124,23 +156,10 @@ namespace wmsApp
                 }
             }
         }
-       
-        /*        private void NavigationView_ItemInvoked(ModernWpf.Controls.NavigationView sender, ModernWpf.Controls.NavigationViewItemInvokedEventArgs args)
-                {
-                    if (args.IsSettingsInvoked)
-                    {
-                        // 处理“设置”项的点击事件
-                        // ...
-                    }
-                    else
-                    {
-                        // 获取点击的导航菜单项的Tag
-                        string selectedPage = args.InvokedItemContainer.Tag.ToString();
 
-                        // 根据Tag更改Frame的导航
-                        ContentFrame.Navigate(new Uri(selectedPage, UriKind.Relative));
-                    }
-                }*/
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }

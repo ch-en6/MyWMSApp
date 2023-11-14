@@ -48,10 +48,9 @@ namespace wms
             if (!result.success) MessageBox.Show(result.errorMsg);
             return result;
         }
-        public static void logout()
+        public static Result logout()
         {
-            JsonHelper.JSONToObject<Result>(http.Get("/logout"));
-            return ;
+            return JsonHelper.JSONToObject<Result>(http.Get("/logout"));
         }
     }
 

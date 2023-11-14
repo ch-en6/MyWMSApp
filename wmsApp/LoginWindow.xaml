@@ -8,19 +8,26 @@
         xmlns:local="clr-namespace:wmsApp.pages"
         mc:Ignorable="d"
          WindowStartupLocation="CenterScreen"
-        Title="登录界面" Height="450" Width="800">
-    <Grid>
-        <Grid Background="#FFD8D7D7">
-            <TextBlock Text="欢迎使用仓库管理系统" FontSize="32" FontWeight="Bold"
+        KeyDown="Window_KeyDown"
+        Title="登录界面"  Height="800" Width="1280" >
+    <Grid >
+       
+        <Grid Background="#FFD8D7D7" >
+            <Grid.Resources>
+                <Style TargetType="Control">
+                    <Setter Property="FontSize" Value="24"/>
+                </Style>
+            </Grid.Resources>
+            <TextBlock Text="欢迎使用仓库管理系统" FontSize="44" FontWeight="Bold"
                        HorizontalAlignment="Center" Margin="241,58,232.333,298.667" />
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label Content="用户名" />
-                <TextBox x:Name="UsernameTextBox" Width="200" VerticalAlignment="Center"
+                <Label Content="用户名" FontSize="24" />
+                <TextBox x:Name="UsernameTextBox" Width="300" FontSize="24" VerticalAlignment="Center"
                          Margin="0,0,0,10"/>
-                <Label Content="密码" />
-                <PasswordBox x:Name="PasswordBox" Width="200" VerticalAlignment="Center"
+                <Label Content="密码" FontSize="24" />
+                <PasswordBox x:Name="PasswordBox" Width="300"  FontSize="24"  VerticalAlignment="Center"
                              Margin="0,0,0,20"/>
-                <Button Content="登录" Width="100" HorizontalAlignment="Center"
+                <Button Content="登录" Width="300" HorizontalAlignment="Center" FontSize="24"
                         Click="LoginButton_Click"/>
             </StackPanel>
         </Grid>

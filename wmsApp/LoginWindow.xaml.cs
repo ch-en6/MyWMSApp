@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using WindowsFormsApp1.dto;
 using wms;
 using wms.utils;
@@ -13,7 +14,36 @@ namespace wmsApp
         public LoginWindow()
         {
             InitializeComponent();
+            UsernameTextBox.KeyDown += UsernameTextBox_KeyDown;
+            PasswordBox.KeyDown += PasswordBox_KeyDown;
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                e.Handled = true; // 防止回车键产生默认行为
+                UsernameTextBox.Focus();
+            }
+        }
+        private void UsernameTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                e.Handled = true; // 防止回车键产生默认行为
+                PasswordBox.Focus();
+            }
+        }
+
+        private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                e.Handled = true; // 防止回车键产生默认行为
+                LoginButton_Click(sender, new RoutedEventArgs());
+            }
+        }
+
         private async Task<Result> PerformLogin(long userId, string password)
         {
          

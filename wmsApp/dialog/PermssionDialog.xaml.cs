@@ -12,6 +12,7 @@ using wms.utils;
 using wms.param;
 using System;
 using wmsApp.controls;
+using wmsApp.pojo;
 
 namespace wmsApp.dialog
 {
@@ -21,12 +22,12 @@ namespace wmsApp.dialog
 
         long resourceId;
 
-        Dictionary<string, string> resources;
+        Dictionary<string, Resource> resources;
 
         Dictionary<String, long> types;
 
         List<User> userList;
-        public PermissionDialog(Dictionary<string, string> resources,long resourceId)
+        public PermissionDialog(Dictionary<string, Resource> resources,long resourceId)
         { 
             this.resources = resources;
             this.resourceId = resourceId;
@@ -66,14 +67,14 @@ namespace wmsApp.dialog
 
         private void initResource()
         {
-            foreach (KeyValuePair<string, string> kvp in resources)
+            foreach (KeyValuePair<string, Resource> kvp in resources)
             {
                 string key = kvp.Key;
-                string value = kvp.Value;
+                Resource value = kvp.Value;
 
-                if(value == resourceId.ToString())
+                if(value.id == resourceId)
                 {
-                    resourceComboBox.Text = key;
+                    resourceComboBox.Text = value.name;
                 }
             }
         }

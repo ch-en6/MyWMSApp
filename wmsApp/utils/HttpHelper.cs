@@ -30,7 +30,7 @@ namespace wms.utils
         // 添加Authorization请求头
         public void SetAuthorizationHeader(string token)
         {  
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(token==null?"123":token);
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(token);
         }
         //HTTP封装POST请求
         public string HttpPost(string url, string body)

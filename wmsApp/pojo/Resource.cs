@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace wmsApp.pojo
 {
-    class Resource
+    public class Resource
     {
         /**
     * 资源代码

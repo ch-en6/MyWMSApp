@@ -37,6 +37,7 @@ using wmsApp.dialog;
 using Button = System.Windows.Controls.Button;
 using wmsApp.controls;
 using wmsApp.utils;
+using wmsApp.pojo;
 
 namespace wmsApp.pages
 
@@ -67,7 +68,7 @@ namespace wmsApp.pages
         int col_num = 4;
 
         //所有资源，value为id，key为资源名
-        Dictionary<String, String> resources;
+        Dictionary<String, Resource> resources;
 
         //所有资源类型
         Dictionary<long, List<String>> permissionTypes;
@@ -98,14 +99,24 @@ namespace wmsApp.pages
             try
             {
                 //请求返回资源
-                Result result = PermissionApi.get_resources();
+                Result result = ResourceApi.getResources();
+            
                 if (!result.success)
                 {
                     if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
                     ModernMessageBox.showMessage(result.errorMsg.ToString());
                     return;
                 }
-                resources = JsonHelper.ConvertToMap<String, String>(result.data.ToString());
+
+                resources = JsonHelper.ConvertToMap<String, Resource>(result.data.ToString());
+              /*  Result result = PermissionApi.get_resources();
+                if (!result.success)
+                {
+                    if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
+                    ModernMessageBox.showMessage(result.errorMsg.ToString());
+                    return;
+                }
+                resources = JsonHelper.ConvertToMap<String, String>(result.data.ToString());*/
 
                 //请求返回资源类型
                 Result result1 = PermissionApi.get_resourcetypesMap();
@@ -164,20 +175,42 @@ namespace wmsApp.pages
 
         }
 
-   
+        private Symbol GetIconFromName(string iconName)
+        {
+            switch (iconName)
+            {
+                case "People":
+                    return Symbol.People;
+                case "Home":
+                    return Symbol.Home;
+                case "Download":
+                    return Symbol.Download;
+                case "Upload":
+                    return Symbol.Upload;
+                case "ProtectedDocument":
+                    return Symbol.ProtectedDocument;
+                case "Contact":
+                    return Symbol.Contact;
+                default:
+                    return Symbol.Download;
+            }
+        }
+
         private void GenerateMenuItems()
         {
-            foreach (KeyValuePair<string, string> kvp in resources)
+            foreach (KeyValuePair<string, Resource> kvp in resources)
             {
                 string key = kvp.Key;
-                string value = kvp.Value;
-
+                Resource value = kvp.Value;
+                Symbol iconSymbol = GetIconFromName(value.icon);
                 // 创建新的 NavigationViewItem 对象
                 NavigationViewItem newItem = new NavigationViewItem
                 {
-                    Icon = new SymbolIcon(Symbol.Audio),
-                    Content = key,
-                    Tag = value
+                    Icon = new SymbolIcon(iconSymbol),
+                    Content = value.name,
+                    Tag = value.id,
+                    FontSize=22,
+                    Height = 50
                 };
 
                 // 将新的 NavigationViewItem 添加到 MenuItems 集合中
@@ -197,7 +230,6 @@ namespace wmsApp.pages
                 resourceId = selectedResource;
                 navigationView.Header = selectedItem.Content;
 
-
                 currentPage = 1;
 
                 int count = dataGrid.Columns.Count;
@@ -205,7 +237,6 @@ namespace wmsApp.pages
                 {
                     dataGrid.Columns.RemoveAt(col_num);
                 }
-
                 
                 AddPermissionColumns();
                 UpdatePageNumber();
@@ -342,7 +373,6 @@ namespace wmsApp.pages
             }
         }
 
-  
         private void NextPageButton_Click(object sender, RoutedEventArgs e)
         {
             if (currentPage < totalPage)
@@ -403,7 +433,7 @@ namespace wmsApp.pages
         {
 
             List<UserPermission> list = IsSearching ? usersearchPermissionList : userPermissionList;
-            //MessageBox.Show(usersearchPermissionList!=null?usersearchPermissionList.Count.ToString():"无");
+           
             for (int i = 0; i < list.Count; i++)
             {
                 var userPermission = list[i];
