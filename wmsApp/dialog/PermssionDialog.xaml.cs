@@ -38,7 +38,7 @@ namespace wmsApp.dialog
             }
             
             Result result1 = PermissionTypesApi.getSelectMap(resourceId);
-            MessageBox.Show(result1.data.ToString());
+         
             if (!result1.success)
             {
                 throw new Exception(result.errorMsg.ToString());

@@ -11,6 +11,7 @@ using WindowsFormsApp1.dto;
 using wms;
 using wmsApp.controls;
 using wmsApp.utils;
+using Squirrel;
 
 namespace wmsApp
 {
@@ -19,10 +20,40 @@ namespace wmsApp
     /// </summary>
     public partial class App : Application
     {
+      /*  protected override async void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            // 确保更新完成后启动应用程序
+            using (var manager = await UpdateManager.GitHubUpdateManager("https://github.com/BalalaBABABA/MyWMSApp/releases"))
+            {
+                // 检查并安装更新
+                SquirrelAwareApp.HandleEvents(
+                    onInitialInstall: v => manager.CreateShortcutForThisExe(),
+                    onAppUpdate: v => manager.CreateShortcutForThisExe(),
+                    onAppUninstall: v => manager.RemoveShortcutForThisExe()
+                );
+
+                // 检查是否有更新可用
+                var updateInfo = await manager.CheckForUpdate();
+                if (updateInfo.ReleasesToApply.Any())
+                {
+                    // 下载并安装更新
+                    await manager.UpdateApp();
+                }
+            }
+
+            // 启动应用程序的主窗口
+            MainWindow window = new MainWindow();
+            window.Show();
+        }*/
+
+
+
         public App()
         {
            /* if(TokenManager.token==null)StartupUri = new Uri("LoginWindow.xaml", UriKind.Relative);*/
-             StartupUri = new Uri("LoginWindow.xaml", UriKind.Relative);
+             //StartupUri = new Uri("LoginWindow.xaml", UriKind.Relative);
             // 订阅程序退出事件
             Exit += App_Exit;
             //异常退出
