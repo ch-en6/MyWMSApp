@@ -20,10 +20,18 @@ namespace wms.utils
     {
         private static readonly object LockObj = new object();
         private static HttpClient client = null;
+
+        private static RSAUtil rsaUtil;
+        private static AESUtil aesUtil;
+        /*
+         *  设置为服务器IP地址
+         */
         private static readonly string BASE_ADDRESS = "http://localhost:8081/";
         public HttpHelper()
         {
             GetInstance();
+            rsaUtil = new RSAUtil();
+            aesUtil = new AESUtil();
             SetAuthorizationHeader(TokenManager.token);
         }
 

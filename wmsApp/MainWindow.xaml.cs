@@ -78,13 +78,12 @@ namespace wmsApp
             {
                 Content = "",  // 设置内容
                 Icon = new SymbolIcon(Symbol.Contact),  // 设置图标
-                //Tag = "pages/UserPage.xaml",  // 设置标签
+                Tag = "pages/UserPage.xaml",  // 设置标签
                 Width = 60 , // 设置宽度
                 Uri = "",
                 FontSize = 22
             };
-
-            // 创建第二个 NavigationViewItem
+            
             var item2 = new MyNavigationViewItem
             {
                 Content = "首页",  // 设置内容

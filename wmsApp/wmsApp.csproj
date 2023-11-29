@@ -99,8 +99,12 @@
     <Compile Include="pojo\Material.cs" />
     <Compile Include="pojo\PermissionType.cs" />
     <Compile Include="pojo\Resource.cs" />
+    <Compile Include="UpgradeWindow.xaml.cs">
+      <DependentUpon>UpgradeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="utils\HttpHelper.cs" />
     <Compile Include="utils\JsonHelper.cs" />
+    <Compile Include="utils\RsaUtil.cs" />
     <Compile Include="utils\TokenExpiredException.cs" />
     <Compile Include="utils\TokenManager.cs" />
     <Page Include="dialog\DelPermissionTypeDialog.xaml">
@@ -147,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="pages\UserPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UpgradeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

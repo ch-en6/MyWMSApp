@@ -12,6 +12,7 @@ using wms;
 using wmsApp.controls;
 using wmsApp.utils;
 using Squirrel;
+using ModernWpf.Controls;
 
 namespace wmsApp
 {
@@ -20,12 +21,16 @@ namespace wmsApp
     /// </summary>
     public partial class App : Application
     {
-      /*  protected override async void OnStartup(StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
             // 确保更新完成后启动应用程序
-            using (var manager = await UpdateManager.GitHubUpdateManager("https://github.com/BalalaBABABA/MyWMSApp/releases"))
+            /*
+                192.168.200.137:80 为web服务器地址
+                到时候建立本机与虚拟机端口映射，设置为本机ip地址
+            */
+            using (var manager = new UpdateManager("http://192.168.200.137:80", "Setup.exe"))
             {
                 // 检查并安装更新
                 SquirrelAwareApp.HandleEvents(
@@ -35,18 +40,34 @@ namespace wmsApp
                 );
 
                 // 检查是否有更新可用
-                var updateInfo = await manager.CheckForUpdate();
-                if (updateInfo.ReleasesToApply.Any())
+                Task.Run(async () =>
                 {
-                    // 下载并安装更新
-                    await manager.UpdateApp();
-                }
+                    var updateInfo = await manager.CheckForUpdate();
+                    Dictionary<ReleaseEntry, string> map = updateInfo.FetchReleaseNotes();
+                
+                    if (updateInfo.ReleasesToApply.Any())
+                    {
+                        MessageBox.Show("准备更新");
+                        // 下载并安装更新
+                        var upgradeWindow = new UpgradeWindow(); // 创建 UpgradeWindow 对象
+                        var progress = new Progress<int>(percent =>
+                        {
+                            upgradeWindow.UpdateProgress(percent); // 直接更新 UpgradeWindow 中的进度条
+                        });
+                        await manager.UpdateApp();
+                        MessageBox.Show("更新完毕");
+                        // 重新启动应用程序
+                        System.Windows.Forms.Application.Restart();
+                        System.Windows.Application.Current.Shutdown();
+                    }
+                }).Wait();
             }
 
             // 启动应用程序的主窗口
             MainWindow window = new MainWindow();
             window.Show();
-        }*/
+        }
+
 
 
 
