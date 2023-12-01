@@ -12,6 +12,7 @@ using System.Net;
 using System.IO;
 using System.Windows;
 using wmsApp.utils;
+using WindowsFormsApp1.dto;
 
 namespace wms.utils
 {
@@ -26,7 +27,7 @@ namespace wms.utils
         /*
          *  设置为服务器IP地址
          */
-        private static readonly string BASE_ADDRESS = "http://localhost:8081/";
+        private static readonly string BASE_ADDRESS = "http://10.22.33.107:8081/";
         public HttpHelper()
         {
             GetInstance();
@@ -40,26 +41,153 @@ namespace wms.utils
         {  
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(token);
         }
-        //HTTP封装POST请求
-        public string HttpPost(string url, string body)
+        // 添加PublicKey请求头
+        public void SetPublicKeyHeader(string headerValue)
         {
-            Encoding encoding = Encoding.UTF8;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(BASE_ADDRESS+url);
-            request.Method = "POST";
-            request.Accept = "text/html, application/xhtml+xml, */*";
-            request.ContentType = "application/json";
-
-            byte[] buffer = encoding.GetBytes(body);
-            request.ContentLength = buffer.Length;
-            request.GetRequestStream().Write(buffer, 0, buffer.Length);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+            client.DefaultRequestHeaders.Add("PublicKey",headerValue);
+            Console.WriteLine(headerValue);
+        }
+        /**
+         * 发送明文GET请求,获取密文数据
+         */
+        public Result GetDncryptedData(string url)
+        {
+            try
             {
-                return reader.ReadToEnd();
+                RSA rsa = new RSA();
+                AES aes = new AES();
+                var responseString = client.GetStringAsync(url);
+                Result result = JsonHelper.JSONToObject<Result>(responseString.Result); //包含data，aeskey
+                                                                            // rsa私钥解密获得aeskey
+                string aesKeyByRsaDecode = rsa.DecryptByPrivateKey(result.aesKey, TokenManager.csKey["privatekey"]);
+
+                string Resultdata = result.data.ToString();
+
+                return JsonHelper.JSONToObject<Result>(aes.AesDecrypt(result.data.ToString(), aesKeyByRsaDecode));
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
+        /**
+         * 发送明文POST请求,获取密文数据
+         */
+        public Result PostDncryptedData(string url, string strJson)
+        {
+            try
+            {
+                RSA rsa = new RSA();
+                AES aes = new AES();
+                HttpContent content = new StringContent(strJson);
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                SetPublicKeyHeader(TokenManager.csKey["publickey"]);
 
+                //由HttpClient发出Post请求
+                Task<HttpResponseMessage> res = client.PostAsync(url, content);
+                if (res.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                {
 
+                    string resMsgStr = res.Result.Content.ReadAsStringAsync().Result;
+
+                    Result result = JsonHelper.JSONToObject<Result>(resMsgStr); //包含data，aeskey
+                    // rsa私钥解密获得aeskey
+                    string aesKeyByRsaDecode = rsa.DecryptByPrivateKey(result.aesKey, TokenManager.csKey["privatekey"]);
+
+                    string Resultdata = result.data.ToString();
+
+                    return JsonHelper.JSONToObject<Result>(aes.AesDecrypt(result.data.ToString(), aesKeyByRsaDecode));
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        /**
+         * 发送密文GET请求,获取密文数据
+         */
+        public Result GetEncryptedData(string url)
+        {
+            try
+            {
+                RSA rsa = new RSA();
+                AES aes = new AES();
+                //加密数据
+                string aesKey = aes.GetKey();
+                MessageBox.Show("1");
+
+                Result data = new Result();
+                data.data = aes.AesEncrypt(url, aesKey); //AES加密后的数据
+                data.aesKey = rsa.EncryptByPublicKey(aesKey, TokenManager.javaPublicKey); //后端RSA公钥加密后的AES的key
+                data.publicKey = TokenManager.csKey["publickey"];//前端公钥
+                string dataStr = JsonHelper.DateObjectTOJson(data);//将加密后的Result对象转换为json类型
+
+                var responseString = client.GetStringAsync(dataStr);
+                Result result = JsonHelper.JSONToObject<Result>(responseString.Result); //包含data，aeskey
+                // rsa私钥解密获得aeskey
+                string aesKeyByRsaDecode = rsa.DecryptByPrivateKey(result.aesKey, TokenManager.csKey["privatekey"]);
+
+                string Resultdata = result.data.ToString();
+
+                return JsonHelper.JSONToObject<Result>(aes.AesDecrypt(result.data.ToString(), aesKeyByRsaDecode));
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        /**
+         * 发送密文POST请求,获取密文数据，参数含@RequestBody不能用
+         */
+        public Result PostEncryptedData(string url, string strJson)
+        {
+            try
+            {
+                //加密再传输
+                AES aes = new AES();
+                RSA rsa = new RSA();
+
+                string aesKey = aes.GetKey();
+           
+                Result data = new Result();
+                data.data = aes.AesEncrypt(strJson, aesKey); //AES加密后的数据
+                data.aesKey = rsa.EncryptByPublicKey(aesKey, TokenManager.javaPublicKey); //后端RSA公钥加密后的AES的key
+                data.publicKey = TokenManager.csKey["publickey"];//前端公钥
+                string dataStr = JsonHelper.DateObjectTOJson(data);//将加密后的Result对象转换为json类型
+     
+                HttpContent content = new StringContent(dataStr);
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                
+                //由HttpClient发出Post请求
+                Task<HttpResponseMessage> res = client.PostAsync(url, content);
+                if (res.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+         
+                    string resMsgStr = res.Result.Content.ReadAsStringAsync().Result;
+
+                    Result result = JsonHelper.JSONToObject<Result>(resMsgStr); //包含data，aeskey
+                    // rsa私钥解密获得aeskey
+                    string aesKeyByRsaDecode = rsa.DecryptByPrivateKey(result.aesKey, TokenManager.csKey["privatekey"]);
+            
+                    string Resultdata = result.data.ToString();
+                  
+                    return JsonHelper.JSONToObject<Result>(aes.AesDecrypt(result.data.ToString(), aesKeyByRsaDecode));
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
         /// <summary>
         /// 制造单例

@@ -64,23 +64,54 @@
                         <DataGridTextColumn Header="人员ID" Binding="{Binding id}" FontSize="22"></DataGridTextColumn>
                         <DataGridTextColumn Header="姓名" Binding="{Binding name}" FontSize="22"></DataGridTextColumn>
                         <DataGridTextColumn Header="角色"  Binding="{Binding role}" FontSize="22"></DataGridTextColumn>
-                        <DataGridTemplateColumn Header="操作">
+                        <DataGridTemplateColumn Header="全选操作" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="cancel" Content="取消全部" Margin="3,3,3,3" Click="CancelButton_Click" FontSize="22"/>
+                                    
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button x:Name="select" Content="选中" Margin="5" FontSize="16" Click="SelectAllButton_Click">
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                    <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+                                                    <Setter Property="Foreground" Value="Black"/>
+                                                    <Setter Property="BorderThickness" Value="0"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource PrimaryDarkColor}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                        <Button x:Name="cancel" Content="取消" Margin="5" FontSize="16" Click="CancelButton_Click">
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                    <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+                                                    <Setter Property="Foreground" Value="Black"/>
+                                                    <Setter Property="BorderThickness" Value="0"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource PrimaryDarkColor}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                    </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <Button x:Name="PreviousPageButton" Content="上一页" Margin="5" FontSize="22"/>
+                <Button x:Name="PreviousPageButton" Content="上一页" Click ="PreviousPageButton_Click" Margin="5" FontSize="22"/>
                 <TextBlock Text="第" Margin="5" FontSize="22"/>
                 <TextBlock x:Name="PageNumberTextBlock" Margin="5" FontSize="22"/>
                 <TextBlock Text="页" Margin="5" FontSize="22"/>
-                <Button x:Name="NextPageButton" Content="下一页" Margin="5" Click="NextPageButton_Click_1" FontSize="22"/>
+                <Button x:Name="NextPageButton" Content="下一页" Margin="5" Click="NextPageButton_Click" FontSize="22"/>
             </StackPanel>
 
         </Grid>
