@@ -64,10 +64,13 @@
                         <DataGridTextColumn Header="人员ID" Binding="{Binding id}" FontSize="22"></DataGridTextColumn>
                         <DataGridTextColumn Header="姓名" Binding="{Binding name}" FontSize="22"></DataGridTextColumn>
                         <DataGridTextColumn Header="角色"  Binding="{Binding role}" FontSize="22"></DataGridTextColumn>
-                        <DataGridTemplateColumn Header="操作">
+                        <DataGridTemplateColumn Header="全选操作">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="cancel" Content="取消全部" Margin="3,3,3,3" Click="CancelButton_Click" FontSize="22"/>
+                                    <StackPanel>
+                                        <Button x:Name="cancel" Content="取消" Margin="3,3,3,3" Click="CancelButton_Click" FontSize="22"/>
+                                        <Button x:Name="select" Content="选中" Margin="3,3,3,3" Click="SelectAllButton_Click" FontSize="22"/>
+                                    </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -76,11 +79,11 @@
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <Button x:Name="PreviousPageButton" Content="上一页" Margin="5" FontSize="22"/>
+                <Button x:Name="PreviousPageButton" Content="上一页" Click ="PreviousPageButton_Click" Margin="5" FontSize="22"/>
                 <TextBlock Text="第" Margin="5" FontSize="22"/>
                 <TextBlock x:Name="PageNumberTextBlock" Margin="5" FontSize="22"/>
                 <TextBlock Text="页" Margin="5" FontSize="22"/>
-                <Button x:Name="NextPageButton" Content="下一页" Margin="5" Click="NextPageButton_Click_1" FontSize="22"/>
+                <Button x:Name="NextPageButton" Content="下一页" Margin="5" Click="NextPageButton_Click" FontSize="22"/>
             </StackPanel>
 
         </Grid>

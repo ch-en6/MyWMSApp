@@ -31,6 +31,8 @@ namespace wmsApp
         public MainWindow()
         {
             InitializeComponent();
+            //窗口自适应
+            Loaded += OnWindowLoaded;
             //设置默认选中在首页
             NavigationView.SelectedItem = NavigationView.MenuItems.OfType<NavigationViewItem>().FirstOrDefault(item => item.Content.ToString() == "首页");
             GenerateItems();
@@ -43,6 +45,20 @@ namespace wmsApp
 
             // 注册Closing事件处理程序
             Closing += MainWindow_Closing;
+        }
+
+        private void OnWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+            double targetWidth = screenWidth * 0.9; // 90% of screen width
+            double targetHeight = targetWidth / 1.6; // 16:10 aspect ratio
+
+            Width = targetWidth;
+            Height = targetHeight;
+            Left = (screenWidth - targetWidth) / 2;
+            Top = (screenHeight - targetHeight) / 2;
+            WindowStartupLocation = WindowStartupLocation.CenterScreen; // 设置窗口在屏幕中央显示
         }
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

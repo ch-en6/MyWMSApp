@@ -16,8 +16,22 @@ namespace wmsApp
             InitializeComponent();
             UsernameTextBox.KeyDown += UsernameTextBox_KeyDown;
             PasswordBox.KeyDown += PasswordBox_KeyDown;
+            Loaded += OnWindowLoaded;
         }
 
+        private void OnWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+            double targetWidth = screenWidth * 0.9; // 90% of screen width
+            double targetHeight = targetWidth / 1.6; // 16:8 aspect ratio
+
+            Width = targetWidth;
+            Height = targetHeight;
+            Left = (screenWidth - targetWidth) / 2;
+            Top = (screenHeight - targetHeight) / 2;
+            WindowStartupLocation = WindowStartupLocation.CenterScreen; // 设置窗口在屏幕中央显示
+        }
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)

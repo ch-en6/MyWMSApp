@@ -13,6 +13,23 @@ using wmsApp.param;
 
 namespace wms
 {
+    class RsaApi
+    {
+        public static HttpHelper http = new HttpHelper();
+        public static String getJavaPublicKey()
+        {
+            return http.Get("/rsa");
+        }
+
+        public static void test()
+        {
+            
+            Result result = http.GetEncryptedData("/rsa/test2");
+            MessageBox.Show(result.data.ToString());
+
+        }
+
+    }
     class UserApi
     {
         public static HttpHelper http = new HttpHelper();
@@ -153,12 +170,13 @@ namespace wms
         /*获取该资源下的所有权限类型*/
         internal static Result get_resource_types(long resourceId)
         {
-            return JsonHelper.JSONToObject<Result>(http.Get("/permission/types/" + resourceId));
+            return http.GetDncryptedData("/permission/types/" + resourceId);
+            /*return JsonHelper.JSONToObject<Result>(http.Get("/permission/types/" + resourceId));*/
         }
 
         internal static Result get_permissions(int page, long resourceId)
         {
-            return JsonHelper.JSONToObject<Result>(http.Post($"/permission/{page}/{resourceId}/get", ""));
+            return http.PostDncryptedData($"/permission/{page}/{resourceId}/get", "");
         }
 
         internal static Result updatePermission(bool isChecked, UpdatePermissionParams permissionParams)
@@ -173,9 +191,9 @@ namespace wms
             return int.Parse(http.Get("/user/totalpage"));
         }
 
-        internal static Result delPermissionByuserId(long userId, long resourceId)
+        internal static Result updatePermissionByuserId(long userId, long resourceId, bool? isChecked)
         {
-            return JsonHelper.JSONToObject<Result>(http.Post("/permission/del/" + userId + "/" + resourceId, ""));
+            return JsonHelper.JSONToObject<Result>(http.Post($"/permission/update/{userId}/{resourceId}/{isChecked}", ""));
         }
 
         internal static Result savePermissions(AddPermissionParams param)
@@ -185,13 +203,12 @@ namespace wms
 
         internal static Result searchByUser(SearchPermissionParams condition)
         {
-           
-            return JsonHelper.JSONToObject<Result>(http.Post("/permission/search", JsonHelper.ObjectToJSON(condition)));
+            return http.PostDncryptedData("/permission/search", JsonHelper.ObjectToJSON(condition));
         }
 
         internal static Result searchByRole(SearchPermissionParams condition)
         {
-            return JsonHelper.JSONToObject<Result>(http.Post("/permission/search/role", JsonHelper.ObjectToJSON(condition)));
+            return http.PostDncryptedData("/permission/search/role", JsonHelper.ObjectToJSON(condition));
         }
     }
 }
