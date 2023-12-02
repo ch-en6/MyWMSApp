@@ -1,11 +1,11 @@
 ﻿<ui:ContentDialog 
-    x:Class="wmsApp.dialog.UpdateMaterialDialog"
+    x:Class="wmsApp.dialog.AddMaterialDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:local="using:wmsApp.controls"
-    Title="修改物料信息"
+    Title="新增物料信息"
     PrimaryButtonText="保存"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonText="取消"
@@ -20,15 +20,12 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Margin="20, 0, 0, 0">
-            <TextBlock Text="物料id"/>
-            <TextBox x:Name="MaterialIdTextBox" IsEnabled="False" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200"/>
-
             <TextBlock Text="物料名称"/>
             <TextBox x:Name="MaterialNameTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200"/>
 
             <TextBlock Text="库存"/>
             <TextBox x:Name="MaterialStockTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200"/>
-            
+
             <TextBlock Text="备注"/>
             <TextBox x:Name="MaterialCommentsTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200"/>
         </StackPanel>
@@ -36,7 +33,7 @@
         <StackPanel Grid.Column="1" Margin="20, 0, 0, 0">
             <TextBlock Text="仓库id"/>
             <ComboBox x:Name="MaterialHouseIdComboBox" Margin="0,0,0,10" Width="200" />
-            
+
             <TextBlock Text="规格型号"/>
             <ComboBox x:Name="MaterialTypeComboBox" Margin="0,0,0,10" Width="200" />
 
@@ -51,8 +48,6 @@
                 <ComboBoxItem Content="条" />
             </ComboBox>
 
-            <TextBlock Text="创建时间"/>
-            <TextBox x:Name="MaterialCreTimeTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200"/>
         </StackPanel>
 
         <Grid Grid.Column="1" Margin="56,2,24,-2" Grid.RowSpan="2" >

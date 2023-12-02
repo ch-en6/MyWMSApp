@@ -100,6 +100,16 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchHouseId"));
         }
 
+        public static Result searchTypeName()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/typeName"));
+        }
+
+        public static Result addMaterial(Material material)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Post($"/material/save", JsonHelper.DateObjectTOJson(material)));
+        }
+
         //修改
         public static Result updateMaterial(Material material)
         {

@@ -549,9 +549,9 @@
             return JSONToObject<Dictionary<string, object>>(jsonText);
         }
 
-        internal static List<T> JSONToList<T>(object data)
-        {
-            throw new NotImplementedException();
-        }
+        //internal static List<T> JSONToList<T>(object data)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

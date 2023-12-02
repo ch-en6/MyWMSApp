@@ -180,8 +180,10 @@ namespace wmsApp.pages
         {
             var selectedItem = datagrid.SelectedItem as Material;
 
-            Result result = MaterialApi.searchHouseId();
-            List<string> houseList = JsonHelper.JsonToList<string>(result.data.ToString());
+            Result houseIdResult = MaterialApi.searchHouseId();
+            List<string> houseList = JsonHelper.JsonToList<string>(houseIdResult.data.ToString());
+            Result typeNameResult = MaterialApi.searchTypeName();
+            List<string> typeNameList = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
 
             // 将数据分配给对应的TextBox或ComboBox
             UpdateMaterialDialog dialog = new UpdateMaterialDialog();
@@ -193,7 +195,10 @@ namespace wmsApp.pages
 
             dialog.MaterialHouseIdComboBox.ItemsSource = houseList;
             dialog.MaterialHouseIdComboBox.SelectedValue = selectedItem.houseId.ToString();
-            dialog.MaterialTypeComboBox.Text = selectedItem.type;
+
+            dialog.MaterialTypeComboBox.ItemsSource = typeNameList;
+            dialog.MaterialTypeComboBox.SelectedValue = selectedItem.type.ToString();
+
             dialog.MAterialUnitComboBox.Text = selectedItem.unit;
 
             ContentDialogResult dialogResult = await dialog.ShowAsync();
@@ -225,9 +230,22 @@ namespace wmsApp.pages
             
         }
 
-        private void AddMaterialButton_Click_1(object sender, RoutedEventArgs e)
+        private async void AddMaterialButton_Click_1(object sender, RoutedEventArgs e)
         {
+            Result houseIdResult = MaterialApi.searchHouseId();
+            List<string> houseList = JsonHelper.JsonToList<string>(houseIdResult.data.ToString());
+            Result typeNameResult = MaterialApi.searchTypeName();
+            List<string> typeNameList = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
 
+            AddMaterialDialog dialog = new AddMaterialDialog();
+
+            dialog.MaterialHouseIdComboBox.ItemsSource = houseList;
+            dialog.MaterialTypeComboBox.ItemsSource = typeNameList;
+
+            ContentDialogResult dialogResult = await dialog.ShowAsync();
+            if (dialogResult == ContentDialogResult.Secondary) return;
+
+            updatePage();
         }
     }
 }
