@@ -30,7 +30,7 @@
                 <TextBlock Text="*" Foreground="Red"/>
                 <TextBlock Text="库存" Margin="5, 0, 0, 0"/>
             </StackPanel>
-            <TextBox x:Name="MaterialStockTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200"/>
+            <TextBox x:Name="MaterialStockTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200" Text="0"/>
 
             <TextBlock Text="备注"/>
             <TextBox x:Name="MaterialCommentsTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200"/>
@@ -61,6 +61,12 @@
                 <ComboBoxItem Content="枚" />
                 <ComboBoxItem Content="把" />
                 <ComboBoxItem Content="条" />
+                <ComboBoxItem Content="件" />
+                <ComboBoxItem Content="套" />
+                <ComboBoxItem Content="公斤" />
+                <ComboBoxItem Content="吨" />
+                <ComboBoxItem Content="升" />
+                <ComboBoxItem Content="米" />
             </ComboBox>
 
         </StackPanel>

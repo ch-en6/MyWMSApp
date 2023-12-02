@@ -64,6 +64,12 @@
                 <ComboBoxItem Content="枚" />
                 <ComboBoxItem Content="把" />
                 <ComboBoxItem Content="条" />
+                <ComboBoxItem Content="件" />
+                <ComboBoxItem Content="套" />
+                <ComboBoxItem Content="公斤" />
+                <ComboBoxItem Content="吨" />
+                <ComboBoxItem Content="升" />
+                <ComboBoxItem Content="米" />
             </ComboBox>
 
         </StackPanel>
