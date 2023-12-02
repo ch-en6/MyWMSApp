@@ -29,7 +29,7 @@
                     <!-- 下拉选择框内容 -->
                     <ComboBoxItem x:Name="materialID" Content="按ID查询"/>
                     <ComboBoxItem x:Name="meterialName" Content="按名称查询"/>
-                    <ComboBoxItem x:Name="meterialHouseID" Content="按仓库ID查询"/>
+                    <ComboBoxItem x:Name="meterialHouseName" Content="按仓库名查询"/>
                     <ComboBoxItem x:Name="meterialType" Content="按类型查询"/>
                     <ComboBoxItem x:Name="meterialComments" Content="按备注查询"/>
                 </ComboBox>
@@ -55,12 +55,11 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="物料id" Binding="{Binding id}" />
                     <DataGridTextColumn Header="物料名称" Binding="{Binding name}" />
-                    <DataGridTextColumn Header="仓库id" Binding="{Binding houseId}" />
+                    <DataGridTextColumn Header="仓库" Binding="{Binding houseName}" />
                     <DataGridTextColumn Header="规格型号" Binding="{Binding type}" />
                     <DataGridTextColumn Header="计量单位" Binding="{Binding unit}" />
                     <DataGridTextColumn Header="库存数量" Binding="{Binding stock}" />
                     <DataGridTextColumn Header="备注" Binding="{Binding comments}" />
-                    <DataGridTextColumn Header="创建时间" Binding="{Binding createTime, StringFormat='yyyy-MM-dd HH:mm:ss'}" />
 
                     <DataGridTemplateColumn Header="操作">
                         <DataGridTemplateColumn.CellTemplate>

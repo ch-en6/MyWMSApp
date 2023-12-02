@@ -39,9 +39,9 @@
         <StackPanel Grid.Column="1" Margin="20, 0, 0, 0">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="*" Foreground="Red"/>
-                <TextBlock Text="仓库id" Margin="5, 0, 0, 0"/>
+                <TextBlock Text="仓库" Margin="5, 0, 0, 0"/>
             </StackPanel>
-            <ComboBox x:Name="MaterialHouseIdComboBox" Margin="0,0,0,10" Width="200" />
+            <ComboBox x:Name="MaterialHouseNameComboBox" Margin="0,0,0,10" Width="200" />
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="*" Foreground="Red"/>

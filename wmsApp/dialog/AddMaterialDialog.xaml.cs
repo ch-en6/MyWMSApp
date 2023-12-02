@@ -35,13 +35,13 @@ namespace wmsApp.dialog
             int materialStock;
             bool success = int.TryParse(MaterialStockTextBox.Text, out materialStock);
             string materialComments = MaterialCommentsTextBox.Text;
-            long materialHouseId;
-            success &= long.TryParse(MaterialHouseIdComboBox.Text, out materialHouseId);
+            string materialHouseName = (string)MaterialHouseNameComboBox.Text;
             string materialType = (string)MaterialTypeComboBox.Text;
             string materialUnit = (string)MAterialUnitComboBox.Text;
 
             if (string.IsNullOrEmpty(materialName) ||
                 !success ||
+                string.IsNullOrEmpty(materialHouseName) ||
                 string.IsNullOrEmpty(materialType) ||
                 string.IsNullOrEmpty(materialUnit))
             {
@@ -62,7 +62,7 @@ namespace wmsApp.dialog
                     name = materialName,
                     stock = materialStock,
                     comments = materialComments,
-                    houseId = materialHouseId,
+                    houseName = materialHouseName,
                     type = materialType,
                     unit = materialUnit,
                     createTime = DateTime.Now
