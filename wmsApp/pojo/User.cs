@@ -59,6 +59,18 @@ namespace wms.pojo
          */
         public String phone { get; set; }
 
+        public User(long id,string name, string role, string sex, DateTime birthDate, string idNumber, string nativePlace, string address, string phone)
+        {
+            this.id = id;
+            this.name = name;
+            this.role = role;
+            this.sex = sex;
+            this.birthDate = birthDate;
+            this.idNumber = idNumber;
+            this.nativePlace = nativePlace;
+            this.address = address;
+            this.phone = phone;
+        }
         public User(string name, string role, string sex, DateTime birthDate, string idNumber, string nativePlace, string address, string phone)
         {
             this.name = name;
@@ -70,7 +82,6 @@ namespace wms.pojo
             this.address = address;
             this.phone = phone;
         }
-
         public User()
         {
         }

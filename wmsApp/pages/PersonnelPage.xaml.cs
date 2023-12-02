@@ -163,6 +163,23 @@ namespace wmsApp.pages
             }
         }
 
+        public void resetPassword_Click(object sender, RoutedEventArgs e)
+        {
+            // 获取按钮所在行
+            Button resetPassword = (Button)sender;
+            User user = (User)resetPassword.DataContext;
+
+            Result result = UserApi.resetPassword(user);
+            if (result.success)
+            {
+                MessageBox.Show("重置成功");
+            }
+            else
+            {
+                ModernMessageBox.showMessage(result.errorMsg);
+            }
+        }
+
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
@@ -174,32 +191,30 @@ namespace wmsApp.pages
             long id = user.id;
 
             Result result = UserApi.delete(id);
-            if (!result.success)
-            {
-                ModernMessageBox.showMessage(result.errorMsg);
-            }
+            
             if (result.success)
             {
                 MessageBox.Show("删除成功");
             }
             else
             {
-                MessageBox.Show("删除失败");
+                ModernMessageBox.showMessage(result.errorMsg);
             }
             UpdatePage();
 
         }
 
-        private void Update_Click(object sender, RoutedEventArgs e)
+        private async void Update_Click(object sender, RoutedEventArgs e)
         {
             Button updateButton = (Button)sender;
             User user = (User)updateButton.DataContext;
 
             // 提取ID值
-            long id = user.id;
+            //long id = user.id;
             UpdateUserDialog dialog = new UpdateUserDialog();
 
             // 将传递过来的数据填充到对应的控件中
+            dialog.userIdTextBlock.Text = user.id.ToString();
             dialog.nameTextBox.Text = user.name;
             dialog.roleTextBox.SelectedIndex = user.role == "管理员" ? 1 : 0; // 根据role值设置ComboBox的选中项
             dialog.sexComboBox.SelectedIndex = user.sex == "女" ? 1 : 0; // 根据sex值设置ComboBox的选中项
@@ -208,14 +223,14 @@ namespace wmsApp.pages
             dialog.nativePlaceTextBox.Text = user.nativePlace;
             dialog.addressTextBox.Text = user.address;
             dialog.phoneTextBox.Text = user.phone;
-
-            dialog.ShowAsync();
+            ContentDialogResult result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Secondary) return;
             UpdatePage();
         }
 
+       
 
 
-        
 
 
         private void TextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)

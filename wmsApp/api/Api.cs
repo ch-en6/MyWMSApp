@@ -27,12 +27,6 @@ namespace wms
     {
         public static HttpHelper http = new HttpHelper();
 
-        /* 获取所有资源下的所有用户 */
-        /*public static Result getUserMap(int currentPage)
-        {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/user/list/{currentPage}"));
-        }
-        */
         public static Result search(int page)
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/user/search/{page}"));
@@ -62,6 +56,11 @@ namespace wms
         public static Result update(User user)
         {
             return JsonHelper.JSONToObject<Result>(http.Post("/user/update", JsonHelper.DateObjectToJson<User>(user)));
+        }
+
+        public static Result resetPassword(User user)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Post("/user/resetPassword", JsonHelper.DateObjectToJson<User>(user)));
         }
     }
 

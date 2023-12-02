@@ -28,6 +28,7 @@ namespace wmsApp.dialog
             //try
             //{
             // 获取用户输入的数据
+            long id = long.Parse(userIdTextBlock.Text);
             string name = nameTextBox.Text;
             string role = sexComboBox.Text;
             if (role == "用户")
@@ -42,7 +43,7 @@ namespace wmsApp.dialog
             string address = addressTextBox.Text;
             string phone = phoneTextBox.Text;
 
-            User user = new User(name, role, sex, date, idNumber, nativePlace, address, phone);
+            User user = new User(id,name, role, sex, date, idNumber, nativePlace, address, phone);
             Result result = UserApi.update(user);
 
             if (result != null)
@@ -52,6 +53,7 @@ namespace wmsApp.dialog
                     MessageBox.Show("修改成功");
                     // 关闭对话框
                     args.Cancel = false;
+                    
                 }
 
                 else

@@ -17,6 +17,9 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Margin="0,0,0.333,0.333">
+			<TextBlock Text="工号"/>
+			<TextBlock x:Name="userIdTextBlock"/>
+			
             <TextBlock Text="姓名"/>
             <TextBox x:Name="nameTextBox"/>
 
