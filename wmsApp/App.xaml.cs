@@ -20,10 +20,10 @@ namespace wmsApp
     /// </summary>
     public partial class App : Application
     {
-      /*  protected override async void OnStartup(StartupEventArgs e)
+      protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
+            /*
             // 确保更新完成后启动应用程序
             using (var manager = await UpdateManager.GitHubUpdateManager("https://github.com/BalalaBABABA/MyWMSApp/releases"))
             {
@@ -42,11 +42,11 @@ namespace wmsApp
                     await manager.UpdateApp();
                 }
             }
-
+        */
             // 启动应用程序的主窗口
             MainWindow window = new MainWindow();
             window.Show();
-        }*/
+        }
 
 
 

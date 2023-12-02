@@ -55,7 +55,7 @@
                 <DataGrid x:Name="dataGrid" 
                           Margin="-17,-11,-0.333,0"
                           HorizontalAlignment="Right"
-                          Width="1250" 
+                          Width="3000" 
                           AutoGenerateColumns="False"
                           CanUserAddRows="False"
                           IsReadOnly="True"

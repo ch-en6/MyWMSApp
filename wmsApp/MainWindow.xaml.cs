@@ -56,7 +56,6 @@ namespace wmsApp
             }
             else
             {
-               
                 Result result1 = LoginApi.logout();
                 if (result1.success) MessageBox.Show("退出成功"); 
                 TokenManager.token = "null";

@@ -4,30 +4,62 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Xml.Linq;
 using WindowsFormsApp1.dto;
 using wms.param;
 using wms.pojo;
 using wms.utils;
+using wmsApp.controls;
 using wmsApp.param;
 
 namespace wms
 {
+    class UserInfoApi
+    {
+        public static HttpHelper http = new HttpHelper();
+        public static Result show()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/show"));
+        }
+    }
     class UserApi
     {
         public static HttpHelper http = new HttpHelper();
+
         /* 获取所有资源下的所有用户 */
-        public static Result getUserMap(int currentPage)
+        /*public static Result getUserMap(int currentPage)
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/user/list/{currentPage}"));
+        }
+        */
+        public static Result search(int page)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/user/search/{page}"));
         }
 
         public static Result save(User user)
         {
             return JsonHelper.JSONToObject<Result>(http.Post("/user/save", JsonHelper.DateObjectToJson<User>(user)));
         }
+        //通过名称查询
+        public static Result searchByName(int page, string name)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/user/searchByName/{page}/{name}"));
+        }
 
+        //通过id查询
+        public static Result searchById(int page, long id)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/user/searchById/{page}/{id}"));
+        }
+
+        public static Result delete(long id)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/user/delete/{id}"));
+        }
     }
+
 
     class ResourceApi
     {
@@ -45,7 +77,8 @@ namespace wms
         {
             LoginParams loginParams=new LoginParams(userId, password);
             Result result = JsonHelper.JSONToObject<Result>(http.Post("/login", JsonHelper.ObjectToJSON(loginParams)));
-            if (!result.success) MessageBox.Show(result.errorMsg);
+            if (!result.success) 
+                ModernMessageBox.showMessage(result.errorMsg);
             return result;
         }
         public static Result logout()
@@ -53,7 +86,7 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get("/logout"));
         }
     }
-
+    
     class MaterialApi
     {
         public static HttpHelper http = new HttpHelper();
