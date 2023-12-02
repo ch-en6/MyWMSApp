@@ -20,10 +20,16 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Margin="20, 0, 0, 0">
-            <TextBlock Text="物料名称"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="*" Foreground="Red"/>
+                <TextBlock Text="物料名称" Margin="5, 0, 0, 0"/>
+            </StackPanel>
             <TextBox x:Name="MaterialNameTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200"/>
 
-            <TextBlock Text="库存"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="*" Foreground="Red"/>
+                <TextBlock Text="库存" Margin="5, 0, 0, 0"/>
+            </StackPanel>
             <TextBox x:Name="MaterialStockTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200"/>
 
             <TextBlock Text="备注"/>
@@ -31,13 +37,22 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1" Margin="20, 0, 0, 0">
-            <TextBlock Text="仓库id"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="*" Foreground="Red"/>
+                <TextBlock Text="仓库id" Margin="5, 0, 0, 0"/>
+            </StackPanel>
             <ComboBox x:Name="MaterialHouseIdComboBox" Margin="0,0,0,10" Width="200" />
 
-            <TextBlock Text="规格型号"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="*" Foreground="Red"/>
+                <TextBlock Text="规格型号" Margin="5, 0, 0, 0"/>
+            </StackPanel>
             <ComboBox x:Name="MaterialTypeComboBox" Margin="0,0,0,10" Width="200" />
 
-            <TextBlock Text="计量单位" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="*" Foreground="Red"/>
+                <TextBlock Text="计量单位" Margin="5, 0, 0, 0"/>
+            </StackPanel>
             <ComboBox x:Name="MAterialUnitComboBox" Margin="0,0,0,10" Width="200" IsEditable="True">
                 <ComboBoxItem Content="个" />
                 <ComboBoxItem Content="台" />

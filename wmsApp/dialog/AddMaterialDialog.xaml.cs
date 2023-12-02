@@ -32,34 +32,53 @@ namespace wmsApp.dialog
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             string materialName = MaterialNameTextBox.Text;
-            int materialStock = int.Parse(MaterialStockTextBox.Text);
+            int materialStock;
+            bool success = int.TryParse(MaterialStockTextBox.Text, out materialStock);
             string materialComments = MaterialCommentsTextBox.Text;
-            long materialHouseId = long.Parse(MaterialHouseIdComboBox.Text);
+            long materialHouseId;
+            success &= long.TryParse(MaterialHouseIdComboBox.Text, out materialHouseId);
             string materialType = (string)MaterialTypeComboBox.Text;
             string materialUnit = (string)MAterialUnitComboBox.Text;
 
-            Material addMaterial = new Material()
+            if (string.IsNullOrEmpty(materialName) ||
+                !success ||
+                string.IsNullOrEmpty(materialType) ||
+                string.IsNullOrEmpty(materialUnit))
             {
-                name = materialName,
-                stock = materialStock,
-                comments = materialComments,
-                houseId = materialHouseId,
-                type = materialType,
-                unit = materialUnit,
-                createTime = DateTime.Now
-            };
-
-            Result result = MaterialApi.addMaterial(addMaterial);
-
-            if (result.success)
+                // 设置 args.Cancel 属性为 true，防止用户关闭弹窗
+                args.Cancel = true;
+                MessageBox.Show("请填写完整的物料信息");
+            }
+            else if(materialStock < 0)
             {
-                MessageBox.Show("新增成功");
+                args.Cancel = true;
+                MessageBox.Show("请填写正确库存");
             }
             else
             {
-                MessageBox.Show("新增失败");
-            }
+                // 执行添加物料操作
+                Material addMaterial = new Material()
+                {
+                    name = materialName,
+                    stock = materialStock,
+                    comments = materialComments,
+                    houseId = materialHouseId,
+                    type = materialType,
+                    unit = materialUnit,
+                    createTime = DateTime.Now
+                };
 
+                Result result = MaterialApi.addMaterial(addMaterial);
+
+                if (result.success)
+                {
+                    MessageBox.Show("新增成功");
+                }
+                else
+                {
+                    MessageBox.Show("新增失败");
+                }
+            }
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

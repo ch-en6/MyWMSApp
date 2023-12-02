@@ -40,7 +40,7 @@
                     <ui:SymbolIcon Symbol="Find" Height="20" Width="20" RenderTransformOrigin="0.324,0.495"/>
                 </Button>
 
-                <Button x:Name="btnBack" Grid.Column="2" Margin="150,5,-105,5.333" Height="33" >
+                <Button x:Name="btnBack" Grid.Column="2" Margin="150,5,-105,5.333" Height="33" Click="btnBack_Click" >
                     <ui:SymbolIcon Symbol="Forward"/>
                 </Button>
 

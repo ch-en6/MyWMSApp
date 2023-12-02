@@ -1,4 +1,5 @@
 ﻿using ModernWpf.Controls;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -191,7 +192,6 @@ namespace wmsApp.pages
             dialog.MaterialNameTextBox.Text = selectedItem.name;
             dialog.MaterialStockTextBox.Text = selectedItem.stock.ToString();
             dialog.MaterialCommentsTextBox.Text = selectedItem.comments;
-            dialog.MaterialCreTimeTextBox.Text = selectedItem.createTime.ToString("yyyy-MM-dd HH:mm:ss");
 
             dialog.MaterialHouseIdComboBox.ItemsSource = houseList;
             dialog.MaterialHouseIdComboBox.SelectedValue = selectedItem.houseId.ToString();
@@ -245,6 +245,13 @@ namespace wmsApp.pages
             ContentDialogResult dialogResult = await dialog.ShowAsync();
             if (dialogResult == ContentDialogResult.Secondary) return;
 
+            updatePage();
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage = 1;
+            flag = 0;
             updatePage();
         }
     }
