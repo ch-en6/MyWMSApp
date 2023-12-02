@@ -20,7 +20,7 @@ namespace wmsApp
         public App()
         {
            /* if(TokenManager.token==null)StartupUri = new Uri("LoginWindow.xaml", UriKind.Relative);*/
-             StartupUri = new Uri("LoginWindow.xaml", UriKind.Relative);
+             StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
             // 订阅程序退出事件
             Exit += App_Exit;
         }

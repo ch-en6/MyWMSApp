@@ -1,20 +1,17 @@
-﻿using System;
+﻿using ModernWpf.Controls;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Forms;
-using System.Windows.Media.Animation;
+
 using WindowsFormsApp1.dto;
 using wms;
 using wms.pojo;
 using wms.utils;
+using wmsApp.dialog;
 
 namespace wmsApp.pages
 {
-    public partial class MaterialPage : Page
+    public partial class MaterialPage : System.Windows.Controls.Page
     {
         int currentPage = 1;
         long totalPage = 0;
@@ -172,24 +169,45 @@ namespace wmsApp.pages
             datagrid.ItemsSource = materialList;
         }
 
-        private void dataGrid_CurrentCellChanged(object sender, EventArgs e)
+        private async void UpdateMaterialButton_Click(object sender, RoutedEventArgs e)
         {
-            if (datagrid.SelectedCells.Count > 0)
-            {
-                // 获取当前选中的单元格的行和列索引
-                int rowIndex = datagrid.Items.IndexOf(datagrid.CurrentItem);
-                int columnIndex = datagrid.CurrentColumn.DisplayIndex;
+            var selectedItem = datagrid.SelectedItem as Material;
 
-                // 根据行和列索引获取单元格的值
-                var cellInfo = datagrid.SelectedCells[0];
-                var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
-                if (content != null)
-                {
-                    string cellValue = content.Text;
-                    // 在这里可以对获取到的单元格值进行处理
-                    
-                }
-            }
+            Result houseIdResult = MaterialApi.searchHouseId();
+            List<string> houseList = JsonHelper.JsonToList<string>(houseIdResult.data.ToString());
+            Result typeNameResult = MaterialApi.searchTypeName();
+            List<string> typeName = JsonHelper.JSONToList<string>(typeNameResult.data.ToString());
+
+            // 将数据分配给对应的TextBox或ComboBox
+            UpdateMaterialDialog dialog = new UpdateMaterialDialog();
+            dialog.MaterialIdTextBox.Text = selectedItem.id.ToString();
+            dialog.MaterialNameTextBox.Text = selectedItem.name;
+            dialog.MaterialStockTextBox.Text = selectedItem.stock.ToString();
+            dialog.MaterialCommentsTextBox.Text = selectedItem.comments;
+            dialog.MaterialCreTimeTextBox.Text = selectedItem.createTime.ToString("yyyy-MM-dd HH:mm:ss");
+
+            dialog.MaterialHouseIdComboBox.ItemsSource = houseList;
+            dialog.MaterialHouseIdComboBox.SelectedValue = selectedItem.houseId.ToString();
+
+            dialog.MaterialTypeComboBox.ItemsSource = typeName;
+            dialog.MaterialTypeComboBox.SelectedValue = selectedItem.type;
+
+            dialog.MAterialUnitComboBox.Text = selectedItem.unit;
+
+            ContentDialogResult dialogResult = await dialog.ShowAsync();
+            if (dialogResult == ContentDialogResult.Secondary) return;
+
+            updatePage();
+
+        }
+
+        private void DeleteMaterialButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void AddMaterialButton_Click_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
