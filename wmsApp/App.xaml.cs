@@ -31,7 +31,7 @@ namespace wmsApp
                             192.168.200.137:80 为web服务器地址
                             到时候建立本机与虚拟机端口映射，设置为本机ip地址
                         */
-            try
+  /*          try
             {
                 using (var manager = new UpdateManager("http://10.22.33.107:80", "Setup.exe"))
                 {
@@ -71,7 +71,7 @@ namespace wmsApp
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
+            }*/
             // 生成密钥
             GenerateKey();
             // 启动应用程序的主窗口
