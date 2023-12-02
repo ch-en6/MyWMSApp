@@ -1,5 +1,10 @@
 ﻿using ModernWpf.Controls;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Drawing.Drawing2D;
+using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -8,6 +13,7 @@ using wms;
 using wms.pojo;
 using wms.utils;
 using wmsApp.dialog;
+using wmsApp.pojo;
 
 namespace wmsApp.pages
 {
@@ -169,14 +175,13 @@ namespace wmsApp.pages
             datagrid.ItemsSource = materialList;
         }
 
+
         private async void UpdateMaterialButton_Click(object sender, RoutedEventArgs e)
         {
             var selectedItem = datagrid.SelectedItem as Material;
 
-            Result houseIdResult = MaterialApi.searchHouseId();
-            List<string> houseList = JsonHelper.JsonToList<string>(houseIdResult.data.ToString());
-            Result typeNameResult = MaterialApi.searchTypeName();
-            List<string> typeName = JsonHelper.JSONToList<string>(typeNameResult.data.ToString());
+            Result result = MaterialApi.searchHouseId();
+            List<string> houseList = JsonHelper.JsonToList<string>(result.data.ToString());
 
             // 将数据分配给对应的TextBox或ComboBox
             UpdateMaterialDialog dialog = new UpdateMaterialDialog();
@@ -188,23 +193,38 @@ namespace wmsApp.pages
 
             dialog.MaterialHouseIdComboBox.ItemsSource = houseList;
             dialog.MaterialHouseIdComboBox.SelectedValue = selectedItem.houseId.ToString();
-
-            dialog.MaterialTypeComboBox.ItemsSource = typeName;
-            dialog.MaterialTypeComboBox.SelectedValue = selectedItem.type;
-
+            dialog.MaterialTypeComboBox.Text = selectedItem.type;
             dialog.MAterialUnitComboBox.Text = selectedItem.unit;
 
             ContentDialogResult dialogResult = await dialog.ShowAsync();
             if (dialogResult == ContentDialogResult.Secondary) return;
 
             updatePage();
-
+            
         }
 
         private void DeleteMaterialButton_Click(object sender, RoutedEventArgs e)
         {
+            var selectedItem = datagrid.SelectedItem as Material;
 
+            MessageBoxResult result = System.Windows.MessageBox.Show("确定要删除吗？", "确认删除", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if(result == MessageBoxResult.Yes)
+            {
+                Result result1 = MaterialApi.deleteMaterial(selectedItem.id);
+                if (result1.success)
+                {
+                    System.Windows.Forms.MessageBox.Show("删除成功");
+                    datagrid.Items.Refresh();
+                    updatePage();
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("删除失败");
+                }
+            }
+            
         }
+
         private void AddMaterialButton_Click_1(object sender, RoutedEventArgs e)
         {
 

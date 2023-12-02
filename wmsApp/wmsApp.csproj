@@ -74,6 +74,9 @@
     <Compile Include="dialog\PermssionDialog.xaml.cs">
       <DependentUpon>PermssionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dialog\UpdateMaterialDialog.xaml.cs">
+      <DependentUpon>UpdateMaterialDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="dto\Constants.cs" />
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
@@ -96,6 +99,7 @@
     <Compile Include="param\LoginParams.cs" />
     <Compile Include="param\SearchPermissionParams.cs" />
     <Compile Include="param\UpdatePermissionParams.cs" />
+    <Compile Include="pojo\House.cs" />
     <Compile Include="pojo\Material.cs" />
     <Compile Include="pojo\PermissionType.cs" />
     <Compile Include="pojo\Resource.cs" />
@@ -108,6 +112,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="dialog\PermssionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="dialog\UpdateMaterialDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -188,7 +196,6 @@
       <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="assets\icon.ico" />
   </ItemGroup>
