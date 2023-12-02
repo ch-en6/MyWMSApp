@@ -68,11 +68,17 @@
     </ApplicationDefinition>
     <Compile Include="controls\ModernMessageBox.cs" />
     <Compile Include="controls\MyNavigationViewItem.cs" />
+    <Compile Include="dialog\AddMaterialDialog.xaml.cs">
+      <DependentUpon>AddMaterialDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="dialog\DelPermissionTypeDialog.xaml.cs">
       <DependentUpon>DelPermissionTypeDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="dialog\PermssionDialog.xaml.cs">
       <DependentUpon>PermssionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dialog\UpdateMaterialDialog.xaml.cs">
+      <DependentUpon>UpdateMaterialDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="dto\Constants.cs" />
     <Compile Include="LoginWindow.xaml.cs">
@@ -96,7 +102,9 @@
     <Compile Include="param\LoginParams.cs" />
     <Compile Include="param\SearchPermissionParams.cs" />
     <Compile Include="param\UpdatePermissionParams.cs" />
+    <Compile Include="pojo\House.cs" />
     <Compile Include="pojo\Material.cs" />
+    <Compile Include="pojo\MaterialType.cs" />
     <Compile Include="pojo\PermissionType.cs" />
     <Compile Include="pojo\Resource.cs" />
     <Compile Include="UpgradeWindow.xaml.cs">
@@ -110,11 +118,19 @@
     <Compile Include="utils\RSAUtil.cs" />
     <Compile Include="utils\TokenExpiredException.cs" />
     <Compile Include="utils\TokenManager.cs" />
+    <Page Include="dialog\AddMaterialDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="dialog\DelPermissionTypeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="dialog\PermssionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="dialog\UpdateMaterialDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -205,7 +221,6 @@
       <Version>2.0.1</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="assets\icon.ico" />
   </ItemGroup>

@@ -111,10 +111,30 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByComments/{page}/{comments}"));
         }
 
+        public static Result searchHouseId()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchHouseId"));
+        }
+
+        public static Result searchTypeName()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/typeName"));
+        }
+
+        public static Result addMaterial(Material material)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Post($"/material/save", JsonHelper.DateObjectTOJson(material)));
+        }
+
         //修改
         public static Result updateMaterial(Material material)
         {
-            return JsonHelper.JSONToObject<Result>(http.Post("/material/update", JsonHelper.ObjectToJSON(material)));
+            return JsonHelper.JSONToObject<Result>(http.Post("/material/update", JsonHelper.DateObjectToJson(material)));
+        }
+
+        public static Result deleteMaterial(long id)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/del/{id}"));
         }
     }
 
