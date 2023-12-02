@@ -67,8 +67,8 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button x:Name="delete" Content="删除" Margin="3,3,3,3" Click="Delete_Click"/>
-                                    <Button x:Name="resetPassword" Content="重置密码" Margin="3,3,3,3" Click="ResetPassword_Click"/>
+                                    <Button Content="修改" Click="Update_Click" Margin="1, 3, 6, 3"/>
+                                    <Button Content="删除" Click="Delete_Click" Margin="1, 3, 6, 3"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
