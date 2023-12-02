@@ -58,6 +58,11 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/user/delete/{id}"));
         }
+
+        public static Result update(User user)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Post("/user/update", JsonHelper.DateObjectToJson<User>(user)));
+        }
     }
 
 

@@ -190,19 +190,32 @@ namespace wmsApp.pages
 
         }
 
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Update_Click(object sender, RoutedEventArgs e)
         {
+            Button updateButton = (Button)sender;
+            User user = (User)updateButton.DataContext;
 
+            // 提取ID值
+            long id = user.id;
+            UpdateUserDialog dialog = new UpdateUserDialog();
+
+            // 将传递过来的数据填充到对应的控件中
+            dialog.nameTextBox.Text = user.name;
+            dialog.roleTextBox.SelectedIndex = user.role == "管理员" ? 1 : 0; // 根据role值设置ComboBox的选中项
+            dialog.sexComboBox.SelectedIndex = user.sex == "女" ? 1 : 0; // 根据sex值设置ComboBox的选中项
+            dialog.birthdatePicker.SelectedDate = user.birthDate;
+            dialog.idNumberTextBox.Text = user.idNumber;
+            dialog.nativePlaceTextBox.Text = user.nativePlace;
+            dialog.addressTextBox.Text = user.address;
+            dialog.phoneTextBox.Text = user.phone;
+
+            dialog.ShowAsync();
+            UpdatePage();
         }
 
 
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
+        
 
 
         private void TextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)

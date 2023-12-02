@@ -39,8 +39,7 @@
                     <ui:SymbolIcon Symbol="Forward"/>
                 </Button>
 
-                <!-- Add the Reset Password button -->
-                <Button x:Name="btnResetPassword" Content="重置密码" Click="ResetPassword_Click" Grid.Column="2" Margin="10,5,0,5.333" Height="33" />
+               
 
             </Grid>
         </StackPanel>
