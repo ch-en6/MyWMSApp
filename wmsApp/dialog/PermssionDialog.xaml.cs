@@ -11,6 +11,8 @@ using wms.pojo;
 using wms.utils;
 using wms.param;
 using System;
+using wmsApp.controls;
+using wmsApp.pojo;
 
 namespace wmsApp.dialog
 {
@@ -20,10 +22,12 @@ namespace wmsApp.dialog
 
         long resourceId;
 
-        Dictionary<string, string> resources;
+        Dictionary<string, Resource> resources;
+
+        Dictionary<String, long> types;
 
         List<User> userList;
-        public PermissionDialog(Dictionary<string, string> resources,long resourceId)
+        public PermissionDialog(Dictionary<string, Resource> resources,long resourceId)
         { 
             this.resources = resources;
             this.resourceId = resourceId;
@@ -32,13 +36,24 @@ namespace wmsApp.dialog
             {
                 throw new Exception(result.errorMsg.ToString());
             }
+            
+            Result result1 = PermissionTypesApi.getSelectMap(resourceId);
+         
+            if (!result1.success)
+            {
+                throw new Exception(result.errorMsg.ToString());
+            }
+
+            types = JsonHelper.ConvertToMap<String, long>(result1.data.ToString());
+
+            types = JsonHelper.ConvertToMap<String, long>(result1.data.ToString());
 
             userList = JsonHelper.JsonToList<User>(result.data.ToString());
             InitializeComponent();
            
             initPeople();
             initResource();
-           
+            initTypes();
             DataContext = this;
         }
         private void initPeople()
@@ -54,14 +69,29 @@ namespace wmsApp.dialog
 
         private void initResource()
         {
-            foreach (KeyValuePair<string, string> kvp in resources)
+            foreach (KeyValuePair<string, Resource> kvp in resources)
             {
                 string key = kvp.Key;
-                string value = kvp.Value;
+                Resource value = kvp.Value;
 
-                resourceComboBox.Items.Add(key);
+                if(value.id == resourceId)
+                {
+                    resourceComboBox.Text = value.name;
+                }
             }
         }
+
+        private void initTypes()
+        {
+            List<String> items = new List<string>();
+            foreach(KeyValuePair<String, long> kvp in types)
+            {
+                string key = kvp.Key;
+                items.Add(key);
+            }
+            typeTextBox.ItemsSource = items;
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // 点击 "选择人员" 按钮时的逻辑处理
@@ -84,12 +114,6 @@ namespace wmsApp.dialog
                 return false;
             }
 
-            // 验证URI是否为空
-            if (string.IsNullOrWhiteSpace(uri.Text))
-            {
-                MessageBox.Show("请填写URI");
-                return false;
-            }
 
             return true;
         }
@@ -118,18 +142,18 @@ namespace wmsApp.dialog
             }
 
             string type = typeTextBox.Text;
-            long resourceId = long.Parse(resources[resourceComboBox.Text]);
-            AddPermissionParams param = new AddPermissionParams(userIds,resourceId, type);
+            string permissionName = typeTextBox.Text;
+           
+            AddPermissionParams param = new AddPermissionParams(userIds,types[permissionName], type);
             Result result = PermissionApi.savePermissions(param);
             if (!result.success)
             {
-                MessageBox.Show(result.errorMsg.ToString());
+                MessageBox.Show(result.errorMsg);
                 return;
             }
             if (result != null)
             {
-                if (result.success)
-                    MessageBox.Show("添加成功");
+                if (result.success) MessageBox.Show("添加成功");
                 else MessageBox.Show(result.errorMsg);
             }
             
@@ -140,6 +164,11 @@ namespace wmsApp.dialog
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void resourceComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
         }
     }
 

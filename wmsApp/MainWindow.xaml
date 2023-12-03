@@ -5,25 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wmsApp"
         mc:Ignorable="d"
-        Title="仓库管理系统" Height="450" Width="800"
+        Title="仓库管理系统" Height="800" Width="1280"
         xmlns:ui="http://schemas.modernwpf.com/2019"
          WindowStartupLocation="CenterScreen"
     ui:WindowHelper.UseModernWindowStyle="True">
     <Grid>
-        <ui:NavigationView PaneDisplayMode="Top" x:Name="NavigationView" IsSettingsVisible="True"  IsBackButtonVisible="Collapsed">
+        <ui:NavigationView PaneDisplayMode="Top" x:Name="NavigationView" IsSettingsVisible="False" IsBackButtonVisible="Collapsed"  >
             <ui:NavigationView.MenuItems >
-                <ui:NavigationViewItem Margin="0,0,0,0" Content=""  Icon="Contact" Tag="pages/UserPage.xaml" Width="48"/>
-                <ui:NavigationViewItem Content="首页" Tag="pages/HomePage.xaml"/>
-                <ui:NavigationViewItem Content="权限管理" Tag="pages/PermissionPage.xaml"/>
+                <ui:NavigationViewItem Margin="0,0,0,0" Content=""  Icon="Contact" Tag="pages/UserPage.xaml" Width="48" />
+                <ui:NavigationViewItem Content="首页" Tag="pages/HomePage.xaml" />
+                <ui:NavigationViewItem Content="权限管理" Tag="pages/PermissionPage.xaml" />
                 <ui:NavigationViewItem Content="人员管理" Tag="pages/PersonnelPage.xaml"/>
                 <ui:NavigationViewItem Content="物料管理" Tag="pages/MaterialPage.xaml"/>
                 <ui:NavigationViewItem Content="进仓管理" Tag="pages/PersonnelPage.xaml"/>
                 <ui:NavigationViewItem Content="出仓管理" Tag="pages/PersonnelPage.xaml" />
             </ui:NavigationView.MenuItems>
-
+            
             <Frame x:Name="ContentFrame"/>
+            <ui:NavigationView.PaneFooter>
+                <StackPanel Margin="0,3,10,0">
+                    <!-- 其他设置选项 -->
+                    <Button Content="退出登录" Click="LogoutButton_Click" FontSize="22"/>
+                </StackPanel>
+            </ui:NavigationView.PaneFooter>
 
-           
         </ui:NavigationView>
+      
+
     </Grid>
+
 </Window>

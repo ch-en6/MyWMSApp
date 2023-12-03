@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using WindowsFormsApp1.dto;
 using wms;
 using wms.utils;
+using wmsApp.controls;
 
 namespace wmsApp.dialog
 {
@@ -76,7 +77,7 @@ namespace wmsApp.dialog
             Result result = PermissionTypesApi.delPermissionType(resourceId, type);
             if (!result.success)
             {
-                MessageBox.Show(result.errorMsg.ToString());
+                ModernMessageBox.showMessage(result.errorMsg.ToString());
                 return;
             }
             if (result != null && result.success) MessageBox.Show("删除成功!");

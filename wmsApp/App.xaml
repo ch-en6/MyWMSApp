@@ -6,6 +6,7 @@
              
          
              >
+    
     <Application.Resources>
         
         <ResourceDictionary>
@@ -13,7 +14,10 @@
 
                 <ui:ThemeResources RequestedTheme="Light"/>
                 <ui:XamlControlsResources />
+                
+                
             </ResourceDictionary.MergedDictionaries>
+         
         </ResourceDictionary>
     </Application.Resources>
 </Application>
