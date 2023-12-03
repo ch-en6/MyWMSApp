@@ -80,6 +80,9 @@
     <Compile Include="dialog\PermssionDialog.xaml.cs">
       <DependentUpon>PermssionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dialog\UpdateMaterialDialog.xaml.cs">
+      <DependentUpon>UpdateMaterialDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="dialog\UpdateUserDialog.xaml.cs">
       <DependentUpon>UpdateUserDialog.xaml</DependentUpon>
     </Compile>

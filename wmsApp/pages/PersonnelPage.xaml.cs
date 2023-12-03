@@ -59,7 +59,7 @@ namespace wmsApp.pages
         {
             flag = 0;
             Result result = UserApi.search(currentPage);
-            if(!result.success)
+            if (!result.success)
             {
                 ModernMessageBox.showMessage(result.errorMsg);
             }
@@ -151,15 +151,11 @@ namespace wmsApp.pages
                 AddUserDialog dialog = new AddUserDialog();
 
                 ContentDialogResult result = await dialog.ShowAsync();
-                
+
                 if (result == ContentDialogResult.Secondary) return;
 
                 UpdatePage();
 
-            Result result = UserApi.delete(id);
-            if (result.success)
-            {
-                MessageBox.Show("删除成功");
             }
             catch (Exception ex)
             {
@@ -195,7 +191,7 @@ namespace wmsApp.pages
             long id = user.id;
 
             Result result = UserApi.delete(id);
-            
+
             if (result.success)
             {
                 MessageBox.Show("删除成功");
@@ -232,7 +228,7 @@ namespace wmsApp.pages
             UpdatePage();
         }
 
-       
+
 
 
 
@@ -287,5 +283,3 @@ namespace wmsApp.pages
         }
     }
 }
-
-

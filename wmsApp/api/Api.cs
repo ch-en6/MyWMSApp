@@ -12,6 +12,7 @@ using wms.pojo;
 using wms.utils;
 using wmsApp.controls;
 using wmsApp.param;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace wms
 {
@@ -48,11 +49,7 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/user/search/{page}"));
         }
-        */
-        public static Result search(int page)
-        {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/user/search/{page}"));
-        }
+      
 
         public static Result save(User user)
         {
