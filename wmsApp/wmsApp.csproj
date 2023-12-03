@@ -96,6 +96,9 @@
     <Compile Include="pages\PersonnelPage.xaml.cs">
       <DependentUpon>PersonnelPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pages\StorePage.xaml.cs">
+      <DependentUpon>StorePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pages\UserPage.xaml.cs">
       <DependentUpon>UserPage.xaml</DependentUpon>
     </Compile>
@@ -107,6 +110,7 @@
     <Compile Include="pojo\MaterialType.cs" />
     <Compile Include="pojo\PermissionType.cs" />
     <Compile Include="pojo\Resource.cs" />
+    <Compile Include="pojo\Store.cs" />
     <Compile Include="utils\HttpHelper.cs" />
     <Compile Include="utils\JsonHelper.cs" />
     <Compile Include="utils\TokenExpiredException.cs" />
@@ -159,6 +163,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="pages\PersonnelPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\StorePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

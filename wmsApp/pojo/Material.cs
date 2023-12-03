@@ -8,9 +8,6 @@ using System.Threading.Tasks;
 
 namespace wms.pojo
 {
- 
-
-
     public class Material
     {
         public long id { get; set; }
