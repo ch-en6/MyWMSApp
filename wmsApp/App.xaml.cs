@@ -26,31 +26,30 @@ namespace wmsApp
         {
             base.OnStartup(e);
 
+
             // 确保更新完成后启动应用程序
             /*            
                             192.168.200.137:80 为web服务器地址
                             到时候建立本机与虚拟机端口映射，设置为本机ip地址
                         */
-  /*          try
+            try
             {
-                using (var manager = new UpdateManager("http://10.22.33.107:80", "Setup.exe"))
+                using (var manager = new UpdateManager("http://192.168.200.138:80", "Setup.exe"))
                 {
-
-                    // 检查并安装更新
-                    SquirrelAwareApp.HandleEvents(
-                        onInitialInstall: v => manager.CreateShortcutForThisExe(),
-                        onAppUpdate: v => manager.CreateShortcutForThisExe(),
-                        onAppUninstall: v => manager.RemoveShortcutForThisExe()
-                    );
-
-                    // 检查是否有更新可用
+              
                     Task.Run(async () =>
                     {
+                        
                         var updateInfo = await manager.CheckForUpdate();
                         Dictionary<ReleaseEntry, string> map = updateInfo.FetchReleaseNotes();
-
+                        foreach(KeyValuePair<ReleaseEntry,string> entry in map)
+                        {
+                            MessageBox.Show(entry.Key.Filename);
+                        }
+                        MessageBox.Show(updateInfo.CurrentlyInstalledVersion.Filename);
                         if (updateInfo.ReleasesToApply.Any())
                         {
+                            MessageBox.Show("准备更新");
                             // 下载并安装更新
                             var upgradeWindow = new UpgradeWindow(); // 创建 UpgradeWindow 对象
                             var progress = new Progress<int>(percent =>
@@ -68,14 +67,14 @@ namespace wmsApp
                     }).Wait();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }*/
+            }
             // 生成密钥
             GenerateKey();
             // 启动应用程序的主窗口
-            MainWindow window = new MainWindow();
+            LoginWindow window = new LoginWindow();
             window.Show();
         }
 
