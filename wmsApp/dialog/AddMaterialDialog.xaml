@@ -20,24 +20,39 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Margin="20, 0, 0, 0">
-            <TextBlock Text="物料名称"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="*" Foreground="Red"/>
+                <TextBlock Text="物料名称" Margin="5, 0, 0, 0"/>
+            </StackPanel>
             <TextBox x:Name="MaterialNameTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200"/>
 
-            <TextBlock Text="库存"/>
-            <TextBox x:Name="MaterialStockTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="*" Foreground="Red"/>
+                <TextBlock Text="库存" Margin="5, 0, 0, 0"/>
+            </StackPanel>
+            <TextBox x:Name="MaterialStockTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200" Text="0"/>
 
             <TextBlock Text="备注"/>
             <TextBox x:Name="MaterialCommentsTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Margin="20, 0, 0, 0">
-            <TextBlock Text="仓库id"/>
-            <ComboBox x:Name="MaterialHouseIdComboBox" Margin="0,0,0,10" Width="200" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="*" Foreground="Red"/>
+                <TextBlock Text="仓库" Margin="5, 0, 0, 0"/>
+            </StackPanel>
+            <ComboBox x:Name="MaterialHouseNameComboBox" Margin="0,0,0,10" Width="200" />
 
-            <TextBlock Text="规格型号"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="*" Foreground="Red"/>
+                <TextBlock Text="规格型号" Margin="5, 0, 0, 0"/>
+            </StackPanel>
             <ComboBox x:Name="MaterialTypeComboBox" Margin="0,0,0,10" Width="200" />
 
-            <TextBlock Text="计量单位" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="*" Foreground="Red"/>
+                <TextBlock Text="计量单位" Margin="5, 0, 0, 0"/>
+            </StackPanel>
             <ComboBox x:Name="MAterialUnitComboBox" Margin="0,0,0,10" Width="200" IsEditable="True">
                 <ComboBoxItem Content="个" />
                 <ComboBoxItem Content="台" />
@@ -46,6 +61,12 @@
                 <ComboBoxItem Content="枚" />
                 <ComboBoxItem Content="把" />
                 <ComboBoxItem Content="条" />
+                <ComboBoxItem Content="件" />
+                <ComboBoxItem Content="套" />
+                <ComboBoxItem Content="公斤" />
+                <ComboBoxItem Content="吨" />
+                <ComboBoxItem Content="升" />
+                <ComboBoxItem Content="米" />
             </ComboBox>
 
         </StackPanel>

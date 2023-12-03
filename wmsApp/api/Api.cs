@@ -115,9 +115,9 @@ namespace wms
         }
 
         //通过仓库id查询
-        public static Result searchByHouseId(int page, long house_id)
+        public static Result searchByHouseName(int page, string house_Name)
         {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByHouseId/{page}/{house_id}"));
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByHouseName/{page}/{house_Name}"));
         }
 
         //通过类型查询
@@ -132,9 +132,9 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByComments/{page}/{comments}"));
         }
 
-        public static Result searchHouseId()
+        public static Result searchHouseName()
         {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchHouseId"));
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchHouseName"));
         }
 
         public static Result searchTypeName()

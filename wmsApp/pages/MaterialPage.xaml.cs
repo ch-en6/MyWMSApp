@@ -1,4 +1,5 @@
 ﻿using ModernWpf.Controls;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -55,7 +56,7 @@ namespace wmsApp.pages
                     materialList = JsonHelper.JsonToList<Material>(result.data.ToString());
                     break;
                 case 3:
-                    result = searchHouseId(textBox.Text);
+                    result = searchHouseName(textBox.Text);
                     materialList = JsonHelper.JsonToList<Material>(result.data.ToString());
                     break;
                 case 4:
@@ -108,11 +109,13 @@ namespace wmsApp.pages
             return result;
         }
 
-        private Result searchHouseId(string userInput)
+        private Result searchHouseName(string userInput)
         {
-            long id;
-            long.TryParse(userInput, out id);
-            Result result = MaterialApi.searchByHouseId(currentPage, id);
+            if(userInput == "")
+            {
+                userInput = "...";
+            }
+            Result result = MaterialApi.searchByHouseName(currentPage, userInput);
             return result;
         }
 
@@ -155,9 +158,9 @@ namespace wmsApp.pages
                     flag = 2;
                     result = searchName(userInput);
                     break;
-                case "meterialHouseID":
+                case "meterialHouseName":
                     flag = 3;
-                    result = searchHouseId(userInput);
+                    result = searchHouseName(userInput);
                     break;
                 case "meterialType":
                     flag = 4;
@@ -180,7 +183,7 @@ namespace wmsApp.pages
         {
             var selectedItem = datagrid.SelectedItem as Material;
 
-            Result houseIdResult = MaterialApi.searchHouseId();
+            Result houseIdResult = MaterialApi.searchHouseName();
             List<string> houseList = JsonHelper.JsonToList<string>(houseIdResult.data.ToString());
             Result typeNameResult = MaterialApi.searchTypeName();
             List<string> typeNameList = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
@@ -191,10 +194,9 @@ namespace wmsApp.pages
             dialog.MaterialNameTextBox.Text = selectedItem.name;
             dialog.MaterialStockTextBox.Text = selectedItem.stock.ToString();
             dialog.MaterialCommentsTextBox.Text = selectedItem.comments;
-            dialog.MaterialCreTimeTextBox.Text = selectedItem.createTime.ToString("yyyy-MM-dd HH:mm:ss");
 
-            dialog.MaterialHouseIdComboBox.ItemsSource = houseList;
-            dialog.MaterialHouseIdComboBox.SelectedValue = selectedItem.houseId.ToString();
+            dialog.MaterialHouseNameComboBox.ItemsSource = houseList;
+            dialog.MaterialHouseNameComboBox.SelectedValue = selectedItem.houseName.ToString();
 
             dialog.MaterialTypeComboBox.ItemsSource = typeNameList;
             dialog.MaterialTypeComboBox.SelectedValue = selectedItem.type.ToString();
@@ -232,20 +234,33 @@ namespace wmsApp.pages
 
         private async void AddMaterialButton_Click_1(object sender, RoutedEventArgs e)
         {
-            Result houseIdResult = MaterialApi.searchHouseId();
-            List<string> houseList = JsonHelper.JsonToList<string>(houseIdResult.data.ToString());
+            Result houseNameResult = MaterialApi.searchHouseName();
+            List<string> houseList = JsonHelper.JsonToList<string>(houseNameResult.data.ToString());
             Result typeNameResult = MaterialApi.searchTypeName();
             List<string> typeNameList = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
 
             AddMaterialDialog dialog = new AddMaterialDialog();
 
-            dialog.MaterialHouseIdComboBox.ItemsSource = houseList;
+            dialog.MaterialHouseNameComboBox.ItemsSource = houseList;
             dialog.MaterialTypeComboBox.ItemsSource = typeNameList;
 
             ContentDialogResult dialogResult = await dialog.ShowAsync();
             if (dialogResult == ContentDialogResult.Secondary) return;
 
             updatePage();
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage = 1;
+            flag = 0;
+
+            Result result = MaterialApi.search(currentPage);
+            List<Material> materialList = JsonHelper.JsonToList<Material>(result.data.ToString());
+            totalPage = result.total;
+
+            PageNumberTextBlock.Text = currentPage.ToString();
+            datagrid.ItemsSource = materialList;
         }
     }
 }
