@@ -8,9 +8,6 @@ using System.Threading.Tasks;
 
 namespace wms.pojo
 {
- 
-
-
     public class Material
     {
         public long id { get; set; }
@@ -23,7 +20,7 @@ namespace wms.pojo
         /**
          * 仓库代码
          */
-        public long houseId { get; set; }
+        public string houseName { get; set; }
 
         /**
          * 规格型号
@@ -55,11 +52,11 @@ namespace wms.pojo
         {
            
         }
-        public Material(long id, string name, long houseId, string type, string unit, int stock, string comments, DateTime createTime)
+        public Material(long id, string name, string houseName, string type, string unit, int stock, string comments, DateTime createTime)
         {
             this.id = id;
             this.name = name;
-            this.houseId = houseId;
+            this.houseName = houseName;
             this.type = type;
             this.unit = unit;
             this.stock = stock;

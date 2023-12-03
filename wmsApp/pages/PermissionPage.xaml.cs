@@ -38,7 +38,6 @@ using Button = System.Windows.Controls.Button;
 using wmsApp.controls;
 using wmsApp.utils;
 using wmsApp.pojo;
-
 namespace wmsApp.pages
 
 {
@@ -94,13 +93,13 @@ namespace wmsApp.pages
 
 
         public PermissionPage()
-            
+
         {
             try
             {
                 //请求返回资源
                 Result result = ResourceApi.getResources();
-            
+
                 if (!result.success)
                 {
                     if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
@@ -109,14 +108,14 @@ namespace wmsApp.pages
                 }
 
                 resources = JsonHelper.ConvertToMap<String, Resource>(result.data.ToString());
-              /*  Result result = PermissionApi.get_resources();
-                if (!result.success)
-                {
-                    if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
-                    ModernMessageBox.showMessage(result.errorMsg.ToString());
-                    return;
-                }
-                resources = JsonHelper.ConvertToMap<String, String>(result.data.ToString());*/
+                /*  Result result = PermissionApi.get_resources();
+                  if (!result.success)
+                  {
+                      if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
+                      ModernMessageBox.showMessage(result.errorMsg.ToString());
+                      return;
+                  }
+                  resources = JsonHelper.ConvertToMap<String, String>(result.data.ToString());*/
 
                 //请求返回资源类型
                 Result result1 = PermissionApi.get_resourcetypesMap();
@@ -138,21 +137,22 @@ namespace wmsApp.pages
                 }
                 permissionTypes = JsonHelper.ConvertToMap<long, List<String>>(result2.data.ToString());
             }
-            catch(TokenExpiredException ex){ 
-                
+            catch (TokenExpiredException ex)
+            {
+
             };
 
 
             InitializeComponent();
 
-            
+
 
 
             dataGrid.Loaded += (sender, e) =>
             {
                 setCheckBoxValue();
             };
-            
+
             // 初始化页码
 
             UpdatePageNumber();
@@ -160,11 +160,8 @@ namespace wmsApp.pages
             // 初始化MenuItems
             GenerateMenuItems();
 
-            // 上一页按钮点击事件处理程序
-            PreviousPageButton.Click += PreviousPageButton_Click;
 
-            // 下一页按钮点击事件处理程序
-            NextPageButton.Click += NextPageButton_Click;
+          
 
             AddPermissionColumns();
 
@@ -209,7 +206,7 @@ namespace wmsApp.pages
                     Icon = new SymbolIcon(iconSymbol),
                     Content = value.name,
                     Tag = value.id,
-                    FontSize=22,
+                    FontSize = 22,
                     Height = 50
                 };
 
@@ -220,7 +217,7 @@ namespace wmsApp.pages
             navigationView.ItemInvoked += NavigationView_ItemInvoked;
         }
 
-        
+
 
         private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
@@ -237,11 +234,11 @@ namespace wmsApp.pages
                 {
                     dataGrid.Columns.RemoveAt(col_num);
                 }
-                
+
                 AddPermissionColumns();
                 UpdatePageNumber();
 
-        }
+            }
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -252,7 +249,7 @@ namespace wmsApp.pages
             if (selectedItem != null)
             {
                 currentOption = selectedItem.Name.ToString();
-  
+
                 // 在此处处理选项更改后的逻辑
             }
         }
@@ -280,6 +277,11 @@ namespace wmsApp.pages
                 else
                 {
                     string condition = textBox.Text;
+                    if (condition == "")
+                    {
+                        ModernMessageBox.showMessage("参数不能为空!!");
+                        return;
+                    }
                     long parsedValue;
                     SearchPermissionParams param;
 
@@ -369,7 +371,7 @@ namespace wmsApp.pages
             {
                 currentPage--;
                 UpdatePageNumber();
-                
+
             }
         }
 
@@ -379,7 +381,7 @@ namespace wmsApp.pages
             {
                 currentPage++;
                 UpdatePageNumber();
-          
+
             }
         }
 
@@ -425,7 +427,8 @@ namespace wmsApp.pages
                     // 将列添加到DataGrid中
                     dataGrid.Columns.Add(column);
                 }
-            }catch(TokenExpiredException ex) { }
+            }
+            catch (TokenExpiredException ex) { }
 
         }
 
@@ -433,7 +436,7 @@ namespace wmsApp.pages
         {
 
             List<UserPermission> list = IsSearching ? usersearchPermissionList : userPermissionList;
-           
+
             for (int i = 0; i < list.Count; i++)
             {
                 var userPermission = list[i];
@@ -447,7 +450,7 @@ namespace wmsApp.pages
                     if (Types.Contains(type))
                     {
                         int columnIndex = GetColumnIndex(type);
-                       
+
                         if (columnIndex >= 0 && columnIndex < dataGrid.Columns.Count)
                         {
                             DataGridTemplateColumn column = (DataGridTemplateColumn)dataGrid.Columns[columnIndex];
@@ -497,10 +500,10 @@ namespace wmsApp.pages
         }
 
 
-   
 
 
-        private  void OnCheckBoxClick(object sender, RoutedEventArgs e)
+
+        private void OnCheckBoxClick(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = (CheckBox)sender;
             bool isChecked = checkBox.IsChecked ?? false;
@@ -523,7 +526,7 @@ namespace wmsApp.pages
                     // 获取DataGrid中第1列第i行单元格数据
                     var userId = (dataGrid.Columns[0].GetCellContent(dataGrid.Items[rowIndex]) as TextBlock).Text;
 
-                    UpdatePermissionParams param = new UpdatePermissionParams(long.Parse(userId),resourceId,columnName);
+                    UpdatePermissionParams param = new UpdatePermissionParams(long.Parse(userId), resourceId, columnName);
                     try
                     {
                         Result result = PermissionApi.updatePermission(isChecked, param);
@@ -534,7 +537,8 @@ namespace wmsApp.pages
                             ModernMessageBox.showMessage(result.errorMsg);
 
                         }
-                    }catch(TokenExpiredException ex) { }
+                    }
+                    catch (TokenExpiredException ex) { }
 
                 }
             }
@@ -543,7 +547,7 @@ namespace wmsApp.pages
             // ...
         }
 
-        private  void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             // 获取点击的按钮
             Button button = (Button)sender;
@@ -557,9 +561,29 @@ namespace wmsApp.pages
             // 处理点击的行数据
             var userId = (dataGrid.Columns[0].GetCellContent(dataGrid.Items[rowIndex]) as TextBlock).Text;
 
-            Result result = PermissionApi.delPermissionByuserId(long.Parse(userId), resourceId);
+            Result result = PermissionApi.updatePermissionByuserId(long.Parse(userId), resourceId,false);
             if (!result.success) ModernMessageBox.showMessage(result.errorMsg);
             else ModernMessageBox.showMessage("已取消");
+            UpdatePageNumber();
+        }
+
+        private void SelectAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            // 获取点击的按钮
+            Button button = (Button)sender;
+
+            // 获取按钮所在的行
+            DataGridRow row = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromItem(button.DataContext);
+
+            // 获取行数据
+            int rowIndex = row.GetIndex();
+
+            // 处理点击的行数据
+            var userId = (dataGrid.Columns[0].GetCellContent(dataGrid.Items[rowIndex]) as TextBlock).Text;
+
+            Result result = PermissionApi.updatePermissionByuserId(long.Parse(userId), resourceId, true);
+            if (!result.success) ModernMessageBox.showMessage(result.errorMsg);
+            else ModernMessageBox.showMessage("已全选");
             UpdatePageNumber();
         }
 
@@ -578,7 +602,7 @@ namespace wmsApp.pages
         }
 
         // 获取列名
-        private string GetColumnName( DataGridColumn column)
+        private string GetColumnName(DataGridColumn column)
         {
             foreach (DataGridColumn col in dataGrid.Columns)
             {
@@ -621,8 +645,9 @@ namespace wmsApp.pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             IsSearching = true;
+            currentPage = 1;
             UpdatePageNumber();
-            
+
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -634,9 +659,10 @@ namespace wmsApp.pages
 
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            try { 
-                PermissionDialog dialog = new PermissionDialog(resources,resourceId);
-            
+            try
+            {
+                PermissionDialog dialog = new PermissionDialog(resources, resourceId);
+
                 ContentDialogResult result = await dialog.ShowAsync();
 
                 if (result == ContentDialogResult.Secondary) return;
@@ -650,7 +676,7 @@ namespace wmsApp.pages
                 UpdatePageNumber();
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ModernMessageBox.showMessage(ex.Message);
             }
@@ -674,16 +700,12 @@ namespace wmsApp.pages
                 AddPermissionColumns();
                 UpdatePageNumber();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ModernMessageBox.showMessage(ex.Message);
             }
         }
 
-        private void NextPageButton_Click_1(object sender, RoutedEventArgs e)
-        {
 
-        }
     }
-
 }

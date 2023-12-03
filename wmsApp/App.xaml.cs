@@ -12,6 +12,8 @@ using wms;
 using wmsApp.controls;
 using wmsApp.utils;
 using Squirrel;
+using ModernWpf.Controls;
+using static wmsApp.utils.RSA;
 
 namespace wmsApp
 {
@@ -20,40 +22,65 @@ namespace wmsApp
     /// </summary>
     public partial class App : Application
     {
-      protected override async void OnStartup(StartupEventArgs e)
+        protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            /*
-            // 确保更新完成后启动应用程序
-            using (var manager = await UpdateManager.GitHubUpdateManager("https://github.com/BalalaBABABA/MyWMSApp/releases"))
-            {
-                // 检查并安装更新
-                SquirrelAwareApp.HandleEvents(
-                    onInitialInstall: v => manager.CreateShortcutForThisExe(),
-                    onAppUpdate: v => manager.CreateShortcutForThisExe(),
-                    onAppUninstall: v => manager.RemoveShortcutForThisExe()
-                );
 
-                // 检查是否有更新可用
-                var updateInfo = await manager.CheckForUpdate();
-                if (updateInfo.ReleasesToApply.Any())
+            // 确保更新完成后启动应用程序
+            try
+            {
+                /**
+                 * 192.168.200.138:80 IP为服务器IP，端口为服务器端口号，"Setup.exe"是更新文件
+                 */
+               /* using (var manager = new UpdateManager("http://10.22.33.107:80", "Setup.exe"))
                 {
-                    // 下载并安装更新
-                    await manager.UpdateApp();
-                }
+            
+                    var updateInfo = await manager.CheckForUpdate();
+
+                    //判断是否有更新
+                    if (updateInfo.ReleasesToApply.Any())
+                    {
+                        var updateWindow = new UpgradeWindow();
+                        updateWindow.Show();
+
+                        var progress = new Action<int>(value =>
+                        {
+                            updateWindow.Dispatcher.Invoke(() =>
+                            {
+                                // 更新进度条
+                                updateWindow.UpdateProgress(value);
+                            });
+                        });
+                        await manager.UpdateApp(progress);
+                     
+                        *//*await manager.DownloadReleases(updateInfo.ReleasesToApply, progress);
+                        await manager.ApplyReleases(updateInfo, progress);*//*
+                      
+                        updateWindow.Dispatcher.Invoke(() =>
+                        {
+                            updateWindow.Close();
+                            MessageBox.Show("更新完毕，请重新启动");
+                            System.Windows.Forms.Application.Restart();
+                            System.Windows.Application.Current.Shutdown();
+                        });
+                    }
+                }*/
             }
-        */
-            // 启动应用程序的主窗口
-            MainWindow window = new MainWindow();
+            catch (Exception ex)
+            {
+            
+            }
+
+            //生成rsa密钥
+            GenerateKey();
+            //弹出登录框
+            LoginWindow window = new LoginWindow();
             window.Show();
         }
 
 
-
         public App()
         {
-           /* if(TokenManager.token==null)StartupUri = new Uri("LoginWindow.xaml", UriKind.Relative);*/
-             //StartupUri = new Uri("LoginWindow.xaml", UriKind.Relative);
             // 订阅程序退出事件
             Exit += App_Exit;
             //异常退出
@@ -71,7 +98,19 @@ namespace wmsApp
             Result result =LoginApi.logout();
             if (result.success) await ModernMessageBox.Show("提示","退出成功");*/
         }
-
+        private void GenerateKey()
+        {
+            //生成前端RSA密钥
+            RSA rsa = new RSA();
+            RSAKEY Rsakey = rsa.GetKey();
+            TokenManager.csKey = new Dictionary<string, string>();
+            TokenManager.csKey["publickey"] = Rsakey.PublicKey;
+            TokenManager.csKey["privatekey"] = Rsakey.PrivateKey;
+  
+            //获取后端RSA公钥
+            String key = RsaApi.getJavaPublicKey();
+            TokenManager.javaPublicKey = key;
+        }
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Exception ex = e.ExceptionObject as Exception;

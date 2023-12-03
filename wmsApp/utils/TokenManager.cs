@@ -12,5 +12,10 @@ namespace wmsApp.utils
         public static string token { get; set; } = "null";
 
         public static long  userId { get; set; }
+
+        public static string javaPublicKey { get; set; }
+
+        public static Dictionary<string, string> csKey { get; set; }
+
     }
 }

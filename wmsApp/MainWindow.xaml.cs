@@ -31,6 +31,8 @@ namespace wmsApp
         public MainWindow()
         {
             InitializeComponent();
+            //窗口自适应
+            Loaded += OnWindowLoaded;
             //设置默认选中在首页
             NavigationView.SelectedItem = NavigationView.MenuItems.OfType<NavigationViewItem>().FirstOrDefault(item => item.Content.ToString() == "首页");
             GenerateItems();
@@ -44,6 +46,22 @@ namespace wmsApp
             // 注册Closing事件处理程序
             Closing += MainWindow_Closing;
         }
+
+        private void OnWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            // 获取当前屏幕的工作区尺寸
+            double screenWidth = SystemParameters.WorkArea.Width;
+            double screenHeight = SystemParameters.WorkArea.Height;
+
+            // 设置窗口大小和位置
+            Width = screenWidth;
+            Height = screenHeight;
+            Left = 0;
+            Top = 0;
+            WindowStartupLocation = WindowStartupLocation.Manual; // 设置窗口的启动位置为手动模式
+        }
+
+
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // 显示提示框询问用户是否确认关闭窗口
@@ -77,13 +95,12 @@ namespace wmsApp
             {
                 Content = "",  // 设置内容
                 Icon = new SymbolIcon(Symbol.Contact),  // 设置图标
-                //Tag = "pages/UserPage.xaml",  // 设置标签
+                Tag = "pages/UserPage.xaml",  // 设置标签
                 Width = 60 , // 设置宽度
                 Uri = "",
                 FontSize = 22
             };
-
-            // 创建第二个 NavigationViewItem
+            
             var item2 = new MyNavigationViewItem
             {
                 Content = "首页",  // 设置内容

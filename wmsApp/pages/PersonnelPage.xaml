@@ -17,6 +17,7 @@
         <StackPanel Orientation="Horizontal" Margin="9,-10,1,21">
             <Button Content="增加人员"  Margin="0,0,10,0" Click="Add_Click" />
 
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

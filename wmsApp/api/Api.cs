@@ -12,6 +12,7 @@ using wms.pojo;
 using wms.utils;
 using wmsApp.controls;
 using wmsApp.param;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace wms
 {
@@ -23,6 +24,23 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/show"));
         }
     }
+    class RsaApi
+    {
+        public static HttpHelper http = new HttpHelper();
+        public static String getJavaPublicKey()
+        {
+            return http.Get("/rsa");
+        }
+
+        public static void test()
+        {
+            
+            Result result = http.GetEncryptedData("/rsa/test2");
+            MessageBox.Show(result.data.ToString());
+
+        }
+
+    }
     class UserApi
     {
         public static HttpHelper http = new HttpHelper();
@@ -31,6 +49,7 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/user/search/{page}"));
         }
+      
 
         public static Result save(User user)
         {
@@ -77,12 +96,11 @@ namespace wms
     class LoginApi
     {
         public static HttpHelper http = new HttpHelper();
-        public static Result login(long userId,string password)
+        public static Result login(long userId, string password)
         {
-            LoginParams loginParams=new LoginParams(userId, password);
+            LoginParams loginParams = new LoginParams(userId, password);
             Result result = JsonHelper.JSONToObject<Result>(http.Post("/login", JsonHelper.ObjectToJSON(loginParams)));
-            if (!result.success) 
-                ModernMessageBox.showMessage(result.errorMsg);
+            if (!result.success) MessageBox.Show(result.errorMsg);
             return result;
         }
         public static Result logout()
@@ -90,11 +108,11 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get("/logout"));
         }
     }
-    
+
     class MaterialApi
     {
         public static HttpHelper http = new HttpHelper();
-        
+
         //显示
         public static Result search(int page)
         {
@@ -108,17 +126,17 @@ namespace wms
         }
 
         //通过名称查询
-        public static Result searchByName(int page, string name) 
+        public static Result searchByName(int page, string name)
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByName/{page}/{name}"));
         }
 
         //通过仓库id查询
-        public static Result searchByHouseId(int page, long house_id)
+        public static Result searchByHouseName(int page, string house_Name)
         {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByHouseId/{page}/{house_id}"));
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByHouseName/{page}/{house_Name}"));
         }
-        
+
         //通过类型查询
         public static Result searchByType(int page, string type)
         {
@@ -131,10 +149,30 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByComments/{page}/{comments}"));
         }
 
+        public static Result searchHouseName()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchHouseName"));
+        }
+
+        public static Result searchTypeName()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/typeName"));
+        }
+
+        public static Result addMaterial(Material material)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Post($"/material/save", JsonHelper.DateObjectTOJson(material)));
+        }
+
         //修改
         public static Result updateMaterial(Material material)
         {
-            return JsonHelper.JSONToObject<Result>(http.Post("/material/update", JsonHelper.ObjectToJSON(material)));
+            return JsonHelper.JSONToObject<Result>(http.Post("/material/update", JsonHelper.DateObjectToJson(material)));
+        }
+
+        public static Result deleteMaterial(long id)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/material/del/{id}"));
         }
     }
 
@@ -147,7 +185,7 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get("/permissiontype/types/map"));
         }
 
-        public static Result delPermissionType(long resourceId,string type)
+        public static Result delPermissionType(long resourceId, string type)
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/permissiontype/del/{resourceId}/{type}"));
         }
@@ -190,12 +228,13 @@ namespace wms
         /*获取该资源下的所有权限类型*/
         internal static Result get_resource_types(long resourceId)
         {
-            return JsonHelper.JSONToObject<Result>(http.Get("/permission/types/" + resourceId));
+            return http.GetDncryptedData("/permission/types/" + resourceId);
+            /*return JsonHelper.JSONToObject<Result>(http.Get("/permission/types/" + resourceId));*/
         }
 
         internal static Result get_permissions(int page, long resourceId)
         {
-            return JsonHelper.JSONToObject<Result>(http.Post($"/permission/{page}/{resourceId}/get", ""));
+            return http.PostDncryptedData($"/permission/{page}/{resourceId}/get", "");
         }
 
         internal static Result updatePermission(bool isChecked, UpdatePermissionParams permissionParams)
@@ -205,14 +244,14 @@ namespace wms
 
         internal static int get_totalpage()
         {
-            string str=http.Get("/user/totalpage");
+            string str = http.Get("/user/totalpage");
             if (str == null) return 0;
             return int.Parse(http.Get("/user/totalpage"));
         }
 
-        internal static Result delPermissionByuserId(long userId, long resourceId)
+        internal static Result updatePermissionByuserId(long userId, long resourceId, bool? isChecked)
         {
-            return JsonHelper.JSONToObject<Result>(http.Post("/permission/del/" + userId + "/" + resourceId, ""));
+            return JsonHelper.JSONToObject<Result>(http.Post($"/permission/update/{userId}/{resourceId}/{isChecked}", ""));
         }
 
         internal static Result savePermissions(AddPermissionParams param)
@@ -222,13 +261,12 @@ namespace wms
 
         internal static Result searchByUser(SearchPermissionParams condition)
         {
-           
-            return JsonHelper.JSONToObject<Result>(http.Post("/permission/search", JsonHelper.ObjectToJSON(condition)));
+            return http.PostDncryptedData("/permission/search", JsonHelper.ObjectToJSON(condition));
         }
 
         internal static Result searchByRole(SearchPermissionParams condition)
         {
-            return JsonHelper.JSONToObject<Result>(http.Post("/permission/search/role", JsonHelper.ObjectToJSON(condition)));
+            return http.PostDncryptedData("/permission/search/role", JsonHelper.ObjectToJSON(condition));
         }
     }
 }
