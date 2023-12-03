@@ -80,8 +80,8 @@
     <Compile Include="dialog\PermssionDialog.xaml.cs">
       <DependentUpon>PermssionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="dialog\UpdateMaterialDialog.xaml.cs">
-      <DependentUpon>UpdateMaterialDialog.xaml</DependentUpon>
+    <Compile Include="dialog\UpdateUserDialog.xaml.cs">
+      <DependentUpon>UpdateUserDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="dto\Constants.cs" />
     <Compile Include="LoginWindow.xaml.cs">
@@ -138,6 +138,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="dialog\PermssionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="dialog\UpdateUserDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

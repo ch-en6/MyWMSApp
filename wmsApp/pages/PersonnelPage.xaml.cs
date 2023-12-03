@@ -17,6 +17,7 @@ using WindowsFormsApp1.dto;
 using wms;
 using wms.pojo;
 using wms.utils;
+using wmsApp.controls;
 using wmsApp.dialog;
 
 namespace wmsApp.pages
@@ -58,6 +59,10 @@ namespace wmsApp.pages
         {
             flag = 0;
             Result result = UserApi.search(currentPage);
+            if(!result.success)
+            {
+                ModernMessageBox.showMessage(result.errorMsg);
+            }
             List<User> userList = JsonHelper.JsonToList<User>(result.data.ToString());
             totalPage = result.total;
 
@@ -74,6 +79,10 @@ namespace wmsApp.pages
                 userInput = "...";
             }
             Result result = UserApi.searchByName(currentPage, userInput);
+            if (!result.success)
+            {
+                ModernMessageBox.showMessage(result.errorMsg);
+            }
             return result;
         }
 
@@ -82,6 +91,10 @@ namespace wmsApp.pages
             long id;
             long.TryParse(userInput, out id);
             Result result = UserApi.searchById(currentPage, id);
+            if (!result.success)
+            {
+                ModernMessageBox.showMessage(result.errorMsg);
+            }
             return result;
         }
 
@@ -94,10 +107,18 @@ namespace wmsApp.pages
             {
                 case 0:
                     result = UserApi.search(currentPage);
+                    if (!result.success)
+                    {
+                        ModernMessageBox.showMessage(result.errorMsg);
+                    }
                     userList = JsonHelper.JsonToList<User>(result.data.ToString());
                     break;
                 case 1:
                     result = searchByName(textBox.Text);
+                    if (!result.success)
+                    {
+                        ModernMessageBox.showMessage(result.errorMsg);
+                    }
                     userList = JsonHelper.JsonToList<User>(result.data.ToString());
                     break;
             }
@@ -130,15 +151,36 @@ namespace wmsApp.pages
                 AddUserDialog dialog = new AddUserDialog();
 
                 ContentDialogResult result = await dialog.ShowAsync();
-
+                
                 if (result == ContentDialogResult.Secondary) return;
 
                 UpdatePage();
 
+            Result result = UserApi.delete(id);
+            if (result.success)
+            {
+                MessageBox.Show("删除成功");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                ModernMessageBox.showMessage(ex.Message);
+            }
+        }
+
+        public void resetPassword_Click(object sender, RoutedEventArgs e)
+        {
+            // 获取按钮所在行
+            Button resetPassword = (Button)sender;
+            User user = (User)resetPassword.DataContext;
+
+            Result result = UserApi.resetPassword(user);
+            if (result.success)
+            {
+                MessageBox.Show("重置成功");
+            }
+            else
+            {
+                ModernMessageBox.showMessage(result.errorMsg);
             }
         }
 
@@ -153,30 +195,45 @@ namespace wmsApp.pages
             long id = user.id;
 
             Result result = UserApi.delete(id);
+            
             if (result.success)
             {
                 MessageBox.Show("删除成功");
             }
             else
             {
-                MessageBox.Show("删除失败");
+                ModernMessageBox.showMessage(result.errorMsg);
             }
             UpdatePage();
 
         }
 
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private async void Update_Click(object sender, RoutedEventArgs e)
         {
+            Button updateButton = (Button)sender;
+            User user = (User)updateButton.DataContext;
 
+            // 提取ID值
+            //long id = user.id;
+            UpdateUserDialog dialog = new UpdateUserDialog();
+
+            // 将传递过来的数据填充到对应的控件中
+            dialog.userIdTextBlock.Text = user.id.ToString();
+            dialog.nameTextBox.Text = user.name;
+            dialog.roleTextBox.SelectedIndex = user.role == "管理员" ? 1 : 0; // 根据role值设置ComboBox的选中项
+            dialog.sexComboBox.SelectedIndex = user.sex == "女" ? 1 : 0; // 根据sex值设置ComboBox的选中项
+            dialog.birthdatePicker.SelectedDate = user.birthDate;
+            dialog.idNumberTextBox.Text = user.idNumber;
+            dialog.nativePlaceTextBox.Text = user.nativePlace;
+            dialog.addressTextBox.Text = user.address;
+            dialog.phoneTextBox.Text = user.phone;
+            ContentDialogResult result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Secondary) return;
+            UpdatePage();
         }
 
+       
 
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
 
 

@@ -4,15 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Xml.Linq;
 using WindowsFormsApp1.dto;
 using wms.param;
 using wms.pojo;
 using wms.utils;
+using wmsApp.controls;
 using wmsApp.param;
 
 namespace wms
 {
+    class UserInfoApi
+    {
+        public static HttpHelper http = new HttpHelper();
+        public static Result show()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/show"));
+        }
+    }
     class RsaApi
     {
         public static HttpHelper http = new HttpHelper();
@@ -34,10 +44,9 @@ namespace wms
     {
         public static HttpHelper http = new HttpHelper();
 
-        /* 获取所有资源下的所有用户 */
-        /*public static Result getUserMap(int currentPage)
+        public static Result search(int page)
         {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/user/list/{currentPage}"));
+            return JsonHelper.JSONToObject<Result>(http.Get($"/user/search/{page}"));
         }
         */
         public static Result search(int page)
@@ -65,7 +74,18 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/user/delete/{id}"));
         }
+
+        public static Result update(User user)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Post("/user/update", JsonHelper.DateObjectToJson<User>(user)));
+        }
+
+        public static Result resetPassword(User user)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Post("/user/resetPassword", JsonHelper.DateObjectToJson<User>(user)));
+        }
     }
+
 
     class ResourceApi
     {
