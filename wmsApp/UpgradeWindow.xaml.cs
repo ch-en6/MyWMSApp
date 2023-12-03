@@ -20,10 +20,10 @@ namespace wmsApp
     public partial class UpgradeWindow : Window
     {
         public UpgradeWindow()
-        {
-            InitializeComponent();
-            this.Show(); // 显示窗口
+        { 
             Loaded += OnWindowLoaded;
+            InitializeComponent();
+           
         }
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {

@@ -22,61 +22,62 @@ namespace wmsApp
     /// </summary>
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs e)
+        protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-
             // 确保更新完成后启动应用程序
-            /*            
-                            192.168.200.137:80 为web服务器地址
-                            到时候建立本机与虚拟机端口映射，设置为本机ip地址
-                        */
             try
             {
-                using (var manager = new UpdateManager("http://192.168.200.138:80", "Setup.exe"))
+                /**
+                 * 192.168.200.138:80 IP为服务器IP，端口为服务器端口号，"Setup.exe"是更新文件
+                 */
+                using (var manager = new UpdateManager("http://10.22.33.107:80", "Setup.exe"))
                 {
-              
-                    Task.Run(async () =>
-                    {
-                        
-                        var updateInfo = await manager.CheckForUpdate();
-                        Dictionary<ReleaseEntry, string> map = updateInfo.FetchReleaseNotes();
-                        foreach(KeyValuePair<ReleaseEntry,string> entry in map)
-                        {
-                            MessageBox.Show(entry.Key.Filename);
-                        }
-                        MessageBox.Show(updateInfo.CurrentlyInstalledVersion.Filename);
-                        if (updateInfo.ReleasesToApply.Any())
-                        {
-                            MessageBox.Show("准备更新");
-                            // 下载并安装更新
-                            var upgradeWindow = new UpgradeWindow(); // 创建 UpgradeWindow 对象
-                            var progress = new Progress<int>(percent =>
-                            {
-                                upgradeWindow.UpdateProgress(percent); // 直接更新 UpgradeWindow 中的进度条
-                            });
-                            await manager.UpdateApp();
-                            MessageBox.Show("更新完毕");
-                            // 重新启动应用程序
+            
+                    var updateInfo = await manager.CheckForUpdate();
 
+                    //判断是否有更新
+                    if (updateInfo.ReleasesToApply.Any())
+                    {
+                        var updateWindow = new UpgradeWindow();
+                        updateWindow.Show();
+
+                        var progress = new Action<int>(value =>
+                        {
+                            updateWindow.Dispatcher.Invoke(() =>
+                            {
+                                // 更新进度条
+                                updateWindow.UpdateProgress(value);
+                            });
+                        });
+                        await manager.UpdateApp(progress);
+                     
+                        /*await manager.DownloadReleases(updateInfo.ReleasesToApply, progress);
+                        await manager.ApplyReleases(updateInfo, progress);*/
+                      
+                        updateWindow.Dispatcher.Invoke(() =>
+                        {
+                            updateWindow.Close();
+                            MessageBox.Show("更新完毕，请重新启动");
                             System.Windows.Forms.Application.Restart();
                             System.Windows.Application.Current.Shutdown();
-
-                        }
-                    }).Wait();
+                        });
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+             /*   MessageBox.Show(ex.Message);*/
             }
-            // 生成密钥
+
+            //生成rsa密钥
             GenerateKey();
-            // 启动应用程序的主窗口
+            //弹出登录框
             LoginWindow window = new LoginWindow();
             window.Show();
         }
+
 
         public App()
         {

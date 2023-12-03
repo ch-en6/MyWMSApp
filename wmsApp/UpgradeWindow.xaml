@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:wmsApp"
         mc:Ignorable="d"
         xmlns:ui="http://schemas.modernwpf.com/2019"
-        Title="UpgradeWindow" Height="180" Width="500">
+        Title="UpgradeWindow" Height="180" Width="500"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

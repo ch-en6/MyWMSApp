@@ -27,6 +27,34 @@ namespace wmsApp.controls
             await ModernMessageBox.Show("提示", msg);
             return;
         }
+
+        public static async Task<bool> ShowAndReturn(string title, string message)
+        {
+            bool result = false;
+
+            var messageDialog = new ContentDialog
+            {
+                Title = title,
+                Content = message,
+                CloseButtonText = "Cancel",
+                PrimaryButtonText = "OK"
+            };
+
+            messageDialog.CloseButtonClick += delegate
+            {
+                result = false;
+            };
+
+            messageDialog.PrimaryButtonClick += delegate
+            {
+                result = true;
+            };
+
+            await messageDialog.ShowAsync();
+
+            return result;
+        }
+
     }
 
 }
