@@ -32,7 +32,7 @@ namespace wmsApp
                 /**
                  * 192.168.200.138:80 IP为服务器IP，端口为服务器端口号，"Setup.exe"是更新文件
                  */
-                using (var manager = new UpdateManager("http://10.22.33.107:80", "Setup.exe"))
+               /* using (var manager = new UpdateManager("http://10.22.33.107:80", "Setup.exe"))
                 {
             
                     var updateInfo = await manager.CheckForUpdate();
@@ -53,8 +53,8 @@ namespace wmsApp
                         });
                         await manager.UpdateApp(progress);
                      
-                        /*await manager.DownloadReleases(updateInfo.ReleasesToApply, progress);
-                        await manager.ApplyReleases(updateInfo, progress);*/
+                        *//*await manager.DownloadReleases(updateInfo.ReleasesToApply, progress);
+                        await manager.ApplyReleases(updateInfo, progress);*//*
                       
                         updateWindow.Dispatcher.Invoke(() =>
                         {
@@ -64,11 +64,11 @@ namespace wmsApp
                             System.Windows.Application.Current.Shutdown();
                         });
                     }
-                }
+                }*/
             }
             catch (Exception ex)
             {
-             /*   MessageBox.Show(ex.Message);*/
+            
             }
 
             //生成rsa密钥
