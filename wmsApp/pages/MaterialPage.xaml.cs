@@ -94,7 +94,14 @@ namespace wmsApp.pages
         private Result searchId(string userInput)
         {
             long id;
-            long.TryParse(userInput, out id);
+            if(userInput == "")
+            {
+                id = -1;
+            }
+            else
+            {
+                long.TryParse(userInput, out id);
+            }
             Result result = MaterialApi.searchById(currentPage, id);
             return result;
         }
