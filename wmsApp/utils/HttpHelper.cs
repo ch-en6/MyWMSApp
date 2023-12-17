@@ -27,7 +27,7 @@ namespace wms.utils
         /*
          *  设置为服务器IP地址
          */
-        private static readonly string BASE_ADDRESS = "http://10.22.33.107:8081/";
+        private static readonly string BASE_ADDRESS = "http://localhost:8081/";
         public HttpHelper()
         {
             GetInstance();
@@ -56,6 +56,7 @@ namespace wms.utils
             {
                 RSA rsa = new RSA();
                 AES aes = new AES();
+                SetPublicKeyHeader(TokenManager.csKey["publickey"]);
                 var responseString = client.GetStringAsync(url);
                 Result result = JsonHelper.JSONToObject<Result>(responseString.Result); //包含data，aeskey
                                                                             // rsa私钥解密获得aeskey
