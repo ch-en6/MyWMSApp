@@ -55,11 +55,17 @@
                 <DataGrid x:Name="dataGrid" 
                           Margin="-17,-11,-0.333,0"
                           HorizontalAlignment="Right"
-                          Width="3000" 
+                          Width="1250" 
                           AutoGenerateColumns="False"
                           CanUserAddRows="False"
                           IsReadOnly="True"
-                          FontSize="22">
+                          FontSize="20"
+                         >
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="FontSize" Value="20"/>
+                        </Style>
+                    </DataGrid.Resources>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="人员ID" Binding="{Binding id}" FontSize="22"></DataGridTextColumn>
                         <DataGridTextColumn Header="姓名" Binding="{Binding name}" FontSize="22"></DataGridTextColumn>
@@ -67,7 +73,6 @@
                         <DataGridTemplateColumn Header="全选操作" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                         <Button x:Name="select" Content="选中" Margin="5" FontSize="16" Click="SelectAllButton_Click">
                                             <Button.Style>

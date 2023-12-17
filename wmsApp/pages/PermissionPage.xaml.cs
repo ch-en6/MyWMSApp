@@ -108,14 +108,7 @@ namespace wmsApp.pages
                 }
 
                 resources = JsonHelper.ConvertToMap<String, Resource>(result.data.ToString());
-                /*  Result result = PermissionApi.get_resources();
-                  if (!result.success)
-                  {
-                      if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
-                      ModernMessageBox.showMessage(result.errorMsg.ToString());
-                      return;
-                  }
-                  resources = JsonHelper.ConvertToMap<String, String>(result.data.ToString());*/
+              
 
                 //请求返回资源类型
                 Result result1 = PermissionApi.get_resourcetypesMap();
@@ -161,7 +154,7 @@ namespace wmsApp.pages
             GenerateMenuItems();
 
 
-          
+
 
             AddPermissionColumns();
 
@@ -304,6 +297,11 @@ namespace wmsApp.pages
                     {
                         case "user":
                             result = PermissionApi.searchByUser(param);
+                            if (result==null)
+                            {
+                                ModernMessageBox.showMessage("无访问权限");
+                                return;
+                            }
                             if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
                             if (result.data != null)
                             {
@@ -320,6 +318,12 @@ namespace wmsApp.pages
                             break;
                         case "role":
                             result = PermissionApi.searchByRole(param);
+                            if (result == null)
+                            {
+                                ModernMessageBox.showMessage("无访问权限");
+                                return;
+                            }
+                            if (result == null) ModernMessageBox.showMessage("无访问权限");
                             if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
                             if (result.data != null)
                             {
@@ -411,7 +415,7 @@ namespace wmsApp.pages
                     // 创建一个DataGridTemplateColumn列
                     DataGridTemplateColumn column = new DataGridTemplateColumn();
                     column.Header = permissionName;
-                    column.Width = 60; // 设置单元格宽度
+                    column.Width = DataGridLength.SizeToCells; // 设置单元格宽度
                     column.IsReadOnly = false; //设置为可修改
 
                     // 创建一个数据模板，包含一个CheckBox
@@ -526,10 +530,10 @@ namespace wmsApp.pages
                     // 获取DataGrid中第1列第i行单元格数据
                     var userId = (dataGrid.Columns[0].GetCellContent(dataGrid.Items[rowIndex]) as TextBlock).Text;
 
-                    UpdatePermissionParams param = new UpdatePermissionParams(long.Parse(userId), resourceId, columnName);
+                    UpdatePermissionParams param = new UpdatePermissionParams(long.Parse(userId), resourceId, columnName,isChecked);
                     try
                     {
-                        Result result = PermissionApi.updatePermission(isChecked, param);
+                        Result result = PermissionApi.updatePermission( param);
                         if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
                         if (!result.success)
                         {
@@ -547,7 +551,7 @@ namespace wmsApp.pages
             // ...
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private async void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             // 获取点击的按钮
             Button button = (Button)sender;
@@ -561,13 +565,22 @@ namespace wmsApp.pages
             // 处理点击的行数据
             var userId = (dataGrid.Columns[0].GetCellContent(dataGrid.Items[rowIndex]) as TextBlock).Text;
 
-            Result result = PermissionApi.updatePermissionByuserId(long.Parse(userId), resourceId,false);
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = "提示",
+                Content = "确认取消吗？",
+                PrimaryButtonText = "确定",
+                SecondaryButtonText = "取消"
+            };
+            ContentDialogResult select = await dialog.ShowAsync();
+            if (select == ContentDialogResult.Secondary) return;
+            Result result = PermissionApi.updatePermissionByuserId(long.Parse(userId), resourceId, false);
             if (!result.success) ModernMessageBox.showMessage(result.errorMsg);
             else ModernMessageBox.showMessage("已取消");
             UpdatePageNumber();
         }
 
-        private void SelectAllButton_Click(object sender, RoutedEventArgs e)
+        private async void SelectAllButton_Click(object sender, RoutedEventArgs e)
         {
             // 获取点击的按钮
             Button button = (Button)sender;
@@ -580,6 +593,16 @@ namespace wmsApp.pages
 
             // 处理点击的行数据
             var userId = (dataGrid.Columns[0].GetCellContent(dataGrid.Items[rowIndex]) as TextBlock).Text;
+
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = "提示",
+                Content = "确认全选吗？",
+                PrimaryButtonText = "确定",
+                SecondaryButtonText = "取消"
+            };
+            ContentDialogResult select = await dialog.ShowAsync();
+            if (select == ContentDialogResult.Secondary) return;
 
             Result result = PermissionApi.updatePermissionByuserId(long.Parse(userId), resourceId, true);
             if (!result.success) ModernMessageBox.showMessage(result.errorMsg);
@@ -688,6 +711,7 @@ namespace wmsApp.pages
             try
             {
                 DelPermissionTypeDialog dialog = new DelPermissionTypeDialog(resourceId);
+              
                 ContentDialogResult result = await dialog.ShowAsync();
 
                 if (result == ContentDialogResult.Secondary) return;

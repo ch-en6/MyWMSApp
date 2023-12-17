@@ -35,7 +35,9 @@ namespace wmsApp
             Loaded += OnWindowLoaded;
             //设置默认选中在首页
             NavigationView.SelectedItem = NavigationView.MenuItems.OfType<NavigationViewItem>().FirstOrDefault(item => item.Content.ToString() == "首页");
+
             GenerateItems();
+  
             // 添加导航菜单项的点击事件处理程序
             NavigationView.ItemInvoked += NavigationView_ItemInvoked;
             NavigationView navigation;
@@ -45,6 +47,8 @@ namespace wmsApp
 
             // 注册Closing事件处理程序
             Closing += MainWindow_Closing;
+
+          
         }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
@@ -96,11 +100,11 @@ namespace wmsApp
                 Content = "",  // 设置内容
                 Icon = new SymbolIcon(Symbol.Contact),  // 设置图标
                 Tag = "pages/UserPage.xaml",  // 设置标签
-                Width = 60 , // 设置宽度
-                Uri = "",
+                Width = 60, // 设置宽度
+                Uri = "/userInfo",
                 FontSize = 22
             };
-            
+
             var item2 = new MyNavigationViewItem
             {
                 Content = "首页",  // 设置内容
@@ -110,15 +114,16 @@ namespace wmsApp
             };
             menuItems.Add(item1);
             menuItems.Add(item2);
-
-            Result result = ResourceApi.getResources();
-            
+      
+            Result result = ResourceApi.getUserResources();
+        
             Dictionary<String,Resource> map =JsonHelper.ConvertToMap<String, Resource>(result.data.ToString());
             foreach (var entry in map)
             {
 
                 string key = entry.Key;  // 获取键
                 Resource value = entry.Value;  // 获取值
+                if (value.name == "用户中心") continue;
                 MyNavigationViewItem item =new MyNavigationViewItem
                 {
                     Content = value.name,
@@ -126,13 +131,6 @@ namespace wmsApp
                     Uri = value.uriName,
                     FontSize =22
                 };
-                if (value.name == "用户中心")
-                {
-                    item1.Tag = value.page;
-                    item1.Uri = value.uriName; 
-                  
-                    continue;
-                }
                 menuItems.Add(item);
 
             }
@@ -151,13 +149,16 @@ namespace wmsApp
                 // 获取点击的导航菜单项的Tag
                 string selectedPage = args.InvokedItemContainer.Tag.ToString();
 
-
                 // 获取自定义的URI属性
                 MyNavigationViewItem selectedItem = args.InvokedItemContainer as MyNavigationViewItem;
                 if (selectedItem != null)
                 {
                     string uri = selectedItem.Uri;
-                    if (uri == "")return ;
+                    if (uri == "")
+                    {
+                        ContentFrame.Navigate(new Uri(selectedPage, UriKind.Relative));
+                        return;
+                    }
                     try {
                     Result result = PermissionApi.enter(uri);
                         if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();

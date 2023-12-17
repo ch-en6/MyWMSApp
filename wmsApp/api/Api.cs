@@ -34,8 +34,11 @@ namespace wms
 
         public static void test()
         {
+            User user = new User();
+            user.id = 1;
+            user.name = "hi";
             
-            Result result = http.GetEncryptedData("/rsa/test2");
+            Result result = http.GetDncryptedData("/rsa/test1/1");
             MessageBox.Show(result.data.ToString());
 
         }
@@ -91,6 +94,12 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get("/resource/all"));
         }
+
+        public static Result getUserResources()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get("/resource/get"));
+        }
+
 
     }
     class LoginApi
@@ -234,12 +243,13 @@ namespace wms
 
         internal static Result get_permissions(int page, long resourceId)
         {
-            return http.PostDncryptedData($"/permission/{page}/{resourceId}/get", "");
+            return http.GetDncryptedData($"/permission/get/{page}/{resourceId}");
         }
 
-        internal static Result updatePermission(bool isChecked, UpdatePermissionParams permissionParams)
+        internal static Result updatePermission(UpdatePermissionParams permissionParams)
         {
-            return JsonHelper.JSONToObject<Result>(http.Post("/permission/update/" + isChecked, JsonHelper.ObjectToJSON(permissionParams)));
+            return http.PostEncryptedData("/permission/update", JsonHelper.ObjectToJSON(permissionParams));
+            //return JsonHelper.JSONToObject<Result>(http.Post("/permission/update", JsonHelper.ObjectToJSON(permissionParams)));
         }
 
         internal static int get_totalpage()
@@ -251,7 +261,9 @@ namespace wms
 
         internal static Result updatePermissionByuserId(long userId, long resourceId, bool? isChecked)
         {
-            return JsonHelper.JSONToObject<Result>(http.Post($"/permission/update/{userId}/{resourceId}/{isChecked}", ""));
+            UpdatePermissionParams update =   new UpdatePermissionParams(userId, resourceId, null, isChecked);
+            return http.PostEncryptedData("/permission/update/all",JsonHelper.ObjectToJSON(update));
+            /*return JsonHelper.JSONToObject<Result>(http.Post($"/permission/update/{userId}/{resourceId}/{isChecked}", ""));*/
         }
 
         internal static Result savePermissions(AddPermissionParams param)
