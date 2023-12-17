@@ -12,6 +12,7 @@ using wms.pojo;
 using wms.utils;
 using wmsApp.controls;
 using wmsApp.param;
+using wmsApp.pojo;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace wms
@@ -43,6 +44,18 @@ namespace wms
 
         }
 
+        public static void modify()
+        {
+            DateTime date = new DateTime(2023, 12, 2);
+            Store store = new Store(1, 1437831, "华南888仓", date, 320231202000001, 10, 1, "123");
+            Result result = http.PostEncryptedData("/store/update", JsonHelper.DateObjectTOJson(store));
+            MessageBox.Show(result.success.ToString());
+        }
+
+        //static void Main(string[] args)
+        //{
+        //    modify();
+        //}
     }
     class UserApi
     {
@@ -185,6 +198,16 @@ namespace wms
         }
     }
 
+    class StoreApi
+    {
+        public static HttpHelper http = new HttpHelper();
+
+        public static Result searchAll(int page)
+        {
+            return http.GetDncryptedData($"/store/searchAll/{page}");
+        }
+    }
+
     class PermissionTypesApi
     {
         public static HttpHelper http = new HttpHelper();
@@ -204,6 +227,7 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get($"/permissiontype/select/map/{resourceId}"));
         }
     }
+
     class PermissionApi
     {
         public static HttpHelper http = new HttpHelper();

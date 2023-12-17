@@ -13,68 +13,93 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="42"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto" MinHeight="42"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Margin="9,-10,1,21">
-            <Button Content="进仓"  Margin="0,0,10,0" Click="AddStoreButton_Click_1"/>
-
-            <Grid>
+        <StackPanel Grid.Row="0" Orientation="Vertical" Margin="9,-10,1,21" HorizontalAlignment="Center">
+            <Grid Margin="0,10,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <ComboBox Grid.Column="0" Width="100" Margin="5" x:Name="comboBox" SelectedValue="store" SelectedIndex="1">
-                    <!-- 下拉选择框内容 -->
-                    <ComboBoxItem x:Name="storeNo" Content="按进仓单号查询"/>
-                    <ComboBoxItem x:Name="houseName" Content="按仓库名查询"/>
-                    <ComboBoxItem x:Name="storeTime" Content="按进仓日期查询"/>
-                    <ComboBoxItem x:Name="meterialId" Content="按物料ID查询"/>
-                    <ComboBoxItem x:Name="userId" Content="按操作人员ID查询"/>
-                </ComboBox>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
-                <TextBox Grid.Column="1" Width="200" Margin="5" x:Name="textBox"  PreviewKeyDown="Button_Click"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="入仓ID:" VerticalAlignment="Center" Margin="5" />
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="5" x:Name="storeNoTextBox" Width="200" />
 
-                <Button Grid.Column="2" Width="39" Margin="1,5,0,5.333" Click="Button_Click" Height="33">
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="物料ID:" VerticalAlignment="Center" Margin="5" />
+                <TextBox Grid.Row="0" Grid.Column="3" Margin="5" x:Name="materialIdTextBox" Width="200" />
+
+                <TextBlock Grid.Row="0" Grid.Column="4" Text="仓库名:" VerticalAlignment="Center" Margin="5" />
+                <TextBox Grid.Row="0" Grid.Column="5" Margin="5" x:Name="warehouseNameTextBox" Width="200" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="开始日期:" VerticalAlignment="Center" Margin="5" />
+                <DatePicker Grid.Row="1" Grid.Column="1" Margin="5" x:Name="startTimeTextBox" Width="200" />
+                
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="结束日期:" VerticalAlignment="Center" Margin="5" />
+                <DatePicker Grid.Row="1" Grid.Column="3" Margin="5" x:Name="endTimeTextBox" Width="200" />
+
+                <TextBlock Grid.Row="1" Grid.Column="4" Text="操作人员ID:" VerticalAlignment="Center" Margin="5" />
+                <TextBox Grid.Row="1" Grid.Column="5" Margin="5" x:Name="operatorIdTextBox" Width="200" />
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="备注:" VerticalAlignment="Center" Margin="5" />
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="5" x:Name="storeNotes" Width="200" />
+
+                <Button Grid.Row="2" Grid.Column="5" Width="39" Margin="15,0,0,0" Click="Button_Click" Height="33">
                     <ui:SymbolIcon Symbol="Find" Height="20" Width="20" RenderTransformOrigin="0.324,0.495"/>
                 </Button>
 
-                <Button x:Name="btnBack" Grid.Column="2" Margin="150,5,-105,5.333" Height="33" Click="btnBack_Click" >
+                <Button x:Name="btnBack" Grid.Row="2" Grid.Column="5" Margin="65,0,0,0" Height="33" Click="btnBack_Click" >
                     <ui:SymbolIcon Symbol="Forward"/>
                 </Button>
 
-
             </Grid>
-
         </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="26,0.333,-1,0" >
 
-            <DataGrid x:Name="datagrid" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="True">
-                <!-- 定义列 -->
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="序号" Binding="{Binding storeId}" />
-                    <DataGridTextColumn Header="进仓单号" Binding="{Binding storeNo}" />
-                    <DataGridTextColumn Header="仓库" Binding="{Binding houseName}" />
-                    <DataGridTextColumn Header="进仓日期" Binding="{Binding storeTime}" />
-                    <DataGridTextColumn Header="物料ID" Binding="{Binding materialId}" />
-                    <DataGridTextColumn Header="进仓数量" Binding="{Binding storeCount}" />
-                    <DataGridTextColumn Header="操作人员ID" Binding="{Binding userId}" />
-                    <DataGridTextColumn Header="备注" Binding="{Binding notes}" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" >
+                <DataGrid x:Name="datagrid" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="True">
+                    <!-- 定义列 -->
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="序号" Binding="{Binding storeId}" />
+                        <DataGridTextColumn Header="进仓单号" Binding="{Binding storeNo}" />
+                        <DataGridTextColumn Header="仓库名" Binding="{Binding houseName}" />
+                        <DataGridTextColumn Header="进仓日期" Binding="{Binding storeTime}" />
+                        <DataGridTextColumn Header="物料ID" Binding="{Binding materialId}" />
+                        <DataGridTextColumn Header="进仓数量" Binding="{Binding storeCount}" />
+                        <DataGridTextColumn Header="操作人员ID" Binding="{Binding userId}" />
+                        <DataGridTextColumn Header="备注" Binding="{Binding notes}" />
 
-                    <DataGridTemplateColumn Header="操作">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Content="修改" Click="UpdateMaterialButton_Click" Margin="1, 3, 6, 3"/>
-                                    <Button Content="删除" Click="DeleteMaterialButton_Click" Margin="1, 3, 6, 3"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-        </StackPanel>
+                        <DataGridTemplateColumn Header="操作">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="修改" Click="UpdateMaterialButton_Click" Margin="1, 3, 6, 3"/>
+                                        <Button Content="删除" Click="DeleteMaterialButton_Click" Margin="1, 3, 6, 3"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Grid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <Button x:Name="PreviousPageButton" Content="上一页" Margin="5" Click="PreviousPageButton_Click"/>
