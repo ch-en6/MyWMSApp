@@ -13,9 +13,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="42"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto" MinHeight="42"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Margin="9,-10,1,21">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="9,-10,1,21" HorizontalAlignment="Center">
             <Button Content="新增物料"  Margin="0,0,10,0" Click="AddMaterialButton_Click_1"/>
 
             <Grid>
@@ -40,7 +41,7 @@
                     <ui:SymbolIcon Symbol="Find" Height="20" Width="20" RenderTransformOrigin="0.324,0.495"/>
                 </Button>
 
-                <Button x:Name="btnBack" Grid.Column="2" Margin="150,5,-105,5.333" Height="33" Click="btnBack_Click" >
+                <Button x:Name="btnBack" Grid.Column="2" Margin="45,0,0,0" Height="33" Click="btnBack_Click" >
                     <ui:SymbolIcon Symbol="Forward"/>
                 </Button>
 

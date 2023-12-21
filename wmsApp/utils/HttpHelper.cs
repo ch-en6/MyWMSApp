@@ -27,7 +27,7 @@ namespace wms.utils
         /*
          *  设置为服务器IP地址
          */
-        private static readonly string BASE_ADDRESS = "http://10.22.33.107:8081/";
+        private static readonly string BASE_ADDRESS = "http://localhost:8081/";
         public HttpHelper()
         {
             GetInstance();
@@ -56,9 +56,10 @@ namespace wms.utils
             {
                 RSA rsa = new RSA();
                 AES aes = new AES();
+                SetPublicKeyHeader(TokenManager.csKey["publickey"]);
                 var responseString = client.GetStringAsync(url);
                 Result result = JsonHelper.JSONToObject<Result>(responseString.Result); //包含data，aeskey
-                                                                            // rsa私钥解密获得aeskey
+                // rsa私钥解密获得aeskey
                 string aesKeyByRsaDecode = rsa.DecryptByPrivateKey(result.aesKey, TokenManager.csKey["privatekey"]);
 
                 string Resultdata = result.data.ToString();
@@ -111,7 +112,7 @@ namespace wms.utils
         /**
          * 发送密文GET请求,获取密文数据
          */
-        public Result GetEncryptedData(string url)
+     /*   public Result GetEncryptedData(string url)
         {
             try
             {
@@ -140,7 +141,7 @@ namespace wms.utils
             {
                 return null;
             }
-        }
+        }*/
         /**
          * 发送密文POST请求,获取密文数据，参数含@RequestBody不能用
          */
@@ -151,6 +152,7 @@ namespace wms.utils
                 //加密再传输
                 AES aes = new AES();
                 RSA rsa = new RSA();
+
 
                 string aesKey = aes.GetKey();
            

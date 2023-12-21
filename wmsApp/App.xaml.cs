@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Globalization;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using WindowsFormsApp1.dto;
 using wms;
-using wmsApp.controls;
 using wmsApp.utils;
-using Squirrel;
-using ModernWpf.Controls;
 using static wmsApp.utils.RSA;
 
 namespace wmsApp
@@ -73,6 +63,7 @@ namespace wmsApp
 
             //生成rsa密钥
             GenerateKey();
+        
             //弹出登录框
             LoginWindow window = new LoginWindow();
             window.Show();

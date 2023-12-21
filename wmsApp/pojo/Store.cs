@@ -8,34 +8,34 @@ namespace wmsApp.pojo
 {
     public class Store
     {
-        public long StoreId { get; set; }
+        public long storeId { get; set; }
 
-        public long StoreNo { get; set; }
+        public long storeNo { get; set; }
 
-        public string HouseName { get; set; }
+        public string houseName { get; set; }
 
-        public DateTime StoreTime { get; set; }
+        public DateTime storeTime { get; set; }
 
-        public long MaterialId { get; set; }
+        public long materialId { get; set; }
 
-        public int StoreCount { get; set; }
+        public int storeCount { get; set; }
 
-        public long UserId { get; set; }
+        public long userId { get; set; }
 
-        public string Notes { get; set; }
+        public string notes { get; set; }
 
-        public Store() { } 
+        public Store() { }
 
         public Store(long storeId, long storeNo, string houseName, DateTime storeTime, long materialId, int storeCount, long userId, string notes)
         {
-            StoreId = storeId;
-            StoreNo = storeNo;
-            HouseName = houseName;
-            StoreTime = storeTime;
-            MaterialId = materialId;
-            StoreCount = storeCount;
-            UserId = userId;
-            Notes = notes;
+            this.storeId = storeId;
+            this.storeNo = storeNo;
+            this.houseName = houseName;
+            this.storeTime = storeTime;
+            this.materialId = materialId;
+            this.storeCount = storeCount;
+            this.userId = userId;
+            this.notes = notes;
         }
     }
 }

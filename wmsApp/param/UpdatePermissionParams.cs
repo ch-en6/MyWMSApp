@@ -8,12 +8,6 @@ namespace wms.param
 {
     class UpdatePermissionParams
     {
-        public UpdatePermissionParams(long userId, long resourceId, string type)
-        {
-            this.userId = userId;
-            this.resourceId = resourceId;
-            this.type = type;
-        }
 
 
         /**
@@ -30,5 +24,17 @@ namespace wms.param
          * 权限类型
          */
         public String type { get; set; }
+        /**
+         * 标志
+         */
+        public bool? flag { get; set; }
+
+        public UpdatePermissionParams(long userId, long resourceId, string type, bool? flag)
+        {
+            this.userId = userId;
+            this.resourceId = resourceId;
+            this.type = type;
+            this.flag = flag;
+        }
     }
 }
