@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -171,11 +173,13 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByComments/{page}/{comments}"));
         }
 
+        //查询所有仓库名
         public static Result searchHouseName()
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchHouseName"));
         }
 
+        //查询所有物料类别
         public static Result searchTypeName()
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/typeName"));
@@ -196,6 +200,26 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/del/{id}"));
         }
+
+        //查询某一类别对应的所有物料
+        public static Result typeMaterial(string type)
+        {
+            return http.PostDncryptedData($"/material/typeMaterial", type);
+        }
+
+        //通过类型和物料名查询物料信息
+        public static Result getMaterialByTypeAndName(string type, string name)
+        {
+            var data = new
+            {
+                type = type,
+                name = name
+            };
+
+            var jsonData = JsonConvert.SerializeObject(data);
+
+            return http.PostEncryptedData($"/material/searchByTypeAndName", jsonData);
+        }
     }
 
     class StoreApi
@@ -205,6 +229,22 @@ namespace wms
         public static Result searchAll(int page)
         {
             return http.GetDncryptedData($"/store/searchAll/{page}");
+        }
+
+        public static Result searchCondition(long storeNo, string houseName, DateTime? startTime, DateTime? endTime, long materialId,
+            long userId, string notes, int page)
+        {
+            if(startTime == null)
+            {
+                startTime = new DateTime(1970, 1, 1);
+            }
+            if(endTime == null)
+            {
+                endTime = DateTime.Now;
+            }
+
+            StoreConSearchParams store = new StoreConSearchParams(storeNo, houseName, startTime, endTime, materialId, userId, notes, page);
+            return http.PostEncryptedData($"/store/conditionSearch", JsonHelper.DateObjectToJson<StoreConSearchParams>(store));
         }
     }
 
