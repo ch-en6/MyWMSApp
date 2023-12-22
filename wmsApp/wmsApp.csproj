@@ -74,6 +74,9 @@
     <Compile Include="dialog\AddUserDialog.xaml.cs">
       <DependentUpon>AddUserDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dialog\DeliverDialog.xaml.cs">
+      <DependentUpon>DeliverDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="dialog\DelPermissionTypeDialog.xaml.cs">
       <DependentUpon>DelPermissionTypeDialog.xaml</DependentUpon>
     </Compile>
@@ -82,6 +85,9 @@
     </Compile>
     <Compile Include="dialog\UpdateMaterialDialog.xaml.cs">
       <DependentUpon>UpdateMaterialDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dialog\UpdatePasswordDialog.xaml.cs">
+      <DependentUpon>UpdatePasswordDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="dialog\UpdateUserDialog.xaml.cs">
       <DependentUpon>UpdateUserDialog.xaml</DependentUpon>
@@ -114,6 +120,7 @@
     <Compile Include="param\LoginParams.cs" />
     <Compile Include="param\SearchPermissionParams.cs" />
     <Compile Include="param\UpdatePermissionParams.cs" />
+    <Compile Include="pojo\Deliver.cs" />
     <Compile Include="pojo\House.cs" />
     <Compile Include="pojo\Material.cs" />
     <Compile Include="pojo\MaterialType.cs" />
@@ -139,6 +146,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="dialog\DeliverDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="dialog\DelPermissionTypeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -146,6 +157,10 @@
     <Page Include="dialog\PermssionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="dialog\UpdatePasswordDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="dialog\UpdateUserDialog.xaml">
       <SubType>Designer</SubType>

@@ -6,6 +6,8 @@ using System.Web.UI.MobileControls;
 using System.Windows;
 using WindowsFormsApp1.dto;
 using wms;
+
+using System.Windows.Controls;
 using wms.pojo;
 using wmsApp.controls;
 using ModernWpf.Controls;
@@ -59,6 +61,7 @@ namespace wmsApp.dialog
             else
             {
                 MessageBox.Show(result.errorMsg);
+                args.Cancel = true;
             }
         }
 

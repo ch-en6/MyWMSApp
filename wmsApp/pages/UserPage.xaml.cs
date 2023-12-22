@@ -26,6 +26,7 @@ namespace wmsApp.pages
     /// </summary>
     public partial class UserPage : System.Windows.Controls.Page
     {
+        private User user;
         public UserPage()
         {
             InitializeComponent();
@@ -34,10 +35,15 @@ namespace wmsApp.pages
             {
                 ModernMessageBox.showMessage(result.errorMsg);
             }
-            User user =JsonHelper.JSONToObject<User>(result.data.ToString());
+            user = JsonHelper.JSONToObject<User>(result.data.ToString());
             DataContext = user;
+        }
 
-
+        public async void updatePassword_MouseDown(object sender, RoutedEventArgs e)
+        {
+            UpdatePasswordDialog dialog = new UpdatePasswordDialog();
+            dialog.phoneTextBlock.Text = user.phone;
+            ContentDialogResult result = await dialog.ShowAsync();
         }
     }
 }

@@ -18,7 +18,7 @@
                 <ui:NavigationViewItem Content="人员管理" Tag="pages/PersonnelPage.xaml"/>
                 <ui:NavigationViewItem Content="物料管理" Tag="pages/MaterialPage.xaml"/>
                 <ui:NavigationViewItem Content="进仓管理" Tag="pages/StorePage.xaml"/>
-                <ui:NavigationViewItem Content="出仓管理" Tag="pages/PersonnelPage.xaml" />
+                <ui:NavigationViewItem Content="出仓管理" Tag="pages/DeliverPage.xaml" />
             </ui:NavigationView.MenuItems>
             
             <Frame x:Name="ContentFrame"/>

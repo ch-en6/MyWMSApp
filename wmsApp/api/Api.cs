@@ -17,6 +17,18 @@ using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace wms
 {
+    class MsmApi
+    {
+        public static HttpHelper http = new HttpHelper();
+        public static Result sendCode(string phone)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/msm/send/{phone}"));
+        }
+        public static Result checkCode(string key, string code)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/msm/checkCode/{key}/{code}"));
+        }
+    }
     class UserInfoApi
     {
         public static HttpHelper http = new HttpHelper();
@@ -24,6 +36,11 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/show"));
         }
+        public static Result UpdatePhone()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/show"));
+        }
+
     }
     class RsaApi
     {
