@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -6,6 +7,7 @@ using WindowsFormsApp1.dto;
 using wms;
 using wms.utils;
 using wmsApp.utils;
+using static wmsApp.utils.RSA;
 
 namespace wmsApp
 {
@@ -17,6 +19,21 @@ namespace wmsApp
             UsernameTextBox.KeyDown += UsernameTextBox_KeyDown;
             PasswordBox.KeyDown += PasswordBox_KeyDown;
             Loaded += OnWindowLoaded;
+        }
+
+        private void GenerateKey()
+        {
+            //生成前端RSA密钥
+            RSA rsa = new RSA();
+            RSAKEY Rsakey = rsa.GetKey();
+            TokenManager.csKey = new Dictionary<string, string>();
+            TokenManager.csKey["publickey"] = Rsakey.PublicKey;
+            TokenManager.csKey["privatekey"] = Rsakey.PrivateKey;
+
+            //获取后端RSA公钥
+            String key = RsaApi.getJavaPublicKey();
+            TokenManager.javaPublicKey = key;
+
         }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
@@ -63,9 +80,12 @@ namespace wmsApp
         private async Task<Result> PerformLogin(long userId, string password)
         {
          
-                ShowLoadingOverlay(); // 显示蒙版和设置 ProgressRing 的 IsActive 属性为 true
+            ShowLoadingOverlay(); // 显示蒙版和设置 ProgressRing 的 IsActive 属性为 true
 
-                return await Task.Run(() => LoginApi.login(userId, password));
+            //生成密钥
+            GenerateKey();
+            //发送登录请求
+            return await Task.Run(() => LoginApi.login(userId, password));
         
         }
 
@@ -77,6 +97,8 @@ namespace wmsApp
             long userId;
             if (long.TryParse(username, out userId))
             {
+                
+                //发送登录请求
                 Task<Result> loginTask = PerformLogin(userId, password);
 
                 // 等待登录结果
@@ -89,11 +111,13 @@ namespace wmsApp
                         TokenManager.token = token;
                         TokenManager.userId = userId;
 
-                        // 登录成功，打开主窗口或执行其他操作
+                        // 登录成功，打开主窗口,获取密钥
                         Dispatcher.Invoke(() =>
                         {
+                            //打开主窗口
                             MainWindow mainWindow = new MainWindow();
                             mainWindow.Show();
+
                             Close();
                         });
                     }

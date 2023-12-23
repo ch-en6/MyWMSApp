@@ -152,19 +152,20 @@ namespace wms.utils
                 //加密再传输
                 AES aes = new AES();
                 RSA rsa = new RSA();
-
-
                 string aesKey = aes.GetKey();
-           
                 Result data = new Result();
+
                 data.data = aes.AesEncrypt(strJson, aesKey); //AES加密后的数据
+  
                 data.aesKey = rsa.EncryptByPublicKey(aesKey, TokenManager.javaPublicKey); //后端RSA公钥加密后的AES的key
+ 
                 data.publicKey = TokenManager.csKey["publickey"];//前端公钥
+              
                 string dataStr = JsonHelper.DateObjectTOJson(data);//将加密后的Result对象转换为json类型
-     
+               
                 HttpContent content = new StringContent(dataStr);
                 content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                
+
                 //由HttpClient发出Post请求
                 Task<HttpResponseMessage> res = client.PostAsync(url, content);
                 if (res.Result.StatusCode == System.Net.HttpStatusCode.OK)
@@ -179,6 +180,45 @@ namespace wms.utils
                     string Resultdata = result.data.ToString();
                   
                     return JsonHelper.JSONToObject<Result>(aes.AesDecrypt(result.data.ToString(), aesKeyByRsaDecode));
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        //发送密文，返回明文
+        public Result PostAndEncryptData(string url, string strJson)
+        {
+            try
+            {
+                //加密再传输
+                AES aes = new AES();
+                RSA rsa = new RSA();
+                string aesKey = aes.GetKey();
+                Result data = new Result();
+
+                data.data = aes.AesEncrypt(strJson, aesKey); //AES加密后的数据
+
+                data.aesKey = rsa.EncryptByPublicKey(aesKey, TokenManager.javaPublicKey); //后端RSA公钥加密后的AES的key
+
+                data.publicKey = TokenManager.csKey["publickey"];//前端公钥
+
+                string dataStr = JsonHelper.DateObjectTOJson(data);//将加密后的Result对象转换为json类型
+
+                HttpContent content = new StringContent(dataStr);
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+                //由HttpClient发出Post请求
+                Task<HttpResponseMessage> res = client.PostAsync(url, content);
+                if (res.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string resMsgStr = res.Result.Content.ReadAsStringAsync().Result;
+                    return JsonHelper.JSONToObject<Result>(resMsgStr);
                 }
                 else
                 {

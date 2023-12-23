@@ -61,8 +61,6 @@ namespace wmsApp
             
             }
 
-            //生成rsa密钥
-            GenerateKey();
         
             //弹出登录框
             LoginWindow window = new LoginWindow();
@@ -89,19 +87,7 @@ namespace wmsApp
             Result result =LoginApi.logout();
             if (result.success) await ModernMessageBox.Show("提示","退出成功");*/
         }
-        private void GenerateKey()
-        {
-            //生成前端RSA密钥
-            RSA rsa = new RSA();
-            RSAKEY Rsakey = rsa.GetKey();
-            TokenManager.csKey = new Dictionary<string, string>();
-            TokenManager.csKey["publickey"] = Rsakey.PublicKey;
-            TokenManager.csKey["privatekey"] = Rsakey.PrivateKey;
-  
-            //获取后端RSA公钥
-            String key = RsaApi.getJavaPublicKey();
-            TokenManager.javaPublicKey = key;
-        }
+        
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Exception ex = e.ExceptionObject as Exception;

@@ -52,10 +52,6 @@ namespace wms
             MessageBox.Show(result.success.ToString());
         }
 
-        //static void Main(string[] args)
-        //{
-        //    modify();
-        //}
     }
     class UserApi
     {
@@ -121,7 +117,8 @@ namespace wms
         public static Result login(long userId, string password)
         {
             LoginParams loginParams = new LoginParams(userId, password);
-            Result result = JsonHelper.JSONToObject<Result>(http.Post("/login", JsonHelper.ObjectToJSON(loginParams)));
+            //Result result = JsonHelper.JSONToObject<Result>(http.Post("/login", JsonHelper.ObjectToJSON(loginParams)));
+            Result result =http.PostAndEncryptData("/login", JsonHelper.ObjectToJSON(loginParams));
             if (!result.success) MessageBox.Show(result.errorMsg);
             return result;
         }

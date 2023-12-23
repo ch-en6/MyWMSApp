@@ -8,7 +8,7 @@ namespace wmsApp.param
 {
     class SearchPermissionParams
 {
-        public static int PERMISSION_SEARCH_PAGE_SIZE = 3;
+        public static int PERMISSION_SEARCH_PAGE_SIZE = 5;
         public long? userId;
         public String empName;
 

@@ -20,8 +20,8 @@
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Horizontal" Margin="9,-10,200,21" HorizontalAlignment="Center">
-                <Button Content="增加权限类型"  Margin="0,6,20,5.333" Click="Button_Click_1" FontSize="24"/>
-                <Button Content="删除权限类型"  Margin="0,6,20,5.333" VerticalAlignment="Stretch" Click="Button_Click_2" FontSize="24"/>
+                <Button Content="增加权限类型"  Margin="0,6,20,5.333" Click="AddPermissionType" FontSize="24"/>
+                <Button Content="删除权限类型"  Margin="0,6,20,5.333" VerticalAlignment="Stretch" Click="DelPermissionType" FontSize="24"/>
 
                 <Grid>
                     <Grid.ColumnDefinitions>

@@ -273,6 +273,7 @@ namespace wmsApp.pages
                     if (condition == "")
                     {
                         ModernMessageBox.showMessage("参数不能为空!!");
+                        IsSearching = !IsSearching;
                         return;
                     }
                     long parsedValue;
@@ -533,7 +534,7 @@ namespace wmsApp.pages
                     UpdatePermissionParams param = new UpdatePermissionParams(long.Parse(userId), resourceId, columnName,isChecked);
                     try
                     {
-                        Result result = PermissionApi.updatePermission( param);
+                        Result result = PermissionApi.updatePermission(param);
                         if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
                         if (!result.success)
                         {
@@ -542,13 +543,13 @@ namespace wmsApp.pages
 
                         }
                     }
-                    catch (TokenExpiredException ex) { }
+                    catch (TokenExpiredException ex) {
+                    }
 
                 }
             }
 
-            // 处理点击事件逻辑
-            // ...
+        
         }
 
         private async void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -680,7 +681,10 @@ namespace wmsApp.pages
             UpdatePageNumber();
         }
 
-        private async void Button_Click_1(object sender, RoutedEventArgs e)
+  
+
+
+        private async void AddPermissionType(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -705,13 +709,12 @@ namespace wmsApp.pages
             }
         }
 
-        private async void Button_Click_2(object sender, RoutedEventArgs e)
+        private async void DelPermissionType(object sender, RoutedEventArgs e)
         {
-
             try
             {
                 DelPermissionTypeDialog dialog = new DelPermissionTypeDialog(resourceId);
-              
+
                 ContentDialogResult result = await dialog.ShowAsync();
 
                 if (result == ContentDialogResult.Secondary) return;
@@ -729,7 +732,5 @@ namespace wmsApp.pages
                 ModernMessageBox.showMessage(ex.Message);
             }
         }
-
-
     }
 }

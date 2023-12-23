@@ -28,12 +28,14 @@ namespace wmsApp.pages
     {
         public UserPage()
         {
-            InitializeComponent();
+            
             Result result = UserInfoApi.show();
             if (!result.success)
             {
                 ModernMessageBox.showMessage(result.errorMsg);
+                return;
             }
+            InitializeComponent();
             User user =JsonHelper.JSONToObject<User>(result.data.ToString());
             DataContext = user;
 

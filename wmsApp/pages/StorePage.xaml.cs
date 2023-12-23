@@ -34,6 +34,7 @@ namespace wmsApp.pages
             totalPage = result.total;
 
             InitializeComponent();
+
             PageNumberTextBlock.Text = currentPage.ToString();
             datagrid.ItemsSource = storeList;
         }
