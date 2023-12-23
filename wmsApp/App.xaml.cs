@@ -63,7 +63,7 @@ namespace wmsApp
 
             //生成rsa密钥
             GenerateKey();
-        
+
             //弹出登录框
             LoginWindow window = new LoginWindow();
             window.Show();
