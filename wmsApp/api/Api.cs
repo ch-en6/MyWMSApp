@@ -226,7 +226,6 @@ namespace wms
                 typeName = type
             };
             var jsonData = JsonConvert.SerializeObject(data);
-            MessageBox.Show(jsonData);
             return http.PostDncryptedData($"/material/typeMaterial", jsonData);
         }
 

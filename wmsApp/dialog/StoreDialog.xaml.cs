@@ -19,18 +19,17 @@ namespace wmsApp.dialog
     /// <summary>
     /// DeliverDialog.xaml 的交互逻辑
     /// </summary>
-    public partial class DeliverDialog : ContentDialog
+    public partial class StoreDialog : ContentDialog
     {
-        private List<Deliver> dataList;
+        private List<Store> dataList;
         public List<string> Categories { get; set; }
 
-        public DeliverDialog()
+        public StoreDialog()
         {
-            // 其他初始化逻辑
             InitializeComponent();
-
-            dataList = new List<Deliver>();
-            datagrid.ItemsSource = dataList;
+            dataList = new List<Store>();
+            
+            //datagrid.ItemsSource = dataList;
             //Result typeNameResult = MaterialApi.searchTypeName();
             //Categories = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
            
@@ -53,37 +52,37 @@ namespace wmsApp.dialog
         }
         private void AddRow_Click(object sender, RoutedEventArgs e)
         {
-            dataList.Add(new Deliver());
-            datagrid.ItemsSource = null;
-            datagrid.ItemsSource = dataList;
+            //dataList.Add(new Deliver());
+            //datagrid.ItemsSource = null;
+            //datagrid.ItemsSource = dataList;
         }
 
         private void RemoveRow_Click(object sender, RoutedEventArgs e)
         {
-            if (datagrid.SelectedItem is Deliver selectedDeliver)
-            {
-                dataList.Remove(selectedDeliver);
-                datagrid.ItemsSource = null;
-                datagrid.ItemsSource = dataList;
-            }
+            //if (datagrid.SelectedItem is Deliver selectedDeliver)
+            //{
+            //    dataList.Remove(selectedDeliver);
+            //    datagrid.ItemsSource = null;
+            //    datagrid.ItemsSource = dataList;
+            //}
         }
         private void TypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count > 0)
-            {
-                string selectedCategory = e.AddedItems[0].ToString();
+            //if (e.AddedItems.Count > 0)
+            //{
+            //    string selectedCategory = e.AddedItems[0].ToString();
 
-                // 确保 MaterialApi 和其方法不为 null
+            //    // 确保 MaterialApi 和其方法不为 null
                 
-                    Result typeMaterialResult = MaterialApi.typeMaterial(selectedCategory);
-                    // 确保 typeMaterialResult 和其属性不为 null
-                    if (typeMaterialResult != null && typeMaterialResult.data != null)
-                    {
-                        List<string> typeMaterialList = JsonHelper.JsonToList<string>(typeMaterialResult.data.ToString());
-                        NameComboBox.ItemsSource = typeMaterialList;
-                    }
+            //        Result typeMaterialResult = MaterialApi.typeMaterial(selectedCategory);
+            //        // 确保 typeMaterialResult 和其属性不为 null
+            //        if (typeMaterialResult != null && typeMaterialResult.data != null)
+            //        {
+            //            List<string> typeMaterialList = JsonHelper.JsonToList<string>(typeMaterialResult.data.ToString());
+            //            NameComboBox.ItemsSource = typeMaterialList;
+            //        }
 
-            }
+            //}
         }
 
 

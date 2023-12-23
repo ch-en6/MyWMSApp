@@ -69,7 +69,7 @@
                 </Button>
 
                 <Button x:Name="addButton" Grid.Row="2" Grid.Column="4" Margin="0,0,0,0" Height="33" Click="Add_Click" >
-                    <ui:SymbolIcon Symbol="Forward"/>
+                    <ui:SymbolIcon Symbol="Add"/>
                 </Button>
 
             </Grid>
