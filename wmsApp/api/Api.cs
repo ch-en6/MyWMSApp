@@ -221,7 +221,13 @@ namespace wms
         //查询某一类别对应的所有物料
         public static Result typeMaterial(string type)
         {
-            return http.PostDncryptedData($"/material/typeMaterial", type);
+            var data = new
+            {
+                typeName = type
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            MessageBox.Show(jsonData);
+            return http.PostDncryptedData($"/material/typeMaterial", jsonData);
         }
 
         //通过类型和物料名查询物料信息

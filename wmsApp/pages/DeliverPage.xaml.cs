@@ -45,7 +45,10 @@ namespace wmsApp.pages
         public async void Add_Click(object sender, RoutedEventArgs e)
         {
             DeliverDialog dialog = new DeliverDialog();
-
+            Result typeNameResult = MaterialApi.searchTypeName();
+            List<string> typeNameList = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
+            dialog.TypeComboBox.ItemsSource = typeNameList;
+            //dialog.TypeComboBox.SelectedValue = selectedItem.type.ToString();
             ContentDialogResult result = await dialog.ShowAsync();
         }
 

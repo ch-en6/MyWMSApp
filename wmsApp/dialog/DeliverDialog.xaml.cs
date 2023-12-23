@@ -6,10 +6,11 @@ using System.Text.RegularExpressions;
 using System.Web.UI.MobileControls;
 using System.Web.UI.WebControls;
 using System.Windows;
-
+using System.Windows.Controls;
 using WindowsFormsApp1.dto;
 using wms;
 using wms.pojo;
+using wms.utils;
 using wmsApp.controls;
 using wmsApp.pojo;
 
@@ -21,15 +22,22 @@ namespace wmsApp.dialog
     public partial class DeliverDialog : ContentDialog
     {
         private List<Deliver> dataList;
+        public List<string> Categories { get; set; }
+
         public DeliverDialog()
         {
-            //InitializeComponent();   
-            //List<Deliver> list = new List<Deliver>();
-            //datagrid.ItemsSource = list;
+            // 其他初始化逻辑
             InitializeComponent();
+
             dataList = new List<Deliver>();
             datagrid.ItemsSource = dataList;
+            //Result typeNameResult = MaterialApi.searchTypeName();
+            //Categories = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
+           
+
+            
         }
+
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
 
@@ -59,6 +67,27 @@ namespace wmsApp.dialog
                 datagrid.ItemsSource = dataList;
             }
         }
+        private void TypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                string selectedCategory = e.AddedItems[0].ToString();
+
+                // 确保 MaterialApi 和其方法不为 null
+                
+                    Result typeMaterialResult = MaterialApi.typeMaterial(selectedCategory);
+
+                    // 确保 typeMaterialResult 和其属性不为 null
+                    if (typeMaterialResult != null && typeMaterialResult.data != null)
+                    {
+                        List<string> typeMaterialList = JsonHelper.JsonToList<string>(typeMaterialResult.data.ToString());
+                        NameComboBox.ItemsSource = typeMaterialList;
+                    }
+
+            }
+        }
+
+
 
     }
 }

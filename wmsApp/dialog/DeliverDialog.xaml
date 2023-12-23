@@ -25,9 +25,17 @@
         <!-- 物料列表 -->
         <DataGrid x:Name="datagrid" Margin="0,57,0,29" AutoGenerateColumns="False" AlternatingRowBackground="Gainsboro" CanUserAddRows="True" IsReadOnly="False" Width="Auto" Grid.ColumnSpan="2" >
             <DataGrid.Columns>
-                <DataGridComboBoxColumn Header="商品类别" SelectedItemBinding="{Binding Category}" Width="Auto"
-                   ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Categories}"/>
-                <DataGridComboBoxColumn Header="商品名称" SelectedItemBinding="{Binding Name}" Width="Auto"
+                <DataGridComboBoxColumn x:Name="TypeComboBox" Header="商品类别" SelectedItemBinding="{Binding Category}" Width="Auto">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <EventSetter Event="SelectionChanged" Handler="TypeComboBox_SelectionChanged" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                </DataGridComboBoxColumn>
+
+
+
+                <DataGridComboBoxColumn x:Name="NameComboBox" Header="商品名称" SelectedItemBinding="{Binding Name}" Width="Auto"
                    ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ProductNames}"/>
                 <DataGridComboBoxColumn Header="仓库" SelectedItemBinding="{Binding Warehouse}" Width="Auto"
                    ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Warehouses}"/>
