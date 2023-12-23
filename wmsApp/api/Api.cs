@@ -226,20 +226,20 @@ namespace wms
                 typeName = type
             };
             var jsonData = JsonConvert.SerializeObject(data);
-            MessageBox.Show(jsonData);
             return http.PostDncryptedData($"/material/typeMaterial", jsonData);
         }
 
         //通过类型和物料名查询物料信息
         public static Result getMaterialByTypeAndName(string type, string name)
         {
+            //MessageBox.Show($"type: {type}, Name: {name}");
             var data = new
             {
                 type = type,
                 name = name
             };
-
-            var jsonData = JsonConvert.SerializeObject(data);
+            MessageBox.Show(data.ToString());
+           var jsonData = JsonConvert.SerializeObject(data);
 
             return http.PostEncryptedData($"/material/searchByTypeAndName", jsonData);
         }

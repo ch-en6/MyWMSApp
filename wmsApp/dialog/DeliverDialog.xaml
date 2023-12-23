@@ -23,9 +23,10 @@
         </StackPanel>
 
         <!-- 物料列表 -->
-        <DataGrid x:Name="datagrid" Margin="0,57,0,29" AutoGenerateColumns="False" AlternatingRowBackground="Gainsboro" CanUserAddRows="True" IsReadOnly="False" Width="Auto" Grid.ColumnSpan="2" >
+        <DataGrid x:Name="datagrid" Margin="0,57,0,29"  AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" AlternatingRowBackground="Gainsboro" CanUserAddRows="True" IsReadOnly="False" Width="Auto" Grid.ColumnSpan="2" >
             <DataGrid.Columns>
-                <DataGridComboBoxColumn x:Name="TypeComboBox" Header="商品类别" SelectedItemBinding="{Binding Category}" Width="Auto">
+                
+                <DataGridComboBoxColumn x:Name="TypeComboBox" Header="商品类别" SelectedItemBinding="{Binding type}" Width="Auto">
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="ComboBox">
                             <EventSetter Event="SelectionChanged" Handler="TypeComboBox_SelectionChanged" />
@@ -33,16 +34,30 @@
                     </DataGridComboBoxColumn.ElementStyle>
                 </DataGridComboBoxColumn>
 
+                <DataGridComboBoxColumn x:Name="NameComboBox" Header="商品名称" SelectedItemBinding="{Binding name}" Width="Auto">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <EventSetter Event="SelectionChanged" Handler="NameComboBox_SelectionChanged" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                </DataGridComboBoxColumn>
 
+                <!--<DataGridComboBoxColumn x:Name="NameComboBox" Header="商品名称" SelectedItemBinding="{Binding Name}" Width="Auto"
+                   ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ProductNames}"/>-->
 
-                <DataGridComboBoxColumn x:Name="NameComboBox" Header="商品名称" SelectedItemBinding="{Binding Name}" Width="Auto"
-                   ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ProductNames}"/>
-                <DataGridComboBoxColumn Header="仓库" SelectedItemBinding="{Binding Warehouse}" Width="Auto"
-                   ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Warehouses}"/>
+                <DataGridComboBoxColumn x:Name="HouseComboBox" Header="商品名称" SelectedItemBinding="{Binding house}" Width="Auto">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <EventSetter Event="SelectionChanged" Handler="HouseComboBox_SelectionChanged" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                </DataGridComboBoxColumn>
+                <!--<DataGridComboBoxColumn Header="仓库" SelectedItemBinding="{Binding Warehouse}" Width="Auto"
+                   ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Warehouses}"/>-->
                 <DataGridTemplateColumn Header="现有库存" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Stock}" Margin="5"/>
+                            <TextBlock Text="{Binding stock}" Margin="5"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -51,7 +66,7 @@
                 <DataGridTemplateColumn Header="申请出库数量" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding Quantity}" Margin="5" Width="5"/>
+                            <TextBox Text="{Binding count}" Margin="5" Width="5"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -59,7 +74,7 @@
                 <DataGridTemplateColumn Header="备注" Width="150">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding Remarks}" Margin="5" />
+                            <TextBox Text="{Binding notes}" Margin="5" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

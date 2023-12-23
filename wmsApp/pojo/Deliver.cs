@@ -24,7 +24,7 @@ namespace wmsApp.pojo
         public string Notes { get; set; }
 
         public int Stock { get; set; }
-
+        public string Category { get; set; }
         public Deliver(long deliverId, long houseId, DateTime deliverTime, long materialId, int deliverCount, long userId, string notes, int stock)
         {
             DeliverId = deliverId;
