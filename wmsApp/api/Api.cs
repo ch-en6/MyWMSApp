@@ -27,7 +27,7 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get($"/msm/send/{phone}"));
         }
         public static Result checkCode(string key, string code)
-        {           
+        {
             return JsonHelper.JSONToObject<Result>(http.Get($"/msm/checkCode/{key}/{code}"));
         }
     }
@@ -38,14 +38,11 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/show"));
         }
-        public static Result updatePhone(String newPhone)
+        public static Result UpdatePhone()
         {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePhone/{newPhone}"));
+            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/show"));
         }
-        public static Result updatePassword(string newPassword)
-        {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePassword/{newPassword}"));
-        }
+
     }
     class RsaApi
     {
@@ -118,10 +115,6 @@ namespace wms
         public static Result resetPassword(User user)
         {
             return JsonHelper.JSONToObject<Result>(http.Post("/user/resetPassword", JsonHelper.DateObjectToJson<User>(user)));
-        }
-        public static Result findAllUserName()
-        {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/user/findAllUserName"));
         }
     }
 
@@ -226,29 +219,37 @@ namespace wms
         }
 
         //查询某一类别对应的所有物料
-        public static Result typeMaterial(string type)
+        public static Result getMaterialNameByType(string type)
         {
             var data = new
             {
                 typeName = type
             };
             var jsonData = JsonConvert.SerializeObject(data);
-            return http.PostDncryptedData($"/material/typeMaterial", jsonData);
+            return http.PostDncryptedData($"/material/getMaterialNameByType", jsonData);
         }
 
-        //通过类型和物料名查询物料信息
-        public static Result getMaterialByTypeAndName(string type, string name)
+        //通过物料名查询仓库
+        public static Result getHouseByMaterialName(string name)
         {
-
             var data = new
             {
-                type = type,
                 name = name
             };
-            MessageBox.Show(data.ToString());
-           var jsonData = JsonConvert.SerializeObject(data);
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/material/getHouseByMaterialName", jsonData);
+        }
 
-            return http.PostEncryptedData($"/material/searchByTypeAndName", jsonData);
+        //根据名字和仓库，返回物料信息
+        public static Result getMaterialByNameAndHouse(string name, string house)
+        {
+            var data = new
+            {
+                name = name,
+                house = house
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostDncryptedData($"/material/getMaterialByNameAndHouse", jsonData);
         }
     }
 

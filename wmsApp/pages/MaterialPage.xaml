@@ -57,7 +57,7 @@
                     <DataGridTextColumn Header="物料id" Binding="{Binding id}" />
                     <DataGridTextColumn Header="物料名称" Binding="{Binding name}" />
                     <DataGridTextColumn Header="仓库" Binding="{Binding houseName}" />
-                    <DataGridTextColumn Header="规格型号" Binding="{Binding type}" />
+                    <DataGridTextColumn Header="物料类别" Binding="{Binding type}" />
                     <DataGridTextColumn Header="计量单位" Binding="{Binding unit}" />
                     <DataGridTextColumn Header="库存数量" Binding="{Binding stock}" />
                     <DataGridTextColumn Header="备注" Binding="{Binding comments}" />
