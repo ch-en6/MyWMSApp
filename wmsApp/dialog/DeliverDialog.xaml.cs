@@ -75,7 +75,7 @@ namespace wmsApp.dialog
             //赋值
             var selectedItem = datagrid.SelectedItem as Product;
             selectedItem.type = selectedtype;
-            Result typeMaterialResult = MaterialApi.typeMaterial(selectedtype);
+            Result typeMaterialResult = MaterialApi.getMaterialNameByType(selectedtype);
             List<string> typeMaterialList = JsonHelper.JsonToList<string>(typeMaterialResult.data.ToString());
             NameComboBox.ItemsSource = typeMaterialList;
         }
@@ -88,15 +88,21 @@ namespace wmsApp.dialog
             selectedItem.name = selectedName; 
            
             // 使用选中的类别和名称调用 API 获取结果
-            Result reslut = MaterialApi.getMaterialByTypeAndName(type, selectedName);
-            MessageBox.Show(reslut.ToString());
+            Result reslut = MaterialApi.getHouseByMaterialName(selectedName);
             // 将结果转换为 List<string>
             List<string> list = JsonHelper.JsonToList<string>(reslut.data.ToString());
             HouseComboBox.ItemsSource = list;
         }
         private void HouseComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            var selectedItem = datagrid.SelectedItem as Product;
+            string name = selectedItem. name.ToString();
+            string selectedHouse = e.AddedItems.Count > 0 ? e.AddedItems[0].ToString() : null;
+            selectedItem.house = selectedHouse;
+            Result reslut = MaterialApi.getMaterialByNameAndHouse(name, selectedHouse);
+            Material material= JsonHelper.JSONToObject<Material>(reslut.data.ToString());
+            selectedItem.materialId = material.id;
+            selectedItem.stock = material.stock;
         }
         
     }

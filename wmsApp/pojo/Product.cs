@@ -11,6 +11,7 @@ namespace wmsApp.pojo
         public string type { get; set; }
         public string name { get; set; }
         public string house { get; set; }
+        public long materialId { get; set; }
         public int stock { get; set; }
         public int count { get; set; }
         public string notes { get; set; }

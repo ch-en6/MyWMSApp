@@ -47,7 +47,7 @@
                 <!--<DataGridComboBoxColumn x:Name="NameComboBox" Header="商品名称" SelectedItemBinding="{Binding Name}" Width="Auto"
                    ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ProductNames}"/>-->
 
-                <DataGridComboBoxColumn x:Name="HouseComboBox" Header="商品名称" SelectedItemBinding="{Binding house}" Width="Auto">
+                <DataGridComboBoxColumn x:Name="HouseComboBox" Header="仓库名称" SelectedItemBinding="{Binding house}" Width="Auto">
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="ComboBox">
                             <EventSetter Event="SelectionChanged" Handler="HouseComboBox_SelectionChanged" />
@@ -56,6 +56,15 @@
                 </DataGridComboBoxColumn>
                 <!--<DataGridComboBoxColumn Header="仓库" SelectedItemBinding="{Binding Warehouse}" Width="Auto"
                    ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.Warehouses}"/>-->
+                
+                <DataGridTemplateColumn Header="物料id" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding materialId}" Margin="5"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
                 <DataGridTemplateColumn Header="现有库存" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

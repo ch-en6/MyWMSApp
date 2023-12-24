@@ -38,9 +38,13 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/show"));
         }
-        public static Result UpdatePhone()
+        public static Result updatePhone(String newPhone)
         {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/show"));
+            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePhone/{newPhone}"));
+        }
+        public static Result updatePassword(string newPassword)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePassword/{newPassword}"));
         }
 
     }
@@ -115,6 +119,10 @@ namespace wms
         public static Result resetPassword(User user)
         {
             return JsonHelper.JSONToObject<Result>(http.Post("/user/resetPassword", JsonHelper.DateObjectToJson<User>(user)));
+        }
+        public static Result findAllUserName()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/user/findAllUserName"));
         }
     }
 
@@ -229,6 +237,7 @@ namespace wms
             return http.PostDncryptedData($"/material/getMaterialNameByType", jsonData);
         }
 
+
         //通过物料名查询仓库
         public static Result getHouseByMaterialName(string name)
         {
@@ -248,6 +257,7 @@ namespace wms
                 name = name,
                 house = house
             };
+            MessageBox.Show(data.ToString());
             var jsonData = JsonConvert.SerializeObject(data);
             return http.PostDncryptedData($"/material/getMaterialByNameAndHouse", jsonData);
         }
