@@ -45,5 +45,26 @@ namespace wmsApp.pages
             dialog.phoneTextBlock.Text = user.phone;
             ContentDialogResult result = await dialog.ShowAsync();
         }
+
+        public void UpdatePage()
+        {
+            Result result = UserInfoApi.show();
+            if (!result.success)
+            {
+                ModernMessageBox.showMessage(result.errorMsg);
+            }
+            user = JsonHelper.JSONToObject<User>(result.data.ToString());
+            DataContext = user;
+        }
+
+        public async void updatePhone_MouseDown(object sender, RoutedEventArgs e)
+        {
+            UpdatePhoneDialog dialog = new UpdatePhoneDialog(user.phone);
+            ContentDialogResult result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Secondary) return;
+            UpdatePage();
+        }
+        
+
     }
 }

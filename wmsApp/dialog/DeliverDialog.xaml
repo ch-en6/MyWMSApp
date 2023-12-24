@@ -15,8 +15,10 @@
         
         <!-- 选择操作人和时间 -->
         <StackPanel  Orientation="Horizontal" Margin="20,0,20,311" Width="Auto" >
+
             <TextBlock Text="操作人：" VerticalAlignment="Center"/>
-            <TextBox x:Name="OperatorTextBox" Width="120" Margin="10" VerticalAlignment="Center"/>
+            <ComboBox x:Name="UserComboBox" Width="120" Margin="10" VerticalAlignment="Center" />
+           
             <TextBlock Text="时间：" VerticalAlignment="Center"/>
             <DatePicker x:Name="DatePicker" Width="120"/>
             <Button Content="添加" Click="AddRow_Click" />

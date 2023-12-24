@@ -27,7 +27,7 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get($"/msm/send/{phone}"));
         }
         public static Result checkCode(string key, string code)
-        {
+        {           
             return JsonHelper.JSONToObject<Result>(http.Get($"/msm/checkCode/{key}/{code}"));
         }
     }
@@ -38,11 +38,14 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/show"));
         }
-        public static Result UpdatePhone()
+        public static Result updatePhone(String newPhone)
         {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/show"));
+            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePhone/{newPhone}"));
         }
-
+        public static Result updatePassword(string newPassword)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePassword/{newPassword}"));
+        }
     }
     class RsaApi
     {
@@ -115,6 +118,10 @@ namespace wms
         public static Result resetPassword(User user)
         {
             return JsonHelper.JSONToObject<Result>(http.Post("/user/resetPassword", JsonHelper.DateObjectToJson<User>(user)));
+        }
+        public static Result findAllUserName()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/user/findAllUserName"));
         }
     }
 
@@ -232,7 +239,7 @@ namespace wms
         //通过类型和物料名查询物料信息
         public static Result getMaterialByTypeAndName(string type, string name)
         {
-            //MessageBox.Show($"type: {type}, Name: {name}");
+
             var data = new
             {
                 type = type,

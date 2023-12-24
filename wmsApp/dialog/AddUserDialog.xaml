@@ -10,14 +10,14 @@
     SecondaryButtonText="取消"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
-    <Grid Margin="0,0,22,0">
+    <Grid  HorizontalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="68"/>
             <ColumnDefinition Width="132.333"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Margin="0,0,0,1" Grid.ColumnSpan="2">
+        <StackPanel Grid.Column="0"  Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <TextBlock Text="姓名"/>
             <TextBox x:Name="nameTextBox" Width="200"/>
 

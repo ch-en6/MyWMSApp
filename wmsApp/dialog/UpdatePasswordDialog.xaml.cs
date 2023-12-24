@@ -53,10 +53,19 @@ namespace wmsApp.dialog
         {
             string phone = phoneTextBlock.Text;
             string code = codeTextBox.Text;
+            string newPassword = confirmPasswordBox.Password;
             Result result = MsmApi.checkCode(phone,code);
             if(result.success)
             {
-                MessageBox.Show("修改成功！");
+                Result result2=UserInfoApi.updatePassword(newPassword);
+                if(result2.success)
+                {
+                    MessageBox.Show("修改成功");
+                }
+                else
+                {
+                    MessageBox.Show(result2.errorMsg);
+                }
             }
             else
             {

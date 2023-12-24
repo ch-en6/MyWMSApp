@@ -89,6 +89,9 @@
     <Compile Include="dialog\UpdatePasswordDialog.xaml.cs">
       <DependentUpon>UpdatePasswordDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dialog\UpdatePhoneDialog.xaml.cs">
+      <DependentUpon>UpdatePhoneDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="dialog\UpdateUserDialog.xaml.cs">
       <DependentUpon>UpdateUserDialog.xaml</DependentUpon>
     </Compile>
@@ -164,6 +167,10 @@
     <Page Include="dialog\UpdatePasswordDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="dialog\UpdatePhoneDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="dialog\UpdateUserDialog.xaml">
       <SubType>Designer</SubType>

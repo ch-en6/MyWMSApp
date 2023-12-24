@@ -48,6 +48,9 @@ namespace wmsApp.pages
             Result typeNameResult = MaterialApi.searchTypeName();
             List<string> typeNameList = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
             dialog.TypeComboBox.ItemsSource = typeNameList;
+            Result userNameResult = UserApi.findAllUserName();
+            List<string> userNameList = JsonHelper.JsonToList<string>(userNameResult.data.ToString());
+            dialog.UserComboBox.ItemsSource = userNameList;
             ContentDialogResult result = await dialog.ShowAsync();
         }
 
