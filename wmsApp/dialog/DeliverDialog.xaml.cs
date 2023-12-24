@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.UI.MobileControls;
 using System.Web.UI.WebControls;
@@ -21,7 +22,7 @@ namespace wmsApp.dialog
     /// </summary>
     public partial class DeliverDialog : ContentDialog
     {
-        private List<Deliver> dataList;
+        private List<Product> dataList;
         public List<string> Categories { get; set; }
 
         public DeliverDialog()
@@ -29,7 +30,7 @@ namespace wmsApp.dialog
             // 其他初始化逻辑
             InitializeComponent();
 
-            dataList = new List<Deliver>();
+            dataList = new List<Product>();
             datagrid.ItemsSource = dataList;
             //Result typeNameResult = MaterialApi.searchTypeName();
             //Categories = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
@@ -53,14 +54,14 @@ namespace wmsApp.dialog
         }
         private void AddRow_Click(object sender, RoutedEventArgs e)
         {
-            dataList.Add(new Deliver());
+            dataList.Add(new Product());
             datagrid.ItemsSource = null;
             datagrid.ItemsSource = dataList;
         }
 
         private void RemoveRow_Click(object sender, RoutedEventArgs e)
         {
-            if (datagrid.SelectedItem is Deliver selectedDeliver)
+            if (datagrid.SelectedItem is Product selectedDeliver)
             {
                 dataList.Remove(selectedDeliver);
                 datagrid.ItemsSource = null;
@@ -69,24 +70,34 @@ namespace wmsApp.dialog
         }
         private void TypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count > 0)
-            {
-                string selectedCategory = e.AddedItems[0].ToString();
 
-                // 确保 MaterialApi 和其方法不为 null
-                
-                    Result typeMaterialResult = MaterialApi.typeMaterial(selectedCategory);
-                    // 确保 typeMaterialResult 和其属性不为 null
-                    if (typeMaterialResult != null && typeMaterialResult.data != null)
-                    {
-                        List<string> typeMaterialList = JsonHelper.JsonToList<string>(typeMaterialResult.data.ToString());
-                        NameComboBox.ItemsSource = typeMaterialList;
-                    }
-
-            }
+            string selectedtype = e.AddedItems[0].ToString();
+            //赋值
+            var selectedItem = datagrid.SelectedItem as Product;
+            selectedItem.type = selectedtype;
+            Result typeMaterialResult = MaterialApi.typeMaterial(selectedtype);
+            List<string> typeMaterialList = JsonHelper.JsonToList<string>(typeMaterialResult.data.ToString());
+            NameComboBox.ItemsSource = typeMaterialList;
         }
 
+        private void NameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedItem = datagrid.SelectedItem as Product;
+            string type=selectedItem.type.ToString(); 
+            string selectedName = e.AddedItems.Count > 0 ? e.AddedItems[0].ToString() : null;
+            selectedItem.name = selectedName; 
+           
+            // 使用选中的类别和名称调用 API 获取结果
+            Result reslut = MaterialApi.getMaterialByTypeAndName(type, selectedName);
 
+            // 将结果转换为 List<string>
+            List<string> list = JsonHelper.JsonToList<string>(reslut.data.ToString());
+            HouseComboBox.ItemsSource = list;
+        }
+        private void HouseComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
+        }
+        
     }
 }

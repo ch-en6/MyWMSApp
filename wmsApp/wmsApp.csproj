@@ -124,11 +124,13 @@
     <Compile Include="param\SearchPermissionParams.cs" />
     <Compile Include="param\StoreConSearchParams.cs" />
     <Compile Include="param\UpdatePermissionParams.cs" />
+    <Compile Include="pojo\Class1.cs" />
     <Compile Include="pojo\Deliver.cs" />
     <Compile Include="pojo\House.cs" />
     <Compile Include="pojo\Material.cs" />
     <Compile Include="pojo\MaterialType.cs" />
     <Compile Include="pojo\PermissionType.cs" />
+    <Compile Include="pojo\Product.cs" />
     <Compile Include="pojo\Resource.cs" />
     <Compile Include="pojo\Store.cs" />
     <Compile Include="UpgradeWindow.xaml.cs">
