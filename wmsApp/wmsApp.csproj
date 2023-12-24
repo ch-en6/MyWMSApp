@@ -74,6 +74,9 @@
     <Compile Include="dialog\AddUserDialog.xaml.cs">
       <DependentUpon>AddUserDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dialog\StoreDialog.xaml.cs">
+      <DependentUpon>StoreDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="dialog\DeliverDialog.xaml.cs">
       <DependentUpon>DeliverDialog.xaml</DependentUpon>
     </Compile>
@@ -149,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="dialog\AddUserDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="dialog\StoreDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

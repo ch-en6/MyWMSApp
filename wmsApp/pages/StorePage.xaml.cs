@@ -1,4 +1,5 @@
-﻿using NuGet;
+﻿using ModernWpf.Controls;
+using NuGet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ using System.Windows.Shapes;
 using WindowsFormsApp1.dto;
 using wms;
 using wms.utils;
+using wmsApp.dialog;
 using wmsApp.pojo;
 
 namespace wmsApp.pages
@@ -23,7 +25,7 @@ namespace wmsApp.pages
     /// <summary>
     /// StorePage.xaml 的交互逻辑
     /// </summary>
-    public partial class StorePage : Page
+    public partial class StorePage : System.Windows.Controls.Page
     {
         int currentPage = 1;
         long totalPage = 0;
@@ -31,25 +33,29 @@ namespace wmsApp.pages
         
         public StorePage()
         {
+            InitializeComponent();
+
             flag = 0;
 
-            Result result = StoreApi.searchAll(currentPage);
-            List<Store> storeList = JsonHelper.JsonToList<Store>(result.data.ToString());
-            totalPage = result.total;
+            SearchAll(currentPage);
 
             Result houseName = MaterialApi.searchHouseName();
             List<string> houseList = JsonHelper.JsonToList<string>(houseName.data.ToString());
-
-            InitializeComponent();
-            PageNumberTextBlock.Text = currentPage.ToString();
-            datagrid.ItemsSource = storeList;
             warehouseNameComboBox.ItemsSource = houseList;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void SearchAll(int page)
         {
-            flag = 1;
+            Result result = StoreApi.searchAll(page);
+            List<Store> storeList = JsonHelper.JsonToList<Store>(result.data.ToString());
+            totalPage = result.total;
 
+            PageNumberTextBlock.Text = currentPage.ToString();
+            datagrid.ItemsSource = storeList;
+        }
+
+        public void ConditionSearch(int page)
+        {
             long storeNo = string.IsNullOrEmpty(storeNoTextBox.Text) ? 0 : long.Parse(storeNoTextBox.Text);
             long materialId = string.IsNullOrEmpty(materialIdTextBox.Text) ? 0 : long.Parse(materialIdTextBox.Text);
             string warehouseName = warehouseNameComboBox.Text;
@@ -57,31 +63,34 @@ namespace wmsApp.pages
             DateTime? endTime = endTimeTextBox.SelectedDate;
             long operatorId = string.IsNullOrEmpty(operatorIdTextBox.Text) ? 0 : long.Parse(operatorIdTextBox.Text);
             string notes = storeNotes.Text;
-            currentPage = 1;
 
-            if(startTime.HasValue && endTime.HasValue && endTime < startTime)
+            if (startTime.HasValue && endTime.HasValue && endTime < startTime)
             {
                 MessageBox.Show("结束时间不能早于开始时间，请重新选择");
                 return;
             }
 
-            Result result = StoreApi.searchCondition(storeNo, warehouseName, startTime, endTime, materialId, operatorId, notes, currentPage);
+            Result result = StoreApi.searchCondition(storeNo, warehouseName, startTime, endTime, materialId, operatorId, notes, page);
             List<Store> storeList = JsonHelper.JsonToList<Store>(result.data.ToString());
             totalPage = result.total;
 
             PageNumberTextBlock.Text = currentPage.ToString();
             datagrid.ItemsSource = storeList;
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            flag = 1;
+
+            currentPage = 1;
+            ConditionSearch(currentPage);
         }
 
         public void btnBack_Click(object sender, RoutedEventArgs e)
         {
             currentPage = 1;
-            Result result = StoreApi.searchAll(currentPage);
-            List<Store> storeList = JsonHelper.JsonToList<Store>(result.data.ToString());
-            totalPage = result.total;
-
-            PageNumberTextBlock.Text = currentPage.ToString();
-            datagrid.ItemsSource = storeList;
+            SearchAll(currentPage);
         }
 
         public void btnClear_Click(object sender, RoutedEventArgs e)
@@ -95,9 +104,10 @@ namespace wmsApp.pages
             storeNotes.Text = "";
         }
 
-        public void Add_Click(object sender, RoutedEventArgs e)
+        public async void Add_Click(object sender, RoutedEventArgs e)
         {
-
+            StoreDialog dialog = new StoreDialog();
+            await dialog.ShowAsync();
         }
 
         public void UpdateMaterialButton_Click(object sender, RoutedEventArgs e)
@@ -117,12 +127,11 @@ namespace wmsApp.pages
                 currentPage--;
                 if(flag == 0)
                 {
-                    Result result = StoreApi.searchAll(currentPage);
-                    List<Store> storeList = JsonHelper.JsonToList<Store>(result.data.ToString());
-                    totalPage = result.total;
-
-                    PageNumberTextBlock.Text = totalPage.ToString();
-                    datagrid.ItemsSource = storeList;
+                    SearchAll(currentPage);
+                }
+                if(flag == 1)
+                {
+                    ConditionSearch(currentPage);
                 }
             }
 
@@ -133,7 +142,14 @@ namespace wmsApp.pages
             if (currentPage < totalPage)
             {
                 currentPage++;
-                
+                if(flag == 0)
+                {
+                    SearchAll(currentPage);
+                }
+                if(flag == 1)
+                {
+                    ConditionSearch(currentPage);
+                }
             }
         }
 
