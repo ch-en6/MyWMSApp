@@ -219,29 +219,37 @@ namespace wms
         }
 
         //查询某一类别对应的所有物料
-        public static Result typeMaterial(string type)
+        public static Result getMaterialNameByType(string type)
         {
             var data = new
             {
                 typeName = type
             };
             var jsonData = JsonConvert.SerializeObject(data);
-            return http.PostDncryptedData($"/material/typeMaterial", jsonData);
+            return http.PostDncryptedData($"/material/getMaterialNameByType", jsonData);
         }
 
-        //通过类型和物料名查询物料信息
-        public static Result getMaterialByTypeAndName(string type, string name)
+        //通过物料名查询仓库
+        public static Result getHouseByMaterialName(string name)
         {
-            //MessageBox.Show($"type: {type}, Name: {name}");
             var data = new
             {
-                type = type,
                 name = name
             };
-            MessageBox.Show(data.ToString());
-           var jsonData = JsonConvert.SerializeObject(data);
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/material/getHouseByMaterialName", jsonData);
+        }
 
-            return http.PostEncryptedData($"/material/searchByTypeAndName", jsonData);
+        //根据名字和仓库，返回物料信息
+        public static Result getMaterialByNameAndHouse(string name, string house)
+        {
+            var data = new
+            {
+                name = name,
+                house = house
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostDncryptedData($"/material/getMaterialByNameAndHouse", jsonData);
         }
     }
 
