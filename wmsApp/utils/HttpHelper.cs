@@ -63,7 +63,7 @@ namespace wms.utils
                 string aesKeyByRsaDecode = rsa.DecryptByPrivateKey(result.aesKey, TokenManager.csKey["privatekey"]);
 
                 string Resultdata = result.data.ToString();
-
+                MessageBox.Show(Resultdata);
                 return JsonHelper.JSONToObject<Result>(aes.AesDecrypt(result.data.ToString(), aesKeyByRsaDecode));
             }
             catch (Exception ex)

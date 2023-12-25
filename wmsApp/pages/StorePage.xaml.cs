@@ -140,6 +140,11 @@ namespace wmsApp.pages
             await dialog.ShowAsync();
         }
 
+        public void Print_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+
         public void UpdateMaterialButton_Click(object sender, RoutedEventArgs e)
         {
 

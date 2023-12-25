@@ -257,9 +257,8 @@ namespace wms
                 name = name,
                 house = house
             };
-            MessageBox.Show(data.ToString());
             var jsonData = JsonConvert.SerializeObject(data);
-            return http.PostDncryptedData($"/material/getMaterialByNameAndHouse", jsonData);
+            return http.PostEncryptedData($"/material/getMaterialByNameAndHouse", jsonData);
         }
     }
 
@@ -269,6 +268,7 @@ namespace wms
 
         public static Result searchAll(int page)
         {
+            MessageBox.Show(http.GetDncryptedData($"/store/searchAll/{page}").data.ToString());
             return http.GetDncryptedData($"/store/searchAll/{page}");
         }
 
