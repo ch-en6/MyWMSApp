@@ -25,9 +25,12 @@
             <ui:NavigationView.PaneFooter>
                 <StackPanel Margin="0,3,10,0">
                     <!-- 其他设置选项 -->
-                    <Button Content="退出登录" Click="LogoutButton_Click" FontSize="22"/>
+                    <Button Click="LogoutButton_Click" Width="32" Height="32" Background="LightGray" BorderThickness="0" >
+                        <ui:SymbolIcon Symbol="Forward" Width="16"/>
+                    </Button>
                 </StackPanel>
             </ui:NavigationView.PaneFooter>
+
 
         </ui:NavigationView>
       

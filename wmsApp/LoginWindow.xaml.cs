@@ -21,6 +21,12 @@ namespace wmsApp
             Loaded += OnWindowLoaded;
         }
 
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+
         private void GenerateKey()
         {
             //生成前端RSA密钥
@@ -42,13 +48,12 @@ namespace wmsApp
             double screenWidth = SystemParameters.WorkArea.Width;
             double screenHeight = SystemParameters.WorkArea.Height;
 
-            // 设置窗口大小和位置
-            Width = screenWidth;
-            Height = screenHeight;
-            Left = 0;
-            Top = 0;
+            // 设置窗口位置
+            Left = (screenWidth - ActualWidth) / 2;
+            Top = (screenHeight - ActualHeight) / 2;
             WindowStartupLocation = WindowStartupLocation.Manual; // 设置窗口的启动位置为手动模式
         }
+
 
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -89,46 +94,53 @@ namespace wmsApp
         
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            // 点击登录按钮后先禁用输入框和登录按钮
+            UsernameTextBox.IsEnabled = false;
+            PasswordBox.IsEnabled = false;
+            LoginButton.IsEnabled = false;
+
             string username = UsernameTextBox.Text;
             string password = PasswordBox.Password;
 
             long userId;
             if (long.TryParse(username, out userId))
             {
-                
                 //发送登录请求
                 Task<Result> loginTask = PerformLogin(userId, password);
 
                 // 等待登录结果
-                loginTask.ContinueWith(task =>
+                Result result = await loginTask;
+                if (result != null && result.success)
                 {
-                    Result result = task.Result;
-                    if (result != null && result.success)
-                    {
-                        string token = result.data.ToString();
-                        TokenManager.token = token;
-                        TokenManager.userId = userId;
+                    string token = result.data.ToString();
+                    TokenManager.token = token;
+                    TokenManager.userId = userId;
 
-                        // 登录成功，打开主窗口,获取密钥
-                        Dispatcher.Invoke(() =>
-                        {
-                            //打开主窗口
-                            MainWindow mainWindow = new MainWindow();
-                            mainWindow.Show();
+                    // 登录成功，打开主窗口
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
 
-                            Close();
-                        });
-                    }
-                    HideLoadingOverlay(); // 隐藏蒙版和设置 ProgressRing 的 IsActive 属性为 false
-                });
+                    // 关闭当前窗口
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("登录失败！");
+                }
             }
             else
             {
                 MessageBox.Show("用户名格式不正确");
             }
+
+            // 启用输入框和登录按钮
+            UsernameTextBox.IsEnabled = true;
+            PasswordBox.IsEnabled = true;
+            LoginButton.IsEnabled = true;
         }
+
 
         private void ShowLoadingOverlay()
         {

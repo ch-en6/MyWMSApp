@@ -7,36 +7,68 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         xmlns:local="clr-namespace:wmsApp.pages"
         mc:Ignorable="d"
-         WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="CenterScreen"
         KeyDown="Window_KeyDown"
-        Title="登录界面"  Height="800" Width="1280" >
-    <Grid >
-       
-        <Grid Background="#FFD8D7D7" >
-            <Grid.Resources>
-                <Style TargetType="Control">
-                    <Setter Property="FontSize" Value="24"/>
-                </Style>
-            </Grid.Resources>
-            <TextBlock Text="欢迎使用仓库管理系统" Foreground="Blue" FontSize="44" FontWeight="Bold"
-                       HorizontalAlignment="Center" Margin="241,58,232.333,298.667" />
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label Content="用户名" FontSize="24" />
-                <TextBox x:Name="UsernameTextBox" Width="300" FontSize="24" VerticalAlignment="Center"
-                         Margin="0,0,0,10"/>
-                <Label Content="密码" FontSize="24" />
-                <PasswordBox x:Name="PasswordBox" Width="300"  FontSize="24"  VerticalAlignment="Center"
-                             Margin="0,0,0,20"/>
-                <Button Content="登录" Width="300" HorizontalAlignment="Center" FontSize="24"
-                        Click="LoginButton_Click"/>
-            </StackPanel>
+        Title="登录界面" Width="357.222" Height="438.667">
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="WindowStyle" Value="None"/>
+            <Setter Property="AllowsTransparency" Value="True"/>
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome CornerRadius="38" GlassFrameThickness="0,0,0,0"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Style>
+
+    <Border Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+
+            <!-- 上方占据一块位置 -->
+            <Grid Grid.Row="0">
+                <Grid.Resources>
+                    <Style TargetType="Control">
+                        <Setter Property="FontSize" Value="18" />
+                    </Style>
+                </Grid.Resources>
+                <Image Grid.Column="0" Source="./assets/icon.png" HorizontalAlignment="Center" Width="Auto" Height="Auto" Margin="108,15,117.667,26.333" />
+                <TextBlock Text="WMS"  FontWeight="Bold" Foreground="Black" FontSize="24" HorizontalAlignment="Center" Margin="145,112,127.667,0.333" Width="82"/>
+                <Button Width="30" Height="30"  HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Click="CloseButton_Click">
+                    <Image Source="./assets/close_icon.png" HorizontalAlignment="Center" Width="17"/>
+                </Button>
+
+            </Grid>
+
+            <!-- 下方添加登录相关内容 -->
+            <Grid Grid.Row="1" Margin="0,20,0,0">
+                <Grid.Resources>
+                    <Style TargetType="Control">
+                        <Setter Property="FontSize" Value="18" />
+                    </Style>
+                </Grid.Resources>
+                <StackPanel HorizontalAlignment="Center" Margin="27,0,27.667,90.667">
+                    <Label Content="用户名" FontSize="18" />
+                    <TextBox x:Name="UsernameTextBox" Width="300" FontSize="18" VerticalAlignment="Center"
+                                     Margin="0,0,0,10"/>
+                    <Label Content="密码" FontSize="18" />
+                    <PasswordBox x:Name="PasswordBox" Width="300"  FontSize="18"  VerticalAlignment="Center"
+                                         Margin="0,0,0,20"/>
+                    <Button x:Name="LoginButton" Content="登录" Width="300" HorizontalAlignment="Center" FontSize="18"
+                                    Click="LoginButton_Click"/>
+                </StackPanel>
+                <Grid x:Name="loadingGrid" Background="#80FFFFFF" Visibility="Collapsed" Grid.ColumnSpan="2" Margin="0,0,0.333,0.333">
+                    <!-- 蒙版，背景色为半透明黑色 -->
+                    <!-- Loding -->
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                        <ui:ProgressRing x:Name="ring" IsActive="False" Width="50" Height="50"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
         </Grid>
-        <Grid x:Name="loadingGrid" Background="#80FFFFFF" Visibility="Collapsed">
-            <!-- 蒙版，背景色为半透明黑色 -->
-            <!-- Loding -->
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <ui:ProgressRing x:Name="ring" IsActive="False" Width="50" Height="50"/>
-            </StackPanel>
-        </Grid>
-    </Grid>
+    </Border>
 </Window>

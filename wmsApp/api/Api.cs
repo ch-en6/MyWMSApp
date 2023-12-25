@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,18 @@ namespace wms
     class RsaApi
     {
         public static HttpHelper http = new HttpHelper();
+
+/*        public static void test(string type)
+        {
+            var data = new
+            {
+                typeName = type
+            };
+            string jsonData = JsonConvert.SerializeObject(data);
+            MessageBox.Show(jsonData);
+            MessageBox.Show(http.PostDncryptedData("/material/typeMaterial", jsonData).data.ToString());
+        }*/
+
         public static String getJavaPublicKey()
         {
             return http.Get("/rsa");
@@ -38,8 +51,7 @@ namespace wms
             User user = new User();
             user.id = 1;
             user.name = "hi";
-            
-            Result result = http.GetDncryptedData("/rsa/test1/1");
+            Result result = http.PostDncryptedData("/rsa/test1/1",JsonHelper.ObjectToJSON(user));
             MessageBox.Show(result.data.ToString());
 
         }

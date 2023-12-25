@@ -347,7 +347,7 @@ namespace wmsApp.pages
 
 
                 // 更新页码显示
-                PageNumberTextBlock.Text = currentPage.ToString();
+                PageNumberTextBlock.Text = currentPage.ToString()+"/"+totalPage.ToString();
 
                 // 更新数据源
                 dataGrid.ItemsSource = IsSearching ? usersearchPermissionList : userPermissionList;

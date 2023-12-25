@@ -112,36 +112,36 @@ namespace wms.utils
         /**
          * 发送密文GET请求,获取密文数据
          */
-     /*   public Result GetEncryptedData(string url)
-        {
-            try
-            {
-                RSA rsa = new RSA();
-                AES aes = new AES();
-                //加密数据
-                string aesKey = aes.GetKey();
-                MessageBox.Show("1");
+        /*   public Result GetEncryptedData(string url)
+           {
+               try
+               {
+                   RSA rsa = new RSA();
+                   AES aes = new AES();
+                   //加密数据
+                   string aesKey = aes.GetKey();
+                   MessageBox.Show("1");
 
-                Result data = new Result();
-                data.data = aes.AesEncrypt(url, aesKey); //AES加密后的数据
-                data.aesKey = rsa.EncryptByPublicKey(aesKey, TokenManager.javaPublicKey); //后端RSA公钥加密后的AES的key
-                data.publicKey = TokenManager.csKey["publickey"];//前端公钥
-                string dataStr = JsonHelper.DateObjectTOJson(data);//将加密后的Result对象转换为json类型
+                   Result data = new Result();
+                   data.data = aes.AesEncrypt(url, aesKey); //AES加密后的数据
+                   data.aesKey = rsa.EncryptByPublicKey(aesKey, TokenManager.javaPublicKey); //后端RSA公钥加密后的AES的key
+                   data.publicKey = TokenManager.csKey["publickey"];//前端公钥
+                   string dataStr = JsonHelper.DateObjectTOJson(data);//将加密后的Result对象转换为json类型
 
-                var responseString = client.GetStringAsync(dataStr);
-                Result result = JsonHelper.JSONToObject<Result>(responseString.Result); //包含data，aeskey
-                // rsa私钥解密获得aeskey
-                string aesKeyByRsaDecode = rsa.DecryptByPrivateKey(result.aesKey, TokenManager.csKey["privatekey"]);
+                   var responseString = client.GetStringAsync(dataStr);
+                   Result result = JsonHelper.JSONToObject<Result>(responseString.Result); //包含data，aeskey
+                   // rsa私钥解密获得aeskey
+                   string aesKeyByRsaDecode = rsa.DecryptByPrivateKey(result.aesKey, TokenManager.csKey["privatekey"]);
 
-                string Resultdata = result.data.ToString();
+                   string Resultdata = result.data.ToString();
 
-                return JsonHelper.JSONToObject<Result>(aes.AesDecrypt(result.data.ToString(), aesKeyByRsaDecode));
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }*/
+                   return JsonHelper.JSONToObject<Result>(aes.AesDecrypt(result.data.ToString(), aesKeyByRsaDecode));
+               }
+               catch (Exception ex)
+               {
+                   return null;
+               }
+           }*/
         /**
          * 发送密文POST请求,获取密文数据，参数含@RequestBody不能用
          */
