@@ -6,6 +6,7 @@ using System.Windows.Input;
 using WindowsFormsApp1.dto;
 using wms;
 using wms.utils;
+using wmsApp.controls;
 using wmsApp.utils;
 using static wmsApp.utils.RSA;
 
@@ -127,12 +128,12 @@ namespace wmsApp
                 }
                 else
                 {
-                    MessageBox.Show("登录失败！");
+                    ModernMessageBox.showMessage("登录失败！");
                 }
             }
             else
             {
-                MessageBox.Show("用户名格式不正确");
+                ModernMessageBox.showMessage("用户名格式不正确");
             }
 
             // 启用输入框和登录按钮
@@ -167,15 +168,15 @@ namespace wmsApp
             if (username != null  && password !=null )
             {
                 if (!long.TryParse(username, out userId))
-                { 
-                    MessageBox.Show("用户名格式不正确！");
+                {
+                    ModernMessageBox.showMessage("用户名格式不正确！");
                     return false;
                 }
                 return true;
             }
             else
             {
-                MessageBox.Show("用户名和密码不能为空！");
+                ModernMessageBox.showMessage("用户名和密码不能为空！");
                 return false;
             }
         }

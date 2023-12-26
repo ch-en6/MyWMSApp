@@ -68,6 +68,7 @@
     </ApplicationDefinition>
     <Compile Include="controls\ModernMessageBox.cs" />
     <Compile Include="controls\MyNavigationViewItem.cs" />
+    <Compile Include="controls\WatermarkService.cs" />
     <Compile Include="dialog\AddMaterialDialog.xaml.cs">
       <DependentUpon>AddMaterialDialog.xaml</DependentUpon>
     </Compile>
@@ -254,6 +255,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\close_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\logout.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

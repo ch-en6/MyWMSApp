@@ -418,16 +418,17 @@ namespace wmsApp.pages
                     column.Header = permissionName;
                     column.Width = DataGridLength.SizeToCells; // 设置单元格宽度
                     column.IsReadOnly = false; //设置为可修改
+                    
 
                     // 创建一个数据模板，包含一个CheckBox
                     FrameworkElementFactory factory = new FrameworkElementFactory(typeof(CheckBox));
                     factory.AddHandler(CheckBox.ClickEvent, new RoutedEventHandler(OnCheckBoxClick));
-                    //factory.SetValue(CheckBox.VerticalAlignmentProperty, VerticalAlignment.Center); // 设置复选框垂直居中
                     factory.SetValue(CheckBox.MarginProperty, new Thickness(20, 0, 0, 0)); // 设置内容水平居中
 
                     DataTemplate cellTemplate = new DataTemplate();
                     cellTemplate.VisualTree = factory;
                     column.CellTemplate = cellTemplate;
+
 
                     // 将列添加到DataGrid中
                     dataGrid.Columns.Add(column);

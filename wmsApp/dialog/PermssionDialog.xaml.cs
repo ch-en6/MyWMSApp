@@ -94,10 +94,11 @@ namespace wmsApp.dialog
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // 点击 "选择人员" 按钮时的逻辑处理
-            userListView.Visibility = userListView.Visibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
-   
+            textblock.Visibility = textblock.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            userListView.Visibility = userListView.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
+
+
         private bool ValidateFields()
         {
             // 验证资源名称是否为空

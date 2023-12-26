@@ -6,6 +6,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:ui="http://schemas.modernwpf.com/2019"
         xmlns:local="clr-namespace:wmsApp.pages"
+        xmlns:local2="clr-namespace:wmsApp.controls"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         KeyDown="Window_KeyDown"
@@ -53,11 +54,27 @@
                 </Grid.Resources>
                 <StackPanel HorizontalAlignment="Center" Margin="27,0,27.667,90.667">
                     <Label Content="用户名" FontSize="18" />
-                    <TextBox x:Name="UsernameTextBox" Width="300" FontSize="18" VerticalAlignment="Center"
-                                     Margin="0,0,0,10"/>
+                    <TextBox x:Name="UsernameTextBox" Width="300" FontSize="18" VerticalAlignment="Center" 
+                             local2:WatermarkService.Watermark="请输入用户名/工号"
+                             local2:WatermarkService.IsWatermarkEnabled="True"
+                                     Margin="0,0,0,10" />
                     <Label Content="密码" FontSize="18" />
-                    <PasswordBox x:Name="PasswordBox" Width="300"  FontSize="18"  VerticalAlignment="Center"
-                                         Margin="0,0,0,20"/>
+                    <Grid>
+                        <PasswordBox x:Name="PasswordBox" Width="300" FontSize="18" VerticalAlignment="Center" Margin="0,0,0,20"/>
+                        <TextBlock x:Name="HintTextBlock" Text="请输入密码" Foreground="Gray" VerticalAlignment="Center" FontSize="18" HorizontalAlignment="Left" Margin="10,0,0,20">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=PasswordBox, Path=IsFocused}" Value="False">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+
                     <Button x:Name="LoginButton" Content="登录" Width="300" HorizontalAlignment="Center" FontSize="18"
                                     Click="LoginButton_Click"/>
                 </StackPanel>

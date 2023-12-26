@@ -1,5 +1,5 @@
 ﻿<ui:ContentDialog 
-    x:Class="wmsApp.dialog.PermissionDialog"
+   x:Class="wmsApp.dialog.PermissionDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
@@ -11,36 +11,66 @@
     SecondaryButtonText="Close"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick" >
 
-    <Grid Width="439">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" MinWidth="97.333"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+    <Grid Width="281">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="1.5*" />
+        </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" Margin="0,0,-31,0" Grid.ColumnSpan="2">
-            <TextBlock Text="资源名称"/>
-            <TextBox x:Name="resourceComboBox" IsEnabled="False" Margin="1,0,0,0" HorizontalAlignment="Left" Width="127"/>
+        <StackPanel Grid.Row="0" Margin="0,0,-31,0" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="*" Foreground="Red"/>
+                <TextBlock Text="资源名称" Margin="5, 0, 0, 0"/>
+            </StackPanel>
+            <TextBox x:Name="resourceComboBox" IsEnabled="False" Margin="1,0,0,0" HorizontalAlignment="Left" Width="280"/>
 
-            <TextBlock Text="权限名称"/>
-            <ComboBox x:Name="typeTextBox" Width="128"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="*" Foreground="Red"/>
+                <TextBlock Text="权限名称" Margin="5, 0, 0, 0"/>
+            </StackPanel>
+            <ComboBox x:Name="typeTextBox" Width="281"/>
 
-            <TextBlock Text="人员"/>
-            <Button Content="选择人员" Click="Button_Click" Width="127" />
+            <TextBlock Text="授权人员"/>
+            <Button Content="选择人员" Click="Button_Click" Width="281" />
 
         </StackPanel>
 
-        <Grid Grid.Column="1" Margin="55.667,2,23.667,-2" >
-            <ListView x:Name="userListView" SelectionMode="Multiple" ItemsSource="{Binding People}" Visibility="Hidden">
+        <Grid Grid.Row="1" Margin="0,20,0,0">
+            <Grid.Background>
+                <SolidColorBrush Color="Gray"/>
+            </Grid.Background>
+            <TextBlock Text="人员列表" x:Name="textblock" HorizontalAlignment="Center" Visibility="Collapsed" 
+               Foreground="White" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+        </Grid>
+
+        <Grid Grid.Row="2" >
+            <Grid.Background>
+                <SolidColorBrush Color="LightGray"/>
+            </Grid.Background>
+            <ListView x:Name="userListView" SelectionMode="Multiple" ItemsSource="{Binding People}" Visibility="Collapsed" Height="100">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding IsSelected}" />
-                            <TextBlock Text="{Binding Name}" Margin="8,0,0,0" />
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="8*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="0" VerticalAlignment="Center" Width="20"/>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <TextBlock Text="{Binding Name}" Margin="8,0,0,0" Grid.Column="1" VerticalAlignment="Center"/>
+                            </Grid>
+
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+
         </Grid>
+
     </Grid>
 
 </ui:ContentDialog>
