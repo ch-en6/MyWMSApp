@@ -15,6 +15,7 @@ using wms.utils;
 using wmsApp.controls;
 using wmsApp.param;
 using wmsApp.pojo;
+using static System.Net.WebRequestMethods;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace wms
@@ -124,6 +125,8 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/user/findAllUserName"));
         }
+       
+
     }
 
 
@@ -259,7 +262,7 @@ namespace wms
             };
             MessageBox.Show(data.ToString());
             var jsonData = JsonConvert.SerializeObject(data);
-            return http.PostDncryptedData($"/material/getMaterialByNameAndHouse", jsonData);
+            return http.PostEncryptedData($"/material/getMaterialByNameAndHouse", jsonData);
         }
     }
 
@@ -286,6 +289,21 @@ namespace wms
 
             StoreConSearchParams store = new StoreConSearchParams(storeNo, houseName, startTime, endTime, materialId, userId, notes, page);
             return http.PostEncryptedData($"/store/conditionSearch", JsonHelper.DateObjectToJson<StoreConSearchParams>(store));
+        }
+    }
+    class DeliverApi
+    {
+        public static HttpHelper http = new HttpHelper();
+        public static Result getMaterialNamesByDeliverTime(DateTime? startTime, DateTime? endTime)
+        {           
+            var data = new { startTime = startTime, endTime = endTime }; 
+            return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/getNames", JsonHelper.DateObjectToJson(data)));
+        }
+
+        public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)
+        {
+            var data = new { startTime = startTime, endTime = endTime };
+            return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/findCountByNames", JsonHelper.DateObjectToJson(data)));
         }
     }
 

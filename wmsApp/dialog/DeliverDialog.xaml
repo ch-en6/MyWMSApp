@@ -20,32 +20,51 @@
             <ComboBox x:Name="UserComboBox" Width="120" Margin="10" VerticalAlignment="Center" />
            
             <TextBlock Text="时间：" VerticalAlignment="Center"/>
-            <DatePicker x:Name="DatePicker" Width="120"/>
-            <Button Content="添加" Click="AddRow_Click" />
+            <DatePicker x:Name="DatePicker" Width="120" Margin="10"/>
+            <Button Content="添加" Click="AddRow_Click"  Margin="10"/>
         </StackPanel>
 
         <!-- 物料列表 -->
-        <DataGrid x:Name="datagrid" Margin="0,57,0,29"  AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" AlternatingRowBackground="Gainsboro" CanUserAddRows="True" IsReadOnly="False" Width="Auto" Grid.ColumnSpan="2" >
+        <DataGrid x:Name="datagrid" Margin="0,57,0,29"  AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" AlternatingRowBackground="Gainsboro" CanUserAddRows="False" IsReadOnly="False" Width="Auto" Grid.ColumnSpan="2" >
             <DataGrid.Columns>
-                
+
                 <DataGridComboBoxColumn x:Name="TypeComboBox" Header="商品类别" SelectedItemBinding="{Binding type}" Width="Auto">
-                    <DataGridComboBoxColumn.ElementStyle>
+                    <!--<DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="ComboBox">
                             <EventSetter Event="SelectionChanged" Handler="TypeComboBox_SelectionChanged" />
                         </Style>
-                    </DataGridComboBoxColumn.ElementStyle>
+                    </DataGridComboBoxColumn.ElementStyle>-->
                 </DataGridComboBoxColumn>
 
-                <DataGridComboBoxColumn x:Name="NameComboBox" Header="商品名称" SelectedItemBinding="{Binding name}" Width="Auto">
+                <!--<DataGridTemplateColumn Header="商品名称" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox x:Name="NameComboBox"  Loaded="NameLoaded">
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>-->
+
+                <DataGridComboBoxColumn x:Name="NameComboBox" Header="商品类别" SelectedItemBinding="{Binding type}" Width="Auto">
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="ComboBox">
-                            <EventSetter Event="SelectionChanged" Handler="NameComboBox_SelectionChanged" />
+                            
                         </Style>
                     </DataGridComboBoxColumn.ElementStyle>
                 </DataGridComboBoxColumn>
 
-                <!--<DataGridComboBoxColumn x:Name="NameComboBox" Header="商品名称" SelectedItemBinding="{Binding Name}" Width="Auto"
-                   ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ProductNames}"/>-->
+                <DataGridTemplateColumn Header="商品名称">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.NameList}" 
+                              SelectedItem="{Binding Name}" 
+                              />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            
+            <!--<DataGridComboBoxColumn x:Name="NameComboBox" Header="商品名称" SelectedItemBinding="{Binding Name}" Width="Auto"
+                   ItemsSource="{Binding NameColumnItemsSource}"/>-->
 
                 <DataGridComboBoxColumn x:Name="HouseComboBox" Header="仓库名称" SelectedItemBinding="{Binding house}" Width="Auto">
                     <DataGridComboBoxColumn.ElementStyle>
