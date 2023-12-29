@@ -190,8 +190,6 @@ namespace wmsApp.pages
         {
             var selectedItem = datagrid.SelectedItem as Material;
 
-            Result houseIdResult = MaterialApi.searchHouseName();
-            List<string> houseList = JsonHelper.JsonToList<string>(houseIdResult.data.ToString());
             Result typeNameResult = MaterialApi.searchTypeName();
             List<string> typeNameList = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
 
@@ -201,10 +199,8 @@ namespace wmsApp.pages
             dialog.MaterialNameTextBox.Text = selectedItem.name;
             dialog.MaterialStockTextBox.Text = selectedItem.stock.ToString();
             dialog.MaterialCommentsTextBox.Text = selectedItem.comments;
+            dialog.MaterialHouseNameTextBox.Text = selectedItem.houseName.ToString();
 
-            dialog.MaterialHouseNameComboBox.ItemsSource = houseList;
-            dialog.MaterialHouseNameComboBox.SelectedValue = selectedItem.houseName.ToString();
-            
             dialog.MaterialTypeComboBox.ItemsSource = typeNameList;
             dialog.MaterialTypeComboBox.SelectedValue = selectedItem.type.ToString();
 

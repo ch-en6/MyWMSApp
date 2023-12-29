@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using WindowsFormsApp1.dto;
 using wms;
 using wms.pojo;
+using wms.utils;
 using wmsApp.pages;
 
 namespace wmsApp.dialog
@@ -36,12 +37,11 @@ namespace wmsApp.dialog
             int materialStock;
             bool success = int.TryParse(MaterialStockTextBox.Text, out materialStock);
             string materialComments = MaterialCommentsTextBox.Text;
-            string materialHouseName = MaterialHouseNameComboBox.Text;
+            string materialHouseName = MaterialHouseNameTextBox.Text;
             string materialType = MaterialTypeComboBox.Text;
             string materialUnit = MAterialUnitComboBox.Text;
 
             if(string.IsNullOrEmpty(materialName) ||
-                !success ||
                 string.IsNullOrEmpty(materialHouseName) ||
                 string.IsNullOrEmpty(materialType) ||
                 string.IsNullOrEmpty(materialUnit))
@@ -49,13 +49,16 @@ namespace wmsApp.dialog
                 args.Cancel = true;
                 MessageBox.Show("请填写完整的物料信息");
             }
-            else if(materialStock < 0)
+            else if(materialStock < 0 || !success)
             {
                 args.Cancel = true;
                 MessageBox.Show("请填写正确库存");
             }
             else
             {
+                Result AllMaterial = MaterialApi.searchAll();
+                List<Material> materials = JsonHelper.JsonToList<Material>(AllMaterial.data.ToString());
+
                 Material updatedMaterial = new Material()
                 {
                     id = materialId,
@@ -68,15 +71,25 @@ namespace wmsApp.dialog
                     createTime = DateTime.Now
                 };
 
-                Result result = MaterialApi.updateMaterial(updatedMaterial);
+                bool exits = materials.Any(m => m.name == updatedMaterial.name && m.houseName == updatedMaterial.houseName);
 
-                if (result.success)
+                if (exits)
                 {
-                    MessageBox.Show("更新成功");
+                    args.Cancel = true;
+                    MessageBox.Show("该物料在该仓库已存在!");
                 }
                 else
                 {
-                    MessageBox.Show("更新失败");
+                    Result result = MaterialApi.updateMaterial(updatedMaterial);
+
+                    if (result.success)
+                    {
+                        MessageBox.Show("更新成功");
+                    }
+                    else
+                    {
+                        MessageBox.Show("更新失败");
+                    }
                 }
             }
         }

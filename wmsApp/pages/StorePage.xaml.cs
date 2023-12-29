@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -46,31 +45,14 @@ namespace wmsApp.pages
             warehouseNameComboBox.ItemsSource = houseList;
         }
 
-        public class DataItem
-        {
-            public int Index {  get; set; }
-            public Store Store { get; set; }
-        }
-
         public void SearchAll(int page)
         {
             Result result = StoreApi.searchAll(page);
             List<Store> storeList = JsonHelper.JsonToList<Store>(result.data.ToString());
             totalPage = result.total;
 
-            List<DataItem> dataList = new List<DataItem>();
-            for(int i = 0; i < storeList.Count; i++)
-            {
-                DataItem item = new DataItem()
-                {
-                    Index = i + 1,
-                    Store = storeList[i]
-                };
-                dataList.Add(item);
-            }
-
             PageNumberTextBlock.Text = currentPage.ToString();
-            datagrid.ItemsSource = dataList;
+            datagrid.ItemsSource = storeList;
         }
 
         public void ConditionSearch(int page)
@@ -93,19 +75,8 @@ namespace wmsApp.pages
             List<Store> storeList = JsonHelper.JsonToList<Store>(result.data.ToString());
             totalPage = result.total;
 
-            List<DataItem> dataList = new List<DataItem>();
-            for (int i = 0; i < storeList.Count; i++)
-            {
-                DataItem item = new DataItem()
-                {
-                    Index = i + 1,
-                    Store = storeList[i]
-                };
-                dataList.Add(item);
-            }
-
             PageNumberTextBlock.Text = currentPage.ToString();
-            datagrid.ItemsSource = dataList;
+            datagrid.ItemsSource = storeList;
 
         }
 
@@ -142,6 +113,8 @@ namespace wmsApp.pages
 
         public void Print_Click(object sender, RoutedEventArgs e)
         {
+            PrintMonthDialog dialog = new PrintMonthDialog();
+            dialog.ShowAsync();
         }
 
 

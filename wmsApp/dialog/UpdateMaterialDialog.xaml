@@ -42,19 +42,19 @@
                 <TextBlock Text="*" Foreground="Red"/>
                 <TextBlock Text="仓库" Margin="5, 0, 0, 0"/>
             </StackPanel>
-            <ComboBox x:Name="MaterialHouseNameComboBox" Margin="0,0,0,10" Width="200" />
+            <TextBox x:Name="MaterialHouseNameTextBox" IsEnabled="False" Margin="0,0,0,10" Width="200" />
             
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="*" Foreground="Red"/>
                 <TextBlock Text="规格型号" Margin="5, 0, 0, 0"/>
             </StackPanel>
-            <ComboBox x:Name="MaterialTypeComboBox" Margin="0,0,0,10" Width="200" />
+            <ComboBox x:Name="MaterialTypeComboBox" Margin="15,0,0,10" Width="200" />
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="*" Foreground="Red"/>
                 <TextBlock Text="计量单位" Margin="5, 0, 0, 0"/>
             </StackPanel>
-            <ComboBox x:Name="MAterialUnitComboBox" Margin="0,0,0,10" Width="200" IsEditable="True">
+            <ComboBox x:Name="MAterialUnitComboBox" Margin="15,0,0,10" Width="200" IsEditable="True">
                 <ComboBoxItem Content="个" />
                 <ComboBoxItem Content="台" />
                 <ComboBoxItem Content="只" />
@@ -72,18 +72,6 @@
 
         </StackPanel>
 
-        <Grid Grid.Column="1" Margin="56,2,24,-2" Grid.RowSpan="2" >
-            <ListView x:Name="userListView" SelectionMode="Multiple" ItemsSource="{Binding People}" Visibility="Hidden">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding IsSelected}" />
-                            <TextBlock Text="{Binding Name}" Margin="8,0,0,0" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
     </Grid>
 
 </ui:ContentDialog>

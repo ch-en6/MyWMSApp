@@ -1,6 +1,6 @@
-﻿namespace wmsApp
+﻿namespace wmsApp.dialog
 {
-    partial class Form1
+    partial class StoreWinForm
     {
         /// <summary>
         /// Required designer variable.
@@ -34,20 +34,22 @@
             // reportViewer1
             // 
             this.reportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reportViewer1.LocalReport.ReportEmbeddedResource = "wmsApp.Report1.rdlc";
+            this.reportViewer1.Font = new System.Drawing.Font("宋体", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.reportViewer1.LocalReport.ReportEmbeddedResource = "wmsApp.report.StoreReport.rdlc";
             this.reportViewer1.Location = new System.Drawing.Point(0, 0);
             this.reportViewer1.Name = "reportViewer1";
             this.reportViewer1.ServerReport.BearerToken = null;
             this.reportViewer1.Size = new System.Drawing.Size(800, 450);
             this.reportViewer1.TabIndex = 0;
+            this.reportViewer1.Load += new System.EventHandler(this.reportViewer1_Load);
             // 
-            // Form1
+            // StoreWinForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.reportViewer1);
-            this.Name = "Form1";
+            this.Name = "StoreWinForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);

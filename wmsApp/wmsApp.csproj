@@ -269,7 +269,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Report1.rdlc" />
     <None Include="Properties\DataSources\wms.pojo.Material.datasource" />
     <None Include="Properties\DataSources\wmsApp.pojo.Store.datasource" />
     <None Include="Properties\Settings.settings">
@@ -281,9 +280,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.Winforms">
-      <Version>150.1586.0</Version>
-    </PackageReference>
     <PackageReference Include="ModernWpfUI">
       <Version>0.9.0</Version>
     </PackageReference>
