@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="9,-10,1,21" HorizontalAlignment="Center">
-            <Button Content="新增物料"  Margin="0,0,10,0" Click="AddMaterialButton_Click_1"/>
+            <!--<Button Content="新增物料"  Margin="0,0,10,0" Click="AddMaterialButton_Click_1"/>-->
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -66,8 +66,8 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Content="修改" Click="UpdateMaterialButton_Click" Margin="1, 3, 6, 3"/>
-                                    <Button Content="删除" Click="DeleteMaterialButton_Click" Margin="1, 3, 6, 3"/>
+                                    <!--<Button Content="修改" Click="UpdateMaterialButton_Click" Margin="1, 3, 6, 3"/>-->
+                                    
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

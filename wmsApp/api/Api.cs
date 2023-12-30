@@ -305,6 +305,13 @@ namespace wms
             var data = new { startTime = startTime, endTime = endTime };
             return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/findCountByNames", JsonHelper.DateObjectToJson(data)));
         }
+
+       
+        public static Result multiDelivery(List<Deliver> deliverList)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Post("/deliver/multiDelivery", JsonHelper.ObjectToJSON(deliverList)));
+        }
+     
     }
 
     class PermissionTypesApi

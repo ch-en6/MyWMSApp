@@ -77,11 +77,11 @@
     <Compile Include="dialog\MaterialDialog.xaml.cs">
       <DependentUpon>MaterialDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dialog\MaterialWindow.xaml.cs">
+      <DependentUpon>MaterialWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="dialog\StoreDialog.xaml.cs">
       <DependentUpon>StoreDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="dialog\DeliverDialog.xaml.cs">
-      <DependentUpon>DeliverDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="dialog\DelPermissionTypeDialog.xaml.cs">
       <DependentUpon>DelPermissionTypeDialog.xaml</DependentUpon>
@@ -104,6 +104,9 @@
     <Compile Include="dto\Constants.cs" />
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="pages\AddDeliverPage.xaml.cs">
+      <DependentUpon>AddDeliverPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\DeliverPage.xaml.cs">
       <DependentUpon>DeliverPage.xaml</DependentUpon>
@@ -129,9 +132,6 @@
     <Compile Include="pages\OutStatisticPage.xaml.cs">
       <DependentUpon>OutStatisticPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="pages\Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="param\LoginParams.cs" />
     <Compile Include="param\SearchPermissionParams.cs" />
     <Compile Include="param\StoreConSearchParams.cs" />
@@ -142,7 +142,7 @@
     <Compile Include="pojo\Material.cs" />
     <Compile Include="pojo\MaterialType.cs" />
     <Compile Include="pojo\PermissionType.cs" />
-    <Compile Include="pojo\Product.cs" />
+    <Compile Include="pojo\IOMaterial.cs" />
     <Compile Include="pojo\Resource.cs" />
     <Compile Include="pojo\Store.cs" />
     <Compile Include="UpgradeWindow.xaml.cs">
@@ -169,11 +169,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="dialog\StoreDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="dialog\MaterialWindow.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="dialog\DeliverDialog.xaml">
+    <Page Include="dialog\StoreDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -220,6 +220,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="pages\AddDeliverPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="pages\DeliverPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -249,10 +253,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="pages\OutStatisticPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="pages\Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,32 +1,40 @@
 ﻿using ModernWpf.Controls;
-using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using WindowsFormsApp1.dto;
+using wms.utils;
 using wms;
 using wms.pojo;
-using wms.utils;
-using wmsApp.dialog;
+
+using ModernWpf.Controls;
+using wmsApp.pages;
+using System.Xml.Linq;
 using wmsApp.pojo;
 
-namespace wmsApp.pages
-{
-    public partial class MaterialPage : System.Windows.Controls.Page
+namespace wmsApp.dialog
+{   
+    public partial class MaterialWindow : Window
     {
+        private AddDeliverPage AddDeliverPageInstance;
         int currentPage = 1;
         long totalPage = 0;
         int flag = 0;
-
-        public MaterialPage()
+        public MaterialWindow(AddDeliverPage addDeliverPageInstance)
         {
-            flag = 0;
+
+            // 其他初始化逻辑
+            InitializeComponent(); flag = 0;
             Result result = MaterialApi.search(currentPage);
             List<Material> materialList = JsonHelper.JsonToList<Material>(result.data.ToString());
             totalPage = result.total;
@@ -34,6 +42,36 @@ namespace wmsApp.pages
             InitializeComponent();
             PageNumberTextBlock.Text = currentPage.ToString();
             datagrid.ItemsSource = materialList;
+            this.AddDeliverPageInstance = addDeliverPageInstance;
+        }
+
+
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            // 获取MaterialWindow的DataGrid中选定的项
+            Material selectedItem = datagrid.SelectedItem as Material;
+
+            // 关闭MaterialWindow
+            this.Close();
+
+            long id = selectedItem.id;
+            string type = selectedItem.type;
+            string name = selectedItem.name;
+            string houseName = selectedItem.houseName;
+            int stock = selectedItem.stock;
+
+            IOMaterial ioMaterial = new IOMaterial(id, type, name, houseName, stock,0,null);
+            AddDeliverPageInstance.AddNewRow(ioMaterial);
+        }
+
+        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+
+        }
+        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+
         }
 
         public void updatePage()
@@ -94,7 +132,7 @@ namespace wmsApp.pages
         private Result searchId(string userInput)
         {
             long id;
-            if(userInput == "")
+            if (userInput == "")
             {
                 id = -1;
             }
@@ -108,7 +146,7 @@ namespace wmsApp.pages
 
         private Result searchName(string userInput)
         {
-            if(userInput == "")
+            if (userInput == "")
             {
                 userInput = "...";
             }
@@ -118,7 +156,7 @@ namespace wmsApp.pages
 
         private Result searchHouseName(string userInput)
         {
-            if(userInput == "")
+            if (userInput == "")
             {
                 userInput = "...";
             }
@@ -186,55 +224,11 @@ namespace wmsApp.pages
         }
 
 
-        private async void UpdateMaterialButton_Click(object sender, RoutedEventArgs e)
-        {
-            var selectedItem = datagrid.SelectedItem as Material;
 
-            Result houseIdResult = MaterialApi.searchHouseName();
-            List<string> houseList = JsonHelper.JsonToList<string>(houseIdResult.data.ToString());
-            Result typeNameResult = MaterialApi.searchTypeName();
-            List<string> typeNameList = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
 
-            // 将数据分配给对应的TextBox或ComboBox
-            UpdateMaterialDialog dialog = new UpdateMaterialDialog();
-            dialog.MaterialIdTextBox.Text = selectedItem.id.ToString();
-            dialog.MaterialNameTextBox.Text = selectedItem.name;
-            dialog.MaterialStockTextBox.Text = selectedItem.stock.ToString();
-            dialog.MaterialCommentsTextBox.Text = selectedItem.comments;
 
-            dialog.MaterialHouseNameComboBox.ItemsSource = houseList;
-            dialog.MaterialHouseNameComboBox.SelectedValue = selectedItem.houseName.ToString();
-            
-            dialog.MaterialTypeComboBox.ItemsSource = typeNameList;
-            dialog.MaterialTypeComboBox.SelectedValue = selectedItem.type.ToString();
 
-            dialog.MAterialUnitComboBox.Text = selectedItem.unit;
 
-            ContentDialogResult dialogResult = await dialog.ShowAsync();
-            if (dialogResult == ContentDialogResult.Secondary) return;
-
-            updatePage();
-            
-        }
-       
-
-        private async void Add_Click(object sender, RoutedEventArgs e)
-        {
-            Result houseNameResult = MaterialApi.searchHouseName();
-            List<string> houseList = JsonHelper.JsonToList<string>(houseNameResult.data.ToString());
-            Result typeNameResult = MaterialApi.searchTypeName();
-            List<string> typeNameList = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
-
-            AddMaterialDialog dialog = new AddMaterialDialog();
-
-            dialog.MaterialHouseNameComboBox.ItemsSource = houseList;
-            dialog.MaterialTypeComboBox.ItemsSource = typeNameList;
-
-            ContentDialogResult dialogResult = await dialog.ShowAsync();
-            if (dialogResult == ContentDialogResult.Secondary) return;
-
-            updatePage();
-        }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
@@ -248,5 +242,8 @@ namespace wmsApp.pages
             PageNumberTextBlock.Text = currentPage.ToString();
             datagrid.ItemsSource = materialList;
         }
+
+
     }
 }
+

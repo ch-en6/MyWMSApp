@@ -44,14 +44,15 @@ namespace wmsApp.pages
 
         public async void Add_Click(object sender, RoutedEventArgs e)
         {
-            DeliverDialog dialog = new DeliverDialog();
-            Result typeNameResult = MaterialApi.searchTypeName();
-            List<string> typeNameList = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
-            dialog.TypeComboBox.ItemsSource = typeNameList;
-            Result userNameResult = UserApi.findAllUserName();
-            List<string> userNameList = JsonHelper.JsonToList<string>(userNameResult.data.ToString());
-            dialog.UserComboBox.ItemsSource = userNameList;
-            ContentDialogResult result = await dialog.ShowAsync();
+            //DeliverDialog dialog = new DeliverDialog();
+            //Result typeNameResult = MaterialApi.searchTypeName();
+            //List<string> typeNameList = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
+            //dialog.TypeComboBox.ItemsSource = typeNameList;
+            //Result userNameResult = UserApi.findAllUserName();
+            //List<string> userNameList = JsonHelper.JsonToList<string>(userNameResult.data.ToString());
+            //dialog.UserComboBox.ItemsSource = userNameList;
+            //ContentDialogResult result = await dialog.ShowAsync();
+            NavigationService.Navigate(new Uri("/pages/AddDeliverPage.xaml", UriKind.Relative));
         }
 
         public void UpdateMaterialButton_Click(object sender, RoutedEventArgs e)
@@ -73,6 +74,6 @@ namespace wmsApp.pages
         {
 
         }
-
+        
     }
 }

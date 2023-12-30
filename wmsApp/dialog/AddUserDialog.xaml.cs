@@ -24,9 +24,7 @@ namespace wmsApp.dialog
         /// <param name="args"></param>
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            //点击确认按钮时执行的逻辑
-            //try
-            //{
+            
             // 获取用户输入的数据
             string name = nameTextBox.Text;
             string role = sexComboBox.Text;
@@ -60,18 +58,6 @@ namespace wmsApp.dialog
                     args.Cancel = true;
                 }
             }
-
-            //if (!result.success)
-            //{
-            //    throw new Exception(result.errorMsg.ToString());
-            //}
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    //处理异常
-            //    args.Cancel = true;
-            //}
         }
 
 
