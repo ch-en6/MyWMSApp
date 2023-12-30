@@ -254,7 +254,7 @@
             };
             if (obj == null)
             {
-                MessageBox.Show("应用发生错误！");
+                ModernMessageBox.showMessage("应用发生错误");
                 return default(T);
             }
             return JsonConvert.DeserializeObject<T>(obj,settings);

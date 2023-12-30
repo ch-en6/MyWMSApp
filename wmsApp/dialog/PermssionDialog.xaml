@@ -6,9 +6,9 @@
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:local="using:wmsApp.controls"
     Title="Add Resource"
-    PrimaryButtonText="Save"
+    PrimaryButtonText="确定"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonText="Close"
+    SecondaryButtonText="取消"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick" >
 
     <Grid Width="281">
