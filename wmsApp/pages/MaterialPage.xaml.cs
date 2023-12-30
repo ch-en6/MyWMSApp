@@ -213,22 +213,29 @@ namespace wmsApp.pages
         {
             var selectedItem = datagrid.SelectedItem as Material;
 
-            MessageBoxResult result = System.Windows.MessageBox.Show("确定要删除吗？", "确认删除", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if(result == MessageBoxResult.Yes)
+            if(selectedItem.stock > 0)
             {
-                Result result1 = MaterialApi.deleteMaterial(selectedItem.id);
-                if (result1.success)
-                {
-                    System.Windows.Forms.MessageBox.Show("删除成功");
-                    datagrid.Items.Refresh();
-                    updatePage();
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("删除失败");
-                }
+                MessageBox.Show("该物料库存大于0，不允许删除！");
             }
-            
+            else
+            {
+                MessageBoxResult result = MessageBox.Show("确定要删除吗？", "确认删除", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Result result1 = MaterialApi.deleteMaterial(selectedItem.id);
+                    if (result1.success)
+                    {
+                        MessageBox.Show("删除成功");
+                        datagrid.Items.Refresh();
+                        updatePage();
+                    }
+                    else
+                    {
+                        MessageBox.Show("删除失败");
+                    }
+                }
+
+            }
         }
 
         private async void AddMaterialButton_Click_1(object sender, RoutedEventArgs e)

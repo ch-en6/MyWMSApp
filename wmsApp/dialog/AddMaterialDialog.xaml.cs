@@ -2,17 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WindowsFormsApp1.dto;
 using wms;
 using wms.pojo;
@@ -72,7 +62,6 @@ namespace wmsApp.dialog
                 };
 
                 bool exists = materials.Any(m => m.name == addMaterial.name && m.houseName == addMaterial.houseName);
-
                 if (exists)
                 {
                     args.Cancel = true;
@@ -80,16 +69,54 @@ namespace wmsApp.dialog
                 }
                 else
                 {
-                    Result result = MaterialApi.addMaterial(addMaterial);
-                    if (result.success)
+                    exists = materials.Any(m => m.name == addMaterial.name);
+                    if (exists)
                     {
-                        MessageBox.Show("新增成功");
+                        Result equalNameResult = MaterialApi.searchByName(1, addMaterial.name);
+                        List<Material> equalNameList = JsonHelper.JsonToList<Material>(equalNameResult.data.ToString());
+                        if(addMaterial.type == equalNameList[0].type)
+                        {
+                            insertMaterial(addMaterial);
+                        }
+                        else
+                        {
+                            MessageBoxResult message = MessageBox.Show("在其他仓库中存在同名物料，如果新增该物料，将会同时修改其他仓库中同名物料的类型，是否继续修改？", "提示", MessageBoxButton.YesNo);
+                            if (message == MessageBoxResult.Yes)
+                            {
+                                Result result = MaterialApi.addMaterialEqual(addMaterial);
+                                if (result.success)
+                                {
+                                    MessageBox.Show("更新成功");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("更新失败");
+                                }
+                            }
+                            else
+                            {
+                                args.Cancel = true;
+                            }
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("新增失败");
+                        insertMaterial(addMaterial);
                     }
                 }
+            }
+        }
+
+        private void insertMaterial(Material material)
+        {
+            Result result = MaterialApi.addMaterial(material);
+            if (result.success)
+            {
+                MessageBox.Show("新增成功");
+            }
+            else
+            {
+                MessageBox.Show("新增失败");
             }
         }
 

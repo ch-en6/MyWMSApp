@@ -208,7 +208,12 @@ namespace wms
 
         public static Result addMaterial(Material material)
         {
-            return JsonHelper.JSONToObject<Result>(http.Post($"/material/save", JsonHelper.DateObjectTOJson(material)));
+            return http.PostEncryptedData($"/material/save", JsonHelper.DateObjectTOJson(material));
+        }
+
+        public static Result addMaterialEqual(Material material)
+        {
+            return http.PostEncryptedData($"/material/saveEqual", JsonHelper.DateObjectToJson<Material>(material));
         }
 
         //修改
