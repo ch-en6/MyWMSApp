@@ -1,32 +1,41 @@
 ﻿using ModernWpf.Controls;
-using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing.Drawing2D;
-using System.Threading.Tasks;
+using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web.UI.MobileControls;
 using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
+//using System.Windows.Forms;
 using WindowsFormsApp1.dto;
 using wms;
 using wms.pojo;
 using wms.utils;
-using wmsApp.dialog;
+using wmsApp.controls;
 using wmsApp.pojo;
+//using static wmsApp.pages.StorePage;
 
-namespace wmsApp.pages
+namespace wmsApp.dialog
 {
-    public partial class MaterialPage : System.Windows.Controls.Page
+    /// <summary>
+    /// DeliverDialog.xaml 的交互逻辑
+    /// </summary>
+    public partial class MaterialDialog : ContentDialog
     {
         int currentPage = 1;
         long totalPage = 0;
         int flag = 0;
-
-        public MaterialPage()
+        public MaterialDialog()
         {
-            flag = 0;
+           
+            // 其他初始化逻辑
+            InitializeComponent(); flag = 0;
             Result result = MaterialApi.search(currentPage);
             List<Material> materialList = JsonHelper.JsonToList<Material>(result.data.ToString());
             totalPage = result.total;
@@ -34,8 +43,24 @@ namespace wmsApp.pages
             InitializeComponent();
             PageNumberTextBlock.Text = currentPage.ToString();
             datagrid.ItemsSource = materialList;
+
+
         }
 
+        private void Add_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+
+        }
+
+        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+
+        }
+        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+
+        }
+        
         public void updatePage()
         {
             Result result;
@@ -94,7 +119,7 @@ namespace wmsApp.pages
         private Result searchId(string userInput)
         {
             long id;
-            if(userInput == "")
+            if (userInput == "")
             {
                 id = -1;
             }
@@ -108,7 +133,7 @@ namespace wmsApp.pages
 
         private Result searchName(string userInput)
         {
-            if(userInput == "")
+            if (userInput == "")
             {
                 userInput = "...";
             }
@@ -118,7 +143,7 @@ namespace wmsApp.pages
 
         private Result searchHouseName(string userInput)
         {
-            if(userInput == "")
+            if (userInput == "")
             {
                 userInput = "...";
             }
@@ -186,51 +211,11 @@ namespace wmsApp.pages
         }
 
 
-        private async void UpdateMaterialButton_Click(object sender, RoutedEventArgs e)
-        {
-            var selectedItem = datagrid.SelectedItem as Material;
-
-            Result typeNameResult = MaterialApi.searchTypeName();
-            List<string> typeNameList = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
-
-            // 将数据分配给对应的TextBox或ComboBox
-            UpdateMaterialDialog dialog = new UpdateMaterialDialog();
-            dialog.MaterialIdTextBox.Text = selectedItem.id.ToString();
-            dialog.MaterialNameTextBox.Text = selectedItem.name;
-            dialog.MaterialStockTextBox.Text = selectedItem.stock.ToString();
-            dialog.MaterialCommentsTextBox.Text = selectedItem.comments;
-            dialog.MaterialHouseNameTextBox.Text = selectedItem.houseName.ToString();
-
-            dialog.MaterialTypeComboBox.ItemsSource = typeNameList;
-            dialog.MaterialTypeComboBox.SelectedValue = selectedItem.type.ToString();
-
-            dialog.MAterialUnitComboBox.Text = selectedItem.unit;
-
-            ContentDialogResult dialogResult = await dialog.ShowAsync();
-            if (dialogResult == ContentDialogResult.Secondary) return;
-
-            updatePage();
-            
-        }
        
 
-        private async void Add_Click(object sender, RoutedEventArgs e)
-        {
-            Result houseNameResult = MaterialApi.searchHouseName();
-            List<string> houseList = JsonHelper.JsonToList<string>(houseNameResult.data.ToString());
-            Result typeNameResult = MaterialApi.searchTypeName();
-            List<string> typeNameList = JsonHelper.JsonToList<string>(typeNameResult.data.ToString());
+        
 
-            AddMaterialDialog dialog = new AddMaterialDialog();
-
-            dialog.MaterialHouseNameComboBox.ItemsSource = houseList;
-            dialog.MaterialTypeComboBox.ItemsSource = typeNameList;
-
-            ContentDialogResult dialogResult = await dialog.ShowAsync();
-            if (dialogResult == ContentDialogResult.Secondary) return;
-
-            updatePage();
-        }
+        
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
@@ -244,5 +229,5 @@ namespace wmsApp.pages
             PageNumberTextBlock.Text = currentPage.ToString();
             datagrid.ItemsSource = materialList;
         }
-    }
+    }    
 }

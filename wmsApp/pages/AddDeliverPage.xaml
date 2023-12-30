@@ -1,0 +1,71 @@
+﻿<Page x:Class="wmsApp.pages.AddDeliverPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:wmsApp.pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddDeliverPage"
+      xmlns:ui="http://schemas.modernwpf.com/2019">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="42"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Frame x:Name="contentFrame" Grid.Row="1"/>
+        <!-- 选择操作人和时间 -->
+        <StackPanel Orientation="Horizontal" Margin="9,10,1,21" HorizontalAlignment="Center">
+
+            <TextBlock Text="操作人：" VerticalAlignment="Center"/>
+            <ComboBox x:Name="UserComboBox" Width="120" Margin="10" VerticalAlignment="Center" />
+
+            <TextBlock Text="时间：" VerticalAlignment="Center"/>
+            <DatePicker x:Name="DatePicker" Width="120" Margin="10"/>
+            <Button Content="添加物料" Click="Add_Click"  Margin="10"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="26,0.333,-1,0" >
+        <!-- 物料列表 -->
+            <DataGrid x:Name="datagrid" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="True">
+                <DataGrid.Columns>
+                <DataGridTextColumn Header="物料id" Binding="{Binding id}"></DataGridTextColumn>
+                <DataGridTextColumn Header="物料类别" Binding="{Binding type}"></DataGridTextColumn>
+                <DataGridTextColumn Header="物料名称" Binding="{Binding name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="仓库名称"  Binding="{Binding houseName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="现有库存"  Binding="{Binding stock}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="出库数量" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding count}" Margin="5" Width="5"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="备注" Width="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding notes}" Margin="5" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="操作" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="删除" Click="RemoveRow_Click"
+DataContext="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=DataContext}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        </StackPanel>
+
+        <StackPanel  Orientation="Horizontal" Width="Auto" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button Content="取消"  Click="Cancel_Click" Margin="10"/>
+            <Button Content="确认"  Margin="10"/>
+        </StackPanel>
+
+    </Grid>
+</Page>

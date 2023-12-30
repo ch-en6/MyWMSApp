@@ -35,25 +35,6 @@ namespace wmsApp.pages
         private long resourceId;
         //标记展示
         int flag = 0;
-        /*public PersonnelPage()
-        {
-            InitializeComponent();
-            PageNumberTextBlock.Text = currentPage.ToString();
-            Result result = UserApi.getUserMap(currentPage);
-            Dictionary<String, Object> map = JsonHelper.ConvertToMap<String, Object>(result.data.ToString());
-            List<User> list = JsonHelper.JsonToList<User>(map["records"].ToString());
-            totalPage = long.Parse(map["totalPage"].ToString());
-
-            //List<User> list =JsonHelper.JsonToList<User>(result.data.ToString());
-            InitializeComponent();
-            // 上一页按钮点击事件处理程序
-            PreviousPageButton.Click += PreviousPageButton_Click;
-
-            // 下一页按钮点击事件处理程序
-            NextPageButton.Click += NextPageButton_Click;
-            dataGrid.ItemsSource = list;
-
-        }*/
 
         public PersonalPage()
         {
