@@ -7,19 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WindowsFormsApp1.dto;
 using wms;
 using wms.utils;
 using wmsApp.dialog;
+using wmsApp.param;
 using wmsApp.pojo;
 
 namespace wmsApp.pages
@@ -46,31 +38,14 @@ namespace wmsApp.pages
             warehouseNameComboBox.ItemsSource = houseList;
         }
 
-        public class DataItem
-        {
-            public int Index {  get; set; }
-            public Store Store { get; set; }
-        }
-
         public void SearchAll(int page)
         {
             Result result = StoreApi.searchAll(page);
-            List<Store> storeList = JsonHelper.JsonToList<Store>(result.data.ToString());
+            List<StoreDetailParam> storeList = JsonHelper.JsonToList<StoreDetailParam>(result.data.ToString());
             totalPage = result.total;
 
-            List<DataItem> dataList = new List<DataItem>();
-            for(int i = 0; i < storeList.Count; i++)
-            {
-                DataItem item = new DataItem()
-                {
-                    Index = i + 1,
-                    Store = storeList[i]
-                };
-                dataList.Add(item);
-            }
-
             PageNumberTextBlock.Text = currentPage.ToString();
-            datagrid.ItemsSource = dataList;
+            datagrid.ItemsSource = storeList;
         }
 
         public void ConditionSearch(int page)
@@ -90,22 +65,11 @@ namespace wmsApp.pages
             }
 
             Result result = StoreApi.searchCondition(storeNo, warehouseName, startTime, endTime, materialId, operatorId, notes, page);
-            List<Store> storeList = JsonHelper.JsonToList<Store>(result.data.ToString());
+            List<StoreDetailParam> storeList = JsonHelper.JsonToList<StoreDetailParam>(result.data.ToString());
             totalPage = result.total;
 
-            List<DataItem> dataList = new List<DataItem>();
-            for (int i = 0; i < storeList.Count; i++)
-            {
-                DataItem item = new DataItem()
-                {
-                    Index = i + 1,
-                    Store = storeList[i]
-                };
-                dataList.Add(item);
-            }
-
             PageNumberTextBlock.Text = currentPage.ToString();
-            datagrid.ItemsSource = dataList;
+            datagrid.ItemsSource = storeList;
 
         }
 
@@ -139,6 +103,13 @@ namespace wmsApp.pages
             StoreDialog dialog = new StoreDialog();
             await dialog.ShowAsync();
         }
+
+        public void Print_Click(object sender, RoutedEventArgs e)
+        {
+            PrintMonthDialog dialog = new PrintMonthDialog();
+            dialog.ShowAsync();
+        }
+
 
         public void UpdateMaterialButton_Click(object sender, RoutedEventArgs e)
         {

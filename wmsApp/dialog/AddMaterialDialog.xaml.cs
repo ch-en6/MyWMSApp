@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using WindowsFormsApp1.dto;
 using wms;
 using wms.pojo;
+using wms.utils;
 
 namespace wmsApp.dialog
 {
@@ -40,7 +41,6 @@ namespace wmsApp.dialog
             string materialUnit = (string)MAterialUnitComboBox.Text;
 
             if (string.IsNullOrEmpty(materialName) ||
-                !success ||
                 string.IsNullOrEmpty(materialHouseName) ||
                 string.IsNullOrEmpty(materialType) ||
                 string.IsNullOrEmpty(materialUnit))
@@ -49,13 +49,16 @@ namespace wmsApp.dialog
                 args.Cancel = true;
                 MessageBox.Show("请填写完整的物料信息");
             }
-            else if(materialStock < 0)
+            else if(materialStock < 0 || !success)
             {
                 args.Cancel = true;
                 MessageBox.Show("请填写正确库存");
             }
             else
             {
+                Result AllMaterial = MaterialApi.searchAll();
+                List<Material> materials = JsonHelper.JsonToList<Material>(AllMaterial.data.ToString());
+
                 // 执行添加物料操作
                 Material addMaterial = new Material()
                 {
@@ -68,15 +71,24 @@ namespace wmsApp.dialog
                     createTime = DateTime.Now
                 };
 
-                Result result = MaterialApi.addMaterial(addMaterial);
+                bool exists = materials.Any(m => m.name == addMaterial.name && m.houseName == addMaterial.houseName);
 
-                if (result.success)
+                if (exists)
                 {
-                    MessageBox.Show("新增成功");
+                    args.Cancel = true;
+                    MessageBox.Show("该物料在该仓库中已存在!");
                 }
                 else
                 {
-                    MessageBox.Show("新增失败");
+                    Result result = MaterialApi.addMaterial(addMaterial);
+                    if (result.success)
+                    {
+                        MessageBox.Show("新增成功");
+                    }
+                    else
+                    {
+                        MessageBox.Show("新增失败");
+                    }
                 }
             }
         }

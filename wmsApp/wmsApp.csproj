@@ -78,6 +78,9 @@
     <Compile Include="dialog\MaterialDialog.xaml.cs">
       <DependentUpon>MaterialDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dialog\PrintMonthDialog.xaml.cs">
+      <DependentUpon>PrintMonthDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="dialog\StoreDialog.xaml.cs">
       <DependentUpon>StoreDialog.xaml</DependentUpon>
     </Compile>
@@ -89,6 +92,12 @@
     </Compile>
     <Compile Include="dialog\PermssionDialog.xaml.cs">
       <DependentUpon>PermssionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dialog\StoreWinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dialog\StoreWinForm.Designer.cs">
+      <DependentUpon>StoreWinForm.cs</DependentUpon>
     </Compile>
     <Compile Include="dialog\UpdateMaterialDialog.xaml.cs">
       <DependentUpon>UpdateMaterialDialog.xaml</DependentUpon>
@@ -134,10 +143,11 @@
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
     <Compile Include="param\LoginParams.cs" />
+    <Compile Include="param\PrintStoreParam.cs" />
     <Compile Include="param\SearchPermissionParams.cs" />
     <Compile Include="param\StoreConSearchParams.cs" />
+    <Compile Include="param\StoreDetailParam.cs" />
     <Compile Include="param\UpdatePermissionParams.cs" />
-    <Compile Include="pojo\Class1.cs" />
     <Compile Include="pojo\Deliver.cs" />
     <Compile Include="pojo\House.cs" />
     <Compile Include="pojo\Material.cs" />
@@ -166,9 +176,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="dialog\MaterialDialog.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="dialog\PrintMonthDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="dialog\StoreDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -279,15 +289,22 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="dialog\StoreWinForm.resx">
+      <DependentUpon>StoreWinForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Report1.rdlc" />
+    <EmbeddedResource Include="report\StoreReport.rdlc" />
+    <None Include="Properties\DataSources\wms.pojo.Material.datasource" />
+    <None Include="Properties\DataSources\wmsApp.pojo.Store.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="wms.pojo.Material.datasource" />
+    <None Include="wmsApp.param.PrintStoreParam.datasource" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -314,6 +331,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon\calendar.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\icon.png" />

@@ -1,18 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Forms;
-using System.Xml.Linq;
 using WindowsFormsApp1.dto;
 using wms.param;
 using wms.pojo;
 using wms.utils;
-using wmsApp.controls;
 using wmsApp.param;
 using wmsApp.pojo;
 using static System.Net.WebRequestMethods;
@@ -48,7 +39,7 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePassword/{newPassword}"));
         }
 
-    }
+    } 
     class RsaApi
     {
         public static HttpHelper http = new HttpHelper();
@@ -173,6 +164,11 @@ namespace wms
     {
         public static HttpHelper http = new HttpHelper();
 
+        public static Result searchAll()
+        {
+            return http.GetDncryptedData($"/material/searchAll");
+        }
+
         //显示
         public static Result search(int page)
         {
@@ -268,7 +264,6 @@ namespace wms
                 name = name,
                 house = house
             };
-            MessageBox.Show(data.ToString());
             var jsonData = JsonConvert.SerializeObject(data);
             return http.PostEncryptedData($"/material/getMaterialByNameAndHouse", jsonData);
         }
@@ -297,6 +292,17 @@ namespace wms
 
             StoreConSearchParams store = new StoreConSearchParams(storeNo, houseName, startTime, endTime, materialId, userId, notes, page);
             return http.PostEncryptedData($"/store/conditionSearch", JsonHelper.DateObjectToJson<StoreConSearchParams>(store));
+        }
+
+        public static Result getStoreByDate(string Year, string Month)
+        {
+            var data = new
+            {
+                year = Year,
+                month = Month
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/store/selectStoreByDate", jsonData);
         }
     }
     class DeliverApi

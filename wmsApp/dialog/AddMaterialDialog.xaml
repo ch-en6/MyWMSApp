@@ -71,18 +71,6 @@
 
         </StackPanel>
 
-        <Grid Grid.Column="1" Margin="56,2,24,-2" Grid.RowSpan="2" >
-            <ListView x:Name="userListView" SelectionMode="Multiple" ItemsSource="{Binding People}" Visibility="Hidden">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding IsSelected}" />
-                            <TextBlock Text="{Binding Name}" Margin="8,0,0,0" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
     </Grid>
 
 </ui:ContentDialog>
