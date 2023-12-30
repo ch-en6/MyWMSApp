@@ -284,10 +284,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="report\1.xls" />
-    <None Include="report\out.doc" />
-    <None Include="report\out.xls.xls" />
-    <None Include="report\output.doc" />
     <None Include="wms.pojo.Material.datasource" />
     <None Include="wmsApp.param.PrintStoreParam.datasource" />
   </ItemGroup>

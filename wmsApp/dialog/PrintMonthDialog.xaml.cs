@@ -52,12 +52,12 @@ namespace wmsApp.dialog
                         PrintStoreParam data = new PrintStoreParam()
                         {
                             storeNo = param.storeNo,
-                            materialName = param.Material.name,
-                            materialId = param.Material.id,
-                            materialType = param.Material.type,
-                            houseName = param.Material.houseName,
+                            materialName = param.material.name,
+                            materialId = param.material.id,
+                            materialType = param.material.type,
+                            houseName = param.material.houseName,
                             storeCount = param.storeCount,
-                            materialUnit = param.Material.unit,
+                            materialUnit = param.material.unit,
                             storeTime = param.storeTime.ToString("yyyy-MM-dd"),
                             userId = param.userId,
                             notes = param.notes

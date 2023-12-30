@@ -89,12 +89,14 @@
                 <DataGrid x:Name="datagrid" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="True">
                     <!-- 定义列 -->
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="序号" Binding="{Binding storeId}" />
                         <DataGridTextColumn Header="进仓单号" Binding="{Binding storeNo}" />
-                        <DataGridTextColumn Header="仓库名" Binding="{Binding houseName}" />
-                        <DataGridTextColumn Header="进仓日期" Binding="{Binding storeTime, StringFormat='yyyy-MM-dd'}" />
+                        <DataGridTextColumn Header="物料名称" Binding="{Binding material.name}" />
                         <DataGridTextColumn Header="物料ID" Binding="{Binding materialId}" />
+                        <DataGridTextColumn Header="物料类型" Binding="{Binding material.type}" />
+                        <DataGridTextColumn Header="所在仓库" Binding="{Binding houseName}" />
                         <DataGridTextColumn Header="进仓数量" Binding="{Binding storeCount}" />
+                        <DataGridTextColumn Header="物料单位" Binding="{Binding material.unit}" />
+                        <DataGridTextColumn Header="入库日期" Binding="{Binding storeTime, StringFormat='yyyy-MM-dd'}" />
                         <DataGridTextColumn Header="操作人员ID" Binding="{Binding userId}" />
                         <DataGridTextColumn Header="备注" Binding="{Binding notes}" />
 
@@ -109,6 +111,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
+
                 </DataGrid>
             </StackPanel>
         </Grid>

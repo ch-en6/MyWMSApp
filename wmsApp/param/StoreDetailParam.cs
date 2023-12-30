@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using wms.pojo;
 
 namespace wmsApp.param
 {
     public class StoreDetailParam
     {
-        public int number { get; set; }
-
+        public int storeId { get; set; }
         public long storeNo { get; set; }
 
         public long materialId { get; set; }
@@ -25,7 +25,6 @@ namespace wmsApp.param
 
         public string notes { get; set; }
 
-        public Material Material { get; set; }
-
+        public Material material { get; set; }
     }
 }

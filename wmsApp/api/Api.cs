@@ -1,18 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Forms;
-using System.Xml.Linq;
 using WindowsFormsApp1.dto;
 using wms.param;
 using wms.pojo;
 using wms.utils;
-using wmsApp.controls;
 using wmsApp.param;
 using wmsApp.pojo;
 using MessageBox = System.Windows.Forms.MessageBox;

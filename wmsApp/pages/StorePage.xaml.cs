@@ -7,18 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WindowsFormsApp1.dto;
 using wms;
 using wms.utils;
 using wmsApp.dialog;
+using wmsApp.param;
 using wmsApp.pojo;
 
 namespace wmsApp.pages
@@ -48,7 +41,7 @@ namespace wmsApp.pages
         public void SearchAll(int page)
         {
             Result result = StoreApi.searchAll(page);
-            List<Store> storeList = JsonHelper.JsonToList<Store>(result.data.ToString());
+            List<StoreDetailParam> storeList = JsonHelper.JsonToList<StoreDetailParam>(result.data.ToString());
             totalPage = result.total;
 
             PageNumberTextBlock.Text = currentPage.ToString();
@@ -72,7 +65,7 @@ namespace wmsApp.pages
             }
 
             Result result = StoreApi.searchCondition(storeNo, warehouseName, startTime, endTime, materialId, operatorId, notes, page);
-            List<Store> storeList = JsonHelper.JsonToList<Store>(result.data.ToString());
+            List<StoreDetailParam> storeList = JsonHelper.JsonToList<StoreDetailParam>(result.data.ToString());
             totalPage = result.total;
 
             PageNumberTextBlock.Text = currentPage.ToString();

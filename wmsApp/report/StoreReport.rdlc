@@ -257,7 +257,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>仓库名</Value>
+                                  <Value>所在仓库</Value>
                                   <Style>
                                     <FontFamily>宋体</FontFamily>
                                     <FontSize>12pt</FontSize>
@@ -327,7 +327,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>单位</Value>
+                                  <Value>物料单位</Value>
                                   <Style>
                                     <FontFamily>宋体</FontFamily>
                                     <FontSize>12pt</FontSize>
@@ -901,7 +901,7 @@
             <DataSetName>DataSet1</DataSetName>
             <Top>3.37819cm</Top>
             <Height>1.53866cm</Height>
-            <Width>26.52321cm</Width>
+            <Width>26.52322cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
