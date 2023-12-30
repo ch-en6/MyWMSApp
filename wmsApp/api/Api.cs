@@ -281,11 +281,11 @@ namespace wms
         public static Result searchCondition(long storeNo, string houseName, DateTime? startTime, DateTime? endTime, long materialId,
             long userId, string notes, int page)
         {
-            if(startTime == null)
+            if (startTime == null)
             {
                 startTime = new DateTime(1970, 1, 1);
             }
-            if(endTime == null)
+            if (endTime == null)
             {
                 endTime = DateTime.Now;
             }
@@ -305,6 +305,7 @@ namespace wms
             return http.PostEncryptedData($"/store/selectStoreByDate", jsonData);
         }
     }
+
     class DeliverApi
     {
         public static HttpHelper http = new HttpHelper();
@@ -416,6 +417,11 @@ namespace wms
         internal static Result searchByRole(SearchPermissionParams condition)
         {
             return http.PostDncryptedData("/permission/search/role", JsonHelper.ObjectToJSON(condition));
+        }
+
+        internal static Result getAllUser()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get("/user/getAll"));
         }
     }
 }

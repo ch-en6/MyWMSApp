@@ -75,17 +75,14 @@
     <Compile Include="dialog\AddUserDialog.xaml.cs">
       <DependentUpon>AddUserDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="dialog\MaterialDialog.xaml.cs">
-      <DependentUpon>MaterialDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="dialog\PrintMonthDialog.xaml.cs">
       <DependentUpon>PrintMonthDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dialog\SelectPersonDialog.xaml.cs">
+      <DependentUpon>SelectPersonDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="dialog\StoreDialog.xaml.cs">
       <DependentUpon>StoreDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="dialog\DeliverDialog.xaml.cs">
-      <DependentUpon>DeliverDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="dialog\DelPermissionTypeDialog.xaml.cs">
       <DependentUpon>DelPermissionTypeDialog.xaml</DependentUpon>
@@ -180,11 +177,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="dialog\StoreDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="dialog\SelectPersonDialog.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="dialog\DeliverDialog.xaml">
+    <Page Include="dialog\StoreDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -336,9 +333,6 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icon\calendar.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="assets\icon.png" />
   </ItemGroup>
   <ItemGroup>
@@ -349,6 +343,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\logout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\calendar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\right.png" />
+    <Resource Include="assets\left.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

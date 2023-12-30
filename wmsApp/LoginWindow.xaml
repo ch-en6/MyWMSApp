@@ -23,7 +23,7 @@
         </Style>
     </Window.Style>
 
-    <Border Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="20">
+    <Border Background="White" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -54,13 +54,13 @@
                 </Grid.Resources>
                 <StackPanel HorizontalAlignment="Center" Margin="27,0,27.667,90.667">
                     <Label Content="用户名" FontSize="18" />
-                    <TextBox x:Name="UsernameTextBox" Width="300" FontSize="18" VerticalAlignment="Center" 
+                    <TextBox x:Name="UsernameTextBox" Width="297" FontSize="18" VerticalAlignment="Center" 
                              local2:WatermarkService.Watermark="请输入用户名/工号"
                              local2:WatermarkService.IsWatermarkEnabled="True"
                                      Margin="0,0,0,10" />
                     <Label Content="密码" FontSize="18" />
                     <Grid>
-                        <PasswordBox x:Name="PasswordBox" Width="300" FontSize="18" VerticalAlignment="Center" Margin="0,0,0,20"/>
+                        <PasswordBox x:Name="PasswordBox" FontSize="18" VerticalAlignment="Center" Margin="0,0,0.667,20"/>
                         <TextBlock x:Name="HintTextBlock" Text="请输入密码" Foreground="Gray" VerticalAlignment="Center" FontSize="18" HorizontalAlignment="Left" Margin="10,0,0,20">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">

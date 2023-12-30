@@ -12,11 +12,6 @@
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick" >
 
     <Grid Width="281">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="1.5*" />
-        </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="0,0,-31,0" Grid.ColumnSpan="2">
             <StackPanel Orientation="Horizontal">
@@ -36,40 +31,6 @@
 
         </StackPanel>
 
-        <Grid Grid.Row="1" Margin="0,20,0,0">
-            <Grid.Background>
-                <SolidColorBrush Color="Gray"/>
-            </Grid.Background>
-            <TextBlock Text="人员列表" x:Name="textblock" HorizontalAlignment="Center" Visibility="Collapsed" 
-               Foreground="White" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
-        </Grid>
-
-        <Grid Grid.Row="2" >
-            <Grid.Background>
-                <SolidColorBrush Color="LightGray"/>
-            </Grid.Background>
-            <ListView x:Name="userListView" SelectionMode="Multiple" ItemsSource="{Binding People}" Visibility="Collapsed" Height="100">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="8*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0">
-                                <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="0" VerticalAlignment="Center" Width="20"/>
-                            </Grid>
-                            <Grid Grid.Column="1">
-                                <TextBlock Text="{Binding Name}" Margin="8,0,0,0" Grid.Column="1" VerticalAlignment="Center"/>
-                            </Grid>
-
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-
-        </Grid>
 
     </Grid>
 
