@@ -62,7 +62,7 @@ namespace wmsApp.dialog
             totalPage = result.total;
 
             InitializeComponent();
-            PageNumberTextBlock.Text = currentPage.ToString();
+            PageNumberTextBlock.Text = currentPage.ToString()+"/"+totalPage.ToString();
             userListView.ItemsSource = userList;
         }
         private void OnConfirmButtonClicked(object sender, List<Person> selectedPersons)
@@ -162,7 +162,7 @@ namespace wmsApp.dialog
             userList = JsonHelper.JsonToList<Person>(result.data.ToString());
             totalPage = result.total;
 
-            PageNumberTextBlock.Text = currentPage.ToString()+"/"+totalPage.ToString();
+            PageNumberTextBlock.Text = currentPage.ToString() + "/" + totalPage.ToString();
             userListView.ItemsSource = userList;
         }
 
@@ -225,7 +225,7 @@ namespace wmsApp.dialog
                     userList = JsonHelper.JsonToList<Person>(result.data.ToString());
                     break;
             }
-            PageNumberTextBlock.Text = currentPage.ToString();
+            PageNumberTextBlock.Text = currentPage.ToString() + "/" + totalPage.ToString();
             userListView.ItemsSource = userList;
             if ((bool)SelectAllCheckBox.IsChecked) SelectAllCheckBox_Checked(null, null);
         }

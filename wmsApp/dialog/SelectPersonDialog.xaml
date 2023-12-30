@@ -7,7 +7,7 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="选择人员" Height="514.5" Width="624"    
+        Title="选择人员" Height="510.5" Width="734"    
        >
     <Window.Resources>
         <DropShadowEffect x:Key="ShadowEffect" Color="Black" Direction="270" ShadowDepth="7" Opacity="0.6" BlurRadius="15"/>
@@ -24,7 +24,7 @@
             <TextBlock Text="选择人员" Foreground="DimGray" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
         <!-- 搜索框 -->
-        <Grid Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,-0.333,0.333" Width="623">
+        <Grid Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,-0.333,0.333" Width="750">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="8*"/>
@@ -39,23 +39,23 @@
 
             <TextBox x:Name="textBox" Grid.Column="1" Margin="10,10,9.667,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" KeyDown="TextBox_PreviewKeyDown"/>
 
-            <Button Grid.Column="2" Width="39" Height="32" FontSize="24" RenderTransformOrigin="0.526,0.258" Margin="4.333,10,0,9" Click="SearchButton_Click">
+            <Button Grid.Column="2" Width="39" Height="32" FontSize="24" RenderTransformOrigin="0.526,0.258" Margin="4.333,10,0,13.667" Click="SearchButton_Click">
                 <ui:SymbolIcon Symbol="Find" Height="20" Width="20" RenderTransformOrigin="0.324,0.495"/>
             </Button>
-            <Button x:Name="btnBack"  Click="btnBack_Click" Grid.Column="3" Margin="0.333,13,0,11.334" Height="32" FontSize="24" Width="37">
+            <Button x:Name="btnBack"  Click="btnBack_Click" Grid.Column="2" Margin="59.333,10,0,13.667" Height="32" FontSize="24" Width="38" Grid.ColumnSpan="2">
                 <ui:SymbolIcon Symbol="Forward"/>
             </Button>
         </Grid>
 
 
         <!-- ListView -->
-        <Grid Grid.Row="2" Margin="0,10.667,-0.333,0.333" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="623" Background="#FFEBEBEB">
+        <Grid Grid.Row="2" Margin="0,10.667,-0.333,0.333" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="750" Background="#FFEBEBEB">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <!-- 全选CheckBox和列头信息 -->
-            <Grid Width="600" HorizontalAlignment="Left" Margin="12,0,0,0">
+            <Grid Width="750" HorizontalAlignment="Left" Margin="12,0,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20"/>
                     <ColumnDefinition Width="*"/>
@@ -69,7 +69,7 @@
             </Grid>
             <Border BorderThickness="0,0,0,1" BorderBrush="LightGray"/>
             <!-- ListView -->
-            <ListView x:Name="userListView" SelectionMode="Multiple" Grid.Row="1"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="644" Background="#FFEBEBEB" Margin="0,0,-21,0">
+            <ListView x:Name="userListView" SelectionMode="Multiple" Grid.Row="1"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="822" Margin="0,0,-72,0.333" Background="White">
                 <ListView.ItemsSource>
                     <x:Array Type="{x:Type local:Person}">
                         <local:Person Id="1" Name="张三" Role="管理员"/>
@@ -81,7 +81,7 @@
                 </ListView.ItemsSource>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Width="600">
+                        <Grid Width="750">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="20"/>
                                 <ColumnDefinition Width="*"/>
@@ -101,7 +101,7 @@
 
 
         <!-- 翻页按钮 -->
-        <StackPanel Grid.Row="3" Width="157" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="234,0,231.667,49" Height="49" >
+        <StackPanel Grid.Row="3" Width="211" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="278,0,238.333,49.333" Height="49" ScrollViewer.VerticalScrollBarVisibility="Disabled">
             <StackPanel.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -110,7 +110,7 @@
                     <TranslateTransform X="0.321"/>
                 </TransformGroup>
             </StackPanel.RenderTransform>
-            <Button x:Name="PreviousButton" Margin="5,10" Width="33" Click="PreviousButton_Click">
+            <Button x:Name="PreviousButton" Margin="5,10" Width="33" Click="PreviousButton_Click" >
                 <Image Source="../assets/left.png" HorizontalAlignment="Center" Width="17"/>
             </Button>
             <TextBlock x:Name="PreviousPageButton" Text="第" Margin="5,10,5,5" FontSize="18"/>
@@ -123,7 +123,7 @@
 
 
         <!-- 确定/取消按钮 -->
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,35.667,10.333,9.667">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,53.667,10.333,4.333">
             <Button Content="确定" Width="80" Margin="5" FontSize="20" Click="ConfirmButton_Click"/>
             <Button Content="取消" Width="80" Margin="5" FontSize="20" Click="CancelButton_Click"/>
         </StackPanel>
