@@ -1,15 +1,16 @@
-﻿<Page x:Class="wmsApp.pages.MaterialPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:wmsApp.pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="MaterialPage"
-      xmlns:ui="http://schemas.modernwpf.com/2019">
+﻿<ui:ContentDialog 
+    x:Class="wmsApp.dialog.MaterialDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    Title="添加人员"
+    PrimaryButtonText="确认"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonText="取消"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
-    <Grid>
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="42"/>
             <RowDefinition/>
@@ -27,7 +28,7 @@
                 </Grid.ColumnDefinitions>
 
                 <ComboBox Grid.Column="0" Width="100" Margin="5" x:Name="comboBox" SelectedValue="material" SelectedIndex="1">
-                    <!-- 下拉选择框内容 -->
+                    --><!-- 下拉选择框内容 --><!--
                     <ComboBoxItem x:Name="materialID" Content="按ID查询"/>
                     <ComboBoxItem x:Name="meterialName" Content="按名称查询"/>
                     <ComboBoxItem x:Name="meterialHouseName" Content="按仓库名查询"/>
@@ -52,7 +53,7 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="26,0.333,-1,0" >
 
             <DataGrid x:Name="datagrid" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="True">
-                <!-- 定义列 -->
+                --><!-- 定义列 --><!--
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="物料id" Binding="{Binding id}" />
                     <DataGridTextColumn Header="物料名称" Binding="{Binding name}" />
@@ -83,5 +84,6 @@
             <TextBlock Text="页" Margin="5"/>
             <Button x:Name="NextPageButton" Content="下一页" Margin="5" Click="NextPageButton_Click"/>
         </StackPanel>
-    </Grid>
-</Page>
+    </Grid>-->
+
+</ui:ContentDialog>

@@ -204,7 +204,7 @@ namespace wmsApp.pages
 
             dialog.MaterialHouseNameComboBox.ItemsSource = houseList;
             dialog.MaterialHouseNameComboBox.SelectedValue = selectedItem.houseName.ToString();
-
+            
             dialog.MaterialTypeComboBox.ItemsSource = typeNameList;
             dialog.MaterialTypeComboBox.SelectedValue = selectedItem.type.ToString();
 

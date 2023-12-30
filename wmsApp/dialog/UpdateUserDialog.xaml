@@ -4,54 +4,53 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:ui="http://schemas.modernwpf.com/2019"
-    Title="修改"
+    Title="修改人员"
     PrimaryButtonText="确认"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonText="取消"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
-    <Grid>
+    <Grid  HorizontalAlignment="Center">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" MinWidth="97.333"/>
+            <ColumnDefinition Width="68"/>
+            <ColumnDefinition Width="132.333"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Margin="0,0,0.333,0.333">
-			<TextBlock Text="工号"/>
-			<TextBlock x:Name="userIdTextBlock"/>
-			
+        <StackPanel Grid.Column="0"  Grid.ColumnSpan="2" HorizontalAlignment="Center">
+            <TextBlock Text="工号"/>
+            <TextBlock x:Name="userIdTextBlock" Width="200"/>
+            
             <TextBlock Text="姓名"/>
-            <TextBox x:Name="nameTextBox"/>
+            <TextBox x:Name="nameTextBox" Width="200"/>
 
             <TextBlock Text="角色"/>
-            <ComboBox x:Name="roleTextBox" Width="96">
+            <ComboBox x:Name="roleTextBox" Width="200">
                 <ComboBoxItem Content="用户"/>
                 <ComboBoxItem Content="管理员"/>
             </ComboBox>
 
             <TextBlock Text="性别"/>
-            <ComboBox x:Name="sexComboBox" Width="96">
+            <ComboBox x:Name="sexComboBox" Width="200">
                 <ComboBoxItem Content="男"/>
                 <ComboBoxItem Content="女"/>
             </ComboBox>
 
             <TextBlock Text="出生日期"/>
-            <DatePicker x:Name="birthdatePicker"/>
+            <DatePicker x:Name="birthdatePicker" Width="200"/>
 
             <TextBlock Text="身份证号"/>
-            <!--<StackPanel Orientation="Horizontal">-->
             <TextBox x:Name="idNumberTextBox" LostFocus="idNumberTextBox_LostFocus" />
             <TextBlock x:Name="idNumberErrorTextBlock" Foreground="Red" VerticalAlignment="Center" FontSize="12"/>
-            <!--</StackPanel>-->
 
             <TextBlock Text="籍贯"/>
-            <TextBox x:Name="nativePlaceTextBox"/>
+            <TextBox x:Name="nativePlaceTextBox" Width="200"/>
 
             <TextBlock Text="家庭住址"/>
-            <TextBox x:Name="addressTextBox"/>
+            <TextBox x:Name="addressTextBox" Width="200"/>
 
             <TextBlock Text="联系电话"/>
-            <TextBox x:Name="phoneTextBox"  LostFocus="phoneTextBox_LostFocus"/>
+            <TextBox x:Name="phoneTextBox"  LostFocus="phoneTextBox_LostFocus" Width="200"/>
             <TextBlock x:Name="phoneTextBlock" Foreground="Red" VerticalAlignment="Center" FontSize="12"/>
         </StackPanel>
 

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,10 +15,23 @@ using wms.utils;
 using wmsApp.controls;
 using wmsApp.param;
 using wmsApp.pojo;
+using static System.Net.WebRequestMethods;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace wms
 {
+    class MsmApi
+    {
+        public static HttpHelper http = new HttpHelper();
+        public static Result sendCode(string phone)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/msm/send/{phone}"));
+        }
+        public static Result checkCode(string key, string code)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/msm/checkCode/{key}/{code}"));
+        }
+    }
     class UserInfoApi
     {
         public static HttpHelper http = new HttpHelper();
@@ -25,6 +39,15 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/show"));
         }
+        public static Result updatePhone(String newPhone)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePhone/{newPhone}"));
+        }
+        public static Result updatePassword(string newPassword)
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePassword/{newPassword}"));
+        }
+
     }
     class RsaApi
     {
@@ -105,6 +128,12 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Post("/user/resetPassword", JsonHelper.DateObjectToJson<User>(user)));
         }
+        public static Result findAllUserName()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/user/findAllUserName"));
+        }
+       
+
     }
 
 
@@ -180,11 +209,13 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchByComments/{page}/{comments}"));
         }
 
+        //查询所有仓库名
         public static Result searchHouseName()
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/searchHouseName"));
         }
 
+        //查询所有物料类别
         public static Result searchTypeName()
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/typeName"));
@@ -205,6 +236,42 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/material/del/{id}"));
         }
+
+        //查询某一类别对应的所有物料
+        public static Result getMaterialNameByType(string type)
+        {
+            var data = new
+            {
+                typeName = type
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostDncryptedData($"/material/getMaterialNameByType", jsonData);
+        }
+
+
+        //通过物料名查询仓库
+        public static Result getHouseByMaterialName(string name)
+        {
+            var data = new
+            {
+                name = name
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/material/getHouseByMaterialName", jsonData);
+        }
+
+        //根据名字和仓库，返回物料信息
+        public static Result getMaterialByNameAndHouse(string name, string house)
+        {
+            var data = new
+            {
+                name = name,
+                house = house
+            };
+            MessageBox.Show(data.ToString());
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/material/getMaterialByNameAndHouse", jsonData);
+        }
     }
 
     class StoreApi
@@ -214,6 +281,37 @@ namespace wms
         public static Result searchAll(int page)
         {
             return http.GetDncryptedData($"/store/searchAll/{page}");
+        }
+
+        public static Result searchCondition(long storeNo, string houseName, DateTime? startTime, DateTime? endTime, long materialId,
+            long userId, string notes, int page)
+        {
+            if(startTime == null)
+            {
+                startTime = new DateTime(1970, 1, 1);
+            }
+            if(endTime == null)
+            {
+                endTime = DateTime.Now;
+            }
+
+            StoreConSearchParams store = new StoreConSearchParams(storeNo, houseName, startTime, endTime, materialId, userId, notes, page);
+            return http.PostEncryptedData($"/store/conditionSearch", JsonHelper.DateObjectToJson<StoreConSearchParams>(store));
+        }
+    }
+    class DeliverApi
+    {
+        public static HttpHelper http = new HttpHelper();
+        public static Result getMaterialNamesByDeliverTime(DateTime? startTime, DateTime? endTime)
+        {           
+            var data = new { startTime = startTime, endTime = endTime }; 
+            return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/getNames", JsonHelper.DateObjectToJson(data)));
+        }
+
+        public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)
+        {
+            var data = new { startTime = startTime, endTime = endTime };
+            return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/findCountByNames", JsonHelper.DateObjectToJson(data)));
         }
     }
 

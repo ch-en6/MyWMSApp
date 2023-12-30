@@ -1,0 +1,43 @@
+﻿<ui:ContentDialog
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av"
+    x:Class="wmsApp.dialog.StoreDialog"
+    Title="申请入库"
+    PrimaryButtonText="确认"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonText="取消"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
+    >
+
+    <Grid Width="500">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="42"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto" MinHeight="42"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="20,0,20,0">
+            <TextBlock Text="操作人员ID：" VerticalAlignment="Center"/>
+            <ComboBox x:Name="userIdComboBox" Width="120" Margin="10" VerticalAlignment="Center"/>
+            <TextBlock Text="进仓日期：" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            <DatePicker x:Name="storeDatePicker" Width="120" Margin="10" VerticalAlignment="Center"/>
+            <Button Content="添加" />
+        </StackPanel>
+
+        <Grid Grid.Row="1"  HorizontalAlignment="Center">
+            <DataGrid x:Name="datagrid" Margin="20,0,20,10" AutoGenerateColumns="False" AlternatingRowBackground="Gainsboro" CanUserAddRows="True" IsReadOnly="False" Width="Auto">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="物料类别"/>
+                    <DataGridTextColumn Header="物料名称"/>
+                    <DataGridTextColumn Header="物料ID"/>
+                    <DataGridTextColumn Header="仓库名"/>
+                    <DataGridTextColumn Header="进仓数量"/>
+                    <DataGridTextColumn Header="备注"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</ui:ContentDialog>

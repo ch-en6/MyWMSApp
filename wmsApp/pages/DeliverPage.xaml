@@ -1,4 +1,4 @@
-﻿<Page x:Class="wmsApp.pages.StorePage"
+﻿<Page x:Class="wmsApp.pages.DeliverPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -42,13 +42,13 @@
                 <TextBox Grid.Row="0" Grid.Column="3" Margin="5" x:Name="materialIdTextBox" Width="200" />
 
                 <TextBlock Grid.Row="0" Grid.Column="4" Text="仓库名:" VerticalAlignment="Center" Margin="5" />
-                <ComboBox Grid.Row="0" Grid.Column="5" Margin="5" x:Name="warehouseNameComboBox" Width="200" />
+                <TextBox Grid.Row="0" Grid.Column="5" Margin="5" x:Name="warehouseNameTextBox" Width="200" />
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="开始日期:" VerticalAlignment="Center" Margin="5" />
-                <DatePicker Grid.Row="1" Grid.Column="1" Margin="5" x:Name="startTimeTextBox" Width="200" DisplayDateStart="2000-01-01" />
-                
+                <DatePicker Grid.Row="1" Grid.Column="1" Margin="5" x:Name="startTimeTextBox" Width="200" />
+
                 <TextBlock Grid.Row="1" Grid.Column="2" Text="结束日期:" VerticalAlignment="Center" Margin="5" />
-                <DatePicker Grid.Row="1" Grid.Column="3" Margin="5" x:Name="endTimeTextBox" Width="200" DisplayDateStart="2022-01-01" />
+                <DatePicker Grid.Row="1" Grid.Column="3" Margin="5" x:Name="endTimeTextBox" Width="200" />
 
                 <TextBlock Grid.Row="1" Grid.Column="4" Text="操作人员ID:" VerticalAlignment="Center" Margin="5" />
                 <TextBox Grid.Row="1" Grid.Column="5" Margin="5" x:Name="operatorIdTextBox" Width="200" />
@@ -64,12 +64,8 @@
                     <ui:SymbolIcon Symbol="Forward"/>
                 </Button>
 
-                <Button x:Name="btnClear" Grid.Row="2" Grid.Column="5" Margin="115,0,0,0" Height="33" Click="btnClear_Click">
-                    <ui:SymbolIcon Symbol="Delete"/>
-                </Button>
-
                 <Button x:Name="addButton" Grid.Row="2" Grid.Column="4" Margin="0,0,0,0" Height="33" Click="Add_Click" >
-                    <ui:SymbolIcon Symbol="Add"/>
+                    <ui:SymbolIcon Symbol="Forward"/>
                 </Button>
 
             </Grid>
@@ -80,19 +76,19 @@
                 <ColumnDefinition Width="1"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" >
                 <DataGrid x:Name="datagrid" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="True">
                     <!-- 定义列 -->
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="序号" Binding="{Binding Index}" />
-                        <DataGridTextColumn Header="进仓单号" Binding="{Binding Store.storeNo}" />
-                        <DataGridTextColumn Header="仓库名" Binding="{Binding Store.houseName}" />
-                        <DataGridTextColumn Header="进仓日期" Binding="{Binding Store.storeTime, StringFormat='yyyy-MM-dd'}" />
-                        <DataGridTextColumn Header="物料ID" Binding="{Binding Store.materialId}" />
-                        <DataGridTextColumn Header="进仓数量" Binding="{Binding Store.storeCount}" />
-                        <DataGridTextColumn Header="操作人员ID" Binding="{Binding Store.userId}" />
-                        <DataGridTextColumn Header="备注" Binding="{Binding Store.notes}" />
+                        <DataGridTextColumn Header="序号" Binding="{Binding storeId}" />
+                        <DataGridTextColumn Header="出仓单号" Binding="{Binding storeNo}" />
+                        <DataGridTextColumn Header="仓库名" Binding="{Binding houseName}" />
+                        <DataGridTextColumn Header="出仓日期" Binding="{Binding storeTime, StringFormat='yyyy-MM-dd'}" />
+                        <DataGridTextColumn Header="物料ID" Binding="{Binding materialId}" />
+                        <DataGridTextColumn Header="出仓数量" Binding="{Binding storeCount}" />
+                        <DataGridTextColumn Header="操作人员ID" Binding="{Binding userId}" />
+                        <DataGridTextColumn Header="备注" Binding="{Binding notes}" />
 
                         <DataGridTemplateColumn Header="操作">
                             <DataGridTemplateColumn.CellTemplate>

@@ -75,6 +75,15 @@
     <Compile Include="dialog\AddUserDialog.xaml.cs">
       <DependentUpon>AddUserDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dialog\MaterialDialog.xaml.cs">
+      <DependentUpon>MaterialDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dialog\StoreDialog.xaml.cs">
+      <DependentUpon>StoreDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dialog\DeliverDialog.xaml.cs">
+      <DependentUpon>DeliverDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="dialog\DelPermissionTypeDialog.xaml.cs">
       <DependentUpon>DelPermissionTypeDialog.xaml</DependentUpon>
     </Compile>
@@ -84,12 +93,21 @@
     <Compile Include="dialog\UpdateMaterialDialog.xaml.cs">
       <DependentUpon>UpdateMaterialDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dialog\UpdatePasswordDialog.xaml.cs">
+      <DependentUpon>UpdatePasswordDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dialog\UpdatePhoneDialog.xaml.cs">
+      <DependentUpon>UpdatePhoneDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="dialog\UpdateUserDialog.xaml.cs">
       <DependentUpon>UpdateUserDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="dto\Constants.cs" />
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="pages\DeliverPage.xaml.cs">
+      <DependentUpon>DeliverPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -109,13 +127,23 @@
     <Compile Include="pages\UserPage.xaml.cs">
       <DependentUpon>UserPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pages\OutStatisticPage.xaml.cs">
+      <DependentUpon>OutStatisticPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="pages\Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="param\LoginParams.cs" />
     <Compile Include="param\SearchPermissionParams.cs" />
+    <Compile Include="param\StoreConSearchParams.cs" />
     <Compile Include="param\UpdatePermissionParams.cs" />
+    <Compile Include="pojo\Class1.cs" />
+    <Compile Include="pojo\Deliver.cs" />
     <Compile Include="pojo\House.cs" />
     <Compile Include="pojo\Material.cs" />
     <Compile Include="pojo\MaterialType.cs" />
     <Compile Include="pojo\PermissionType.cs" />
+    <Compile Include="pojo\Product.cs" />
     <Compile Include="pojo\Resource.cs" />
     <Compile Include="pojo\Store.cs" />
     <Compile Include="UpgradeWindow.xaml.cs">
@@ -129,6 +157,7 @@
     <Compile Include="utils\RSAUtil.cs" />
     <Compile Include="utils\TokenExpiredException.cs" />
     <Compile Include="utils\TokenManager.cs" />
+    <Compile Include="pojo\LvcView.cs" />
     <Page Include="dialog\AddMaterialDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -137,11 +166,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="dialog\MaterialDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="dialog\StoreDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="dialog\DeliverDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="dialog\DelPermissionTypeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="dialog\PermssionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="dialog\UpdatePasswordDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="dialog\UpdatePhoneDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,6 +221,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="pages\DeliverPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="pages\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -193,6 +246,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="pages\UserPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\OutStatisticPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,6 +283,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Report1.rdlc" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -231,6 +293,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="LiveCharts.Wpf">
+      <Version>0.9.7</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.Winforms">
+      <Version>150.1586.0</Version>
+    </PackageReference>
     <PackageReference Include="ModernWpfUI">
       <Version>0.9.0</Version>
     </PackageReference>

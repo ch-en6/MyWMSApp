@@ -9,56 +9,80 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UserPage">
 
-    <Grid>
+    <Grid HorizontalAlignment="Left">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="49,0,0,0">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,30,0,0" >
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="10"/>
+                    <Setter Property="FontSize" Value="15"/>
+                </Style>
+                <Style x:Key="BoldText" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+                <!--<Style TargetType="TextBlock" x:Key="BoldText">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+                <Style TargetType="TextBlock" x:Key="UnderlineText">
+                    <Setter Property="Foreground" Value="Blue"/>
+                    <Setter Property="TextDecorations" Value="Underline"/>
+                </Style>-->
+            </StackPanel.Resources>
+
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="工号: " FontWeight="Bold" Margin="5"/>
-                <TextBlock Text="{Binding id}" Margin="5"/>
+                <TextBlock Style="{StaticResource BoldText}" Text="工号:"/>
+                <TextBlock Text="{Binding id}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="姓名: " FontWeight="Bold" Margin="5"/>
-                <TextBlock Text="{Binding name}" Margin="5"/>
+                <TextBlock Style="{StaticResource BoldText}" Text="姓名:"/>
+                <TextBlock Text="{Binding name}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="角色: " FontWeight="Bold" Margin="5"/>
-                <TextBlock Text="{Binding role}" Margin="5"/>
+                <TextBlock Style="{StaticResource BoldText}" Text="角色:"/>
+                <TextBlock Text="{Binding role}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="性别: " FontWeight="Bold" Margin="5"/>
-                <TextBlock Text="{Binding sex}" Margin="5"/>
+                <TextBlock Style="{StaticResource BoldText}" Text="性别:"/>
+                <TextBlock Text="{Binding sex}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="出生日期: " FontWeight="Bold" Margin="5"/>
-                <TextBlock Text="{Binding birthDate, StringFormat=\{0:yyyy-MM-dd\}}" Margin="5"/>
+                <TextBlock Style="{StaticResource BoldText}" Text="出生日期:"/>
+                <TextBlock Text="{Binding birthDate, StringFormat=\{0:yyyy-MM-dd\}}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="身份证号: " FontWeight="Bold" Margin="5"/>
-                <TextBlock Text="{Binding idNumber}" Margin="5"/>
+                <TextBlock Style="{StaticResource BoldText}" Text="身份证号:"/>
+                <TextBlock Text="{Binding idNumber}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="籍贯: " FontWeight="Bold" Margin="5"/>
-                <TextBlock Text="{Binding nativePlace}" Margin="5"/>
+                <TextBlock Style="{StaticResource BoldText}" Text="籍贯:"/>
+                <TextBlock Text="{Binding nativePlace}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="家庭住址: " FontWeight="Bold" Margin="5"/>
-                <TextBlock Text="{Binding address}" Margin="5"/>
+                <TextBlock Style="{StaticResource BoldText}" Text="家庭住址:"/>
+                <TextBlock Text="{Binding address}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="手机号: " FontWeight="Bold" Margin="5"/>
-                <TextBlock Text="{Binding phone}" Margin="5"/>
-                <TextBlock Text="修改手机号" Foreground="Blue" TextDecorations="Underline" Margin="5"/>
+                <TextBlock Style="{StaticResource BoldText}" Text="手机号:"/>
+                <TextBlock Text="{Binding phone}"/>
+                <TextBlock Text="修改手机号" MouseDown="updatePhone_MouseDown"  Foreground="Blue"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Style="{StaticResource BoldText}" Text="密码:"/>
+                <TextBlock Style="{StaticResource BoldText}" Text="******"/>
+                <TextBlock Text="修改密码" MouseDown="updatePassword_MouseDown"  Foreground="Blue"/>
+
             </StackPanel>
         </StackPanel>
     </Grid>
