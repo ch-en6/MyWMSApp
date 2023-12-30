@@ -1,14 +1,7 @@
 ﻿using ModernWpf.Controls;
-using Newtonsoft.Json.Converters;
-using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Drawing.Drawing2D;
-using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Controls;
-
 using WindowsFormsApp1.dto;
 using wms;
 using wms.pojo;
@@ -23,6 +16,7 @@ namespace wmsApp.pages
         int currentPage = 1;
         long totalPage = 0;
         int flag = 0;
+        string pageNumText;
 
         public MaterialPage()
         {
@@ -32,7 +26,8 @@ namespace wmsApp.pages
             totalPage = result.total;
 
             InitializeComponent();
-            PageNumberTextBlock.Text = currentPage.ToString();
+            pageNumText = currentPage.ToString() + "/" + totalPage.ToString();
+            PageNumberTextBlock.Text = pageNumText;
             datagrid.ItemsSource = materialList;
         }
 
@@ -68,8 +63,8 @@ namespace wmsApp.pages
                     materialList = JsonHelper.JsonToList<Material>(result.data.ToString());
                     break;
             }
-
-            PageNumberTextBlock.Text = currentPage.ToString();
+            pageNumText = currentPage.ToString() + "/" + totalPage.ToString();
+            PageNumberTextBlock.Text = pageNumText;
             datagrid.ItemsSource = materialList;
         }
 
@@ -181,7 +176,8 @@ namespace wmsApp.pages
             materialList = JsonHelper.JsonToList<Material>(result.data.ToString());
             totalPage = result.total;
 
-            PageNumberTextBlock.Text = currentPage.ToString();
+            pageNumText = currentPage.ToString() + "/" + totalPage.ToString();
+            PageNumberTextBlock.Text = pageNumText;
             datagrid.ItemsSource = materialList;
         }
 
@@ -262,8 +258,20 @@ namespace wmsApp.pages
             List<Material> materialList = JsonHelper.JsonToList<Material>(result.data.ToString());
             totalPage = result.total;
 
-            PageNumberTextBlock.Text = currentPage.ToString();
+            pageNumText = currentPage.ToString() + "/" + totalPage.ToString();
+            PageNumberTextBlock.Text = pageNumText;
             datagrid.ItemsSource = materialList;
+        }
+
+        private void HouseManagementButton_Click(object sender, RoutedEventArgs e)
+        {
+            HouseManagementWindow window = new HouseManagementWindow();
+            window.Show();
+        }
+
+        private void TypeManagementButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

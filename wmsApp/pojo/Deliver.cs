@@ -19,6 +19,8 @@ namespace wmsApp.pojo
 
         public int DeliverCount { get; set; }
 
+        public int RemainCount { get; set; }
+
         public long UserId { get; set; }
 
         public string Notes { get; set; }

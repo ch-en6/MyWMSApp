@@ -20,6 +20,8 @@ namespace wmsApp.pojo
 
         public int storeCount { get; set; }
 
+        public int remainCount { get; set; }
+
         public long userId { get; set; }
 
         public string notes { get; set; }

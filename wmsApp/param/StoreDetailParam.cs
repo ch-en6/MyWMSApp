@@ -19,6 +19,8 @@ namespace wmsApp.param
 
         public int storeCount { get; set; }
 
+        public int remainCount { get; set; }
+
         public DateTime storeTime { get; set; }
 
         public long userId { get; set; }

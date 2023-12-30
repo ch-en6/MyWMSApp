@@ -214,7 +214,12 @@ namespace wms
         //修改
         public static Result updateMaterial(Material material)
         {
-            return JsonHelper.JSONToObject<Result>(http.Post("/material/update", JsonHelper.DateObjectToJson(material)));
+            return http.PostEncryptedData($"/material/update", JsonHelper.DateObjectToJson(material));
+        }
+
+        public static Result updateEqualType(Material material)
+        {
+            return http.PostEncryptedData($"/material/updateEqualType", JsonHelper.DateObjectToJson(material));
         }
 
         public static Result deleteMaterial(long id)
