@@ -78,6 +78,9 @@
     <Compile Include="dialog\HouseManagementWindow.xaml.cs">
       <DependentUpon>HouseManagementWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dialog\PrintAccountDialog.xaml.cs">
+      <DependentUpon>PrintAccountDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="dialog\PrintAccountWinForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,12 +89,6 @@
     </Compile>
     <Compile Include="dialog\PrintMonthDialog.xaml.cs">
       <DependentUpon>PrintMonthDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="dialog\PrintAccountDialog.xaml.cs">
-      <DependentUpon>PrintAccountDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="dialog\MaterialWindow.xaml.cs">
-      <DependentUpon>MaterialWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="dialog\SelectPersonDialog.xaml.cs">
       <DependentUpon>SelectPersonDialog.xaml</DependentUpon>
@@ -127,9 +124,6 @@
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="pages\AddDeliverPage.xaml.cs">
-      <DependentUpon>AddDeliverPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="pages\DeliverPage.xaml.cs">
       <DependentUpon>DeliverPage.xaml</DependentUpon>
     </Compile>
@@ -154,7 +148,10 @@
     <Compile Include="pages\OutStatisticPage.xaml.cs">
       <DependentUpon>OutStatisticPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="param\PrintAccountParam.cs" />
+    <Compile Include="pages\Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
+     <Compile Include="param\PrintAccountParam.cs" />
     <Compile Include="param\LoginParams.cs" />
     <Compile Include="param\PrintStoreParam.cs" />
     <Compile Include="param\SearchPermissionParams.cs" />
@@ -166,7 +163,7 @@
     <Compile Include="pojo\Material.cs" />
     <Compile Include="pojo\MaterialType.cs" />
     <Compile Include="pojo\PermissionType.cs" />
-    <Compile Include="pojo\IOMaterial.cs" />
+    <Compile Include="pojo\Product.cs" />
     <Compile Include="pojo\Resource.cs" />
     <Compile Include="pojo\Store.cs" />
     <Compile Include="UpgradeWindow.xaml.cs">
@@ -189,31 +186,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="dialog\HouseManagementWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="dialog\PrintMonthDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="dialog\PrintAccountDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="dialog\StoreDialog.xaml">
     <Page Include="dialog\SelectPersonDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="dialog\MaterialWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="dialog\StoreDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+       
+    <Page Include="dialog\HouseManagementWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+       </Page>
+        <Page Include="dialog\PrintAccountDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+   
     <Page Include="dialog\DelPermissionTypeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -257,10 +251,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="pages\AddDeliverPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="pages\DeliverPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -293,6 +283,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="pages\Window1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UpgradeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -315,8 +309,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="dialog\PrintAccountWinForm.resx">
+        <EmbeddedResource Include="dialog\PrintAccountWinForm.resx">
       <DependentUpon>PrintAccountWinForm.cs</DependentUpon>
+    </EmbeddedResource>
+     <EmbeddedResource Include="report\Account.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="dialog\StoreWinForm.resx">
       <DependentUpon>StoreWinForm.cs</DependentUpon>
@@ -325,14 +322,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="report\Account.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    
     <EmbeddedResource Include="report\StoreReport.rdlc" />
     <None Include="Properties\DataSources\wms.pojo.Material.datasource" />
+    <None Include="Properties\DataSources\wmsApp.pojo.Store.datasource" />
     <None Include="Properties\DataSources\wmsApp.param.AccountDetialFormParam.datasource" />
     <None Include="Properties\DataSources\wmsApp.param.PrintAcountParam.datasource" />
-    <None Include="Properties\DataSources\wmsApp.pojo.Store.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
