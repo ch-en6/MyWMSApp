@@ -78,6 +78,12 @@
     <Compile Include="dialog\HouseManagementWindow.xaml.cs">
       <DependentUpon>HouseManagementWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dialog\MaterialDialog.xaml.cs">
+      <DependentUpon>MaterialDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dialog\MaterialWindow.xaml.cs">
+      <DependentUpon>MaterialWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="dialog\PrintAccountDialog.xaml.cs">
       <DependentUpon>PrintAccountDialog.xaml</DependentUpon>
     </Compile>
@@ -124,6 +130,9 @@
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pages\AddDeliverPage.xaml.cs">
+      <DependentUpon>AddDeliverPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pages\DeliverPage.xaml.cs">
       <DependentUpon>DeliverPage.xaml</DependentUpon>
     </Compile>
@@ -159,6 +168,7 @@
     <Compile Include="param\UpdatePermissionParams.cs" />
     <Compile Include="pojo\Deliver.cs" />
     <Compile Include="pojo\House.cs" />
+    <Compile Include="pojo\IOMaterial.cs" />
     <Compile Include="pojo\Material.cs" />
     <Compile Include="pojo\MaterialType.cs" />
     <Compile Include="pojo\PermissionType.cs" />
@@ -181,6 +191,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="dialog\AddUserDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="dialog\MaterialDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="dialog\MaterialWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -247,6 +265,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="pages\AddDeliverPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="pages\DeliverPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
