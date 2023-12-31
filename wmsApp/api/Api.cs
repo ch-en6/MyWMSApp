@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 using WindowsFormsApp1.dto;
 using wms.param;
@@ -33,6 +34,7 @@ namespace wms
         }
         public static Result updatePhone(String newPhone)
         {
+            
             return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePhone/{newPhone}"));
         }
         public static Result updatePassword(string newPassword)
@@ -44,6 +46,18 @@ namespace wms
     class RsaApi
     {
         public static HttpHelper http = new HttpHelper();
+
+/*        public static void test(string type)
+        {
+            var data = new
+            {
+                typeName = type
+            };
+            string jsonData = JsonConvert.SerializeObject(data);
+            MessageBox.Show(jsonData);
+            MessageBox.Show(http.PostDncryptedData("/material/typeMaterial", jsonData).data.ToString());
+        }*/
+
         public static String getJavaPublicKey()
         {
             return http.Get("/rsa");
@@ -54,8 +68,7 @@ namespace wms
             User user = new User();
             user.id = 1;
             user.name = "hi";
-            
-            Result result = http.GetDncryptedData("/rsa/test1/1");
+            Result result = http.PostDncryptedData("/rsa/test1/1",JsonHelper.ObjectToJSON(user));
             MessageBox.Show(result.data.ToString());
 
         }
@@ -68,10 +81,6 @@ namespace wms
             MessageBox.Show(result.success.ToString());
         }
 
-        //static void Main(string[] args)
-        //{
-        //    modify();
-        //}
     }
     class UserApi
     {
@@ -79,7 +88,8 @@ namespace wms
 
         public static Result search(int page)
         {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/user/search/{page}"));
+            return http.GetDncryptedData($"/user/search/{page}");
+            //return JsonHelper.JSONToObject<Result>(http.Get($"/user/search/{page}"));
         }
       
 
@@ -90,13 +100,15 @@ namespace wms
         //通过名称查询
         public static Result searchByName(int page, string name)
         {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/user/searchByName/{page}/{name}"));
+            return http.GetDncryptedData($"/user/searchByName/{page}/{name}");
+            //return JsonHelper.JSONToObject<Result>(http.Get($"/user/searchByName/{page}/{name}"));
         }
 
         //通过id查询
         public static Result searchById(int page, long id)
         {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/user/searchById/{page}/{id}"));
+            return http.GetDncryptedData($"/user/searchById/{page}/{id}");
+            //return JsonHelper.JSONToObject<Result>(http.Get($"/user/searchById/{page}/{id}"));
         }
 
         public static Result delete(long id)
@@ -117,6 +129,11 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/user/findAllUserName"));
         }
+        public static Result getNowUser()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/user/getNowUser"));
+        }
+
     }
 
 
@@ -141,7 +158,8 @@ namespace wms
         public static Result login(long userId, string password)
         {
             LoginParams loginParams = new LoginParams(userId, password);
-            Result result = JsonHelper.JSONToObject<Result>(http.Post("/login", JsonHelper.ObjectToJSON(loginParams)));
+            //Result result = JsonHelper.JSONToObject<Result>(http.Post("/login", JsonHelper.ObjectToJSON(loginParams)));
+            Result result =http.PostAndEncryptData("/login", JsonHelper.ObjectToJSON(loginParams));
             if (!result.success) MessageBox.Show(result.errorMsg);
             return result;
         }
@@ -298,11 +316,11 @@ namespace wms
         public static Result searchCondition(long storeNo, string houseName, DateTime? startTime, DateTime? endTime, long materialId,
             long userId, string notes, int page)
         {
-            if(startTime == null)
+            if (startTime == null)
             {
                 startTime = new DateTime(1970, 1, 1);
             }
-            if(endTime == null)
+            if (endTime == null)
             {
                 endTime = DateTime.Now;
             }
@@ -338,6 +356,11 @@ namespace wms
     class DeliverApi
     {
         public static HttpHelper http = new HttpHelper();
+        public static Result getMaterialNamesByDeliverTime(DateTime? startTime, DateTime? endTime)
+        {
+            var data = new { startTime = startTime, endTime = endTime };
+            return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/getNames", JsonHelper.DateObjectToJson(data)));
+        }
 
         public static Result getDeliverByYear(string year, Material material)
         {
@@ -349,6 +372,53 @@ namespace wms
             };
             var jsonData = JsonConvert.SerializeObject(data);
             return http.PostEncryptedData($"/deliver/deliverByYear", jsonData);
+        }
+
+    
+
+        public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)
+        {
+            var data = new { startTime = startTime, endTime = endTime };
+            return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/findCountByNames", JsonHelper.DateObjectToJson(data)));
+        }
+
+       
+        public static Result multiDelivery(List<Deliver> deliverList)
+        {
+            MessageBox.Show("哈哈");
+            return JsonHelper.JSONToObject<Result>(http.Post("/deliver/multiDelivery", JsonHelper.ObjectToJSON(deliverList)));
+        }
+
+        public static Result searchAll(int page)
+        {
+            return http.GetDncryptedData($"/deliver/searchAll/{page}");
+        }
+
+        public static Result searchCondition(long deliverNo, string houseName, DateTime? startTime, DateTime? endTime, long materialId,
+            long userId, string notes, int page)
+        {
+            if (startTime == null)
+            {
+                startTime = new DateTime(1970, 1, 1);
+            }
+            if (endTime == null)
+            {
+                endTime = DateTime.Now;
+            }
+
+            DeliverConSearchParams deliver = new DeliverConSearchParams(deliverNo, houseName, startTime, endTime, materialId, userId, notes, page);
+            return http.PostEncryptedData($"/deliver/conditionSearch", JsonHelper.DateObjectToJson<DeliverConSearchParams>(deliver));
+        }
+
+        public static Result getdeliverByDate(string Year, string Month)
+        {
+            var data = new
+            {
+                year = Year,
+                month = Month
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/deliver/selectdeliverByDate", jsonData);
         }
 
     }
@@ -448,6 +518,11 @@ namespace wms
         internal static Result searchByRole(SearchPermissionParams condition)
         {
             return http.PostDncryptedData("/permission/search/role", JsonHelper.ObjectToJSON(condition));
+        }
+
+        internal static Result getAllUser()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get("/user/getAll"));
         }
     }
 }

@@ -47,150 +47,6 @@ namespace wms.utils
             client.DefaultRequestHeaders.Add("PublicKey",headerValue);
             Console.WriteLine(headerValue);
         }
-        /**
-         * 发送明文GET请求,获取密文数据
-         */
-        public Result GetDncryptedData(string url)
-        {
-            try
-            {
-                RSA rsa = new RSA();
-                AES aes = new AES();
-                SetPublicKeyHeader(TokenManager.csKey["publickey"]);
-                var responseString = client.GetStringAsync(url);
-                Result result = JsonHelper.JSONToObject<Result>(responseString.Result); //包含data，aeskey
-                // rsa私钥解密获得aeskey
-                string aesKeyByRsaDecode = rsa.DecryptByPrivateKey(result.aesKey, TokenManager.csKey["privatekey"]);
-
-                string Resultdata = result.data.ToString();
-                //MessageBox.Show(Resultdata);
-                return JsonHelper.JSONToObject<Result>(aes.AesDecrypt(result.data.ToString(), aesKeyByRsaDecode));
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
-        /**
-         * 发送明文POST请求,获取密文数据
-         */
-        public Result PostDncryptedData(string url, string strJson)
-        {
-            try
-            {
-                RSA rsa = new RSA();
-                AES aes = new AES();
-                HttpContent content = new StringContent(strJson);
-                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                SetPublicKeyHeader(TokenManager.csKey["publickey"]);
-
-                //由HttpClient发出Post请求
-                Task<HttpResponseMessage> res = client.PostAsync(url, content);
-                if (res.Result.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-
-                    string resMsgStr = res.Result.Content.ReadAsStringAsync().Result;
-
-                    Result result = JsonHelper.JSONToObject<Result>(resMsgStr); //包含data，aeskey
-                    // rsa私钥解密获得aeskey
-                    string aesKeyByRsaDecode = rsa.DecryptByPrivateKey(result.aesKey, TokenManager.csKey["privatekey"]);
-
-                    string Resultdata = result.data.ToString();
-
-                    return JsonHelper.JSONToObject<Result>(aes.AesDecrypt(result.data.ToString(), aesKeyByRsaDecode));
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
-        /**
-         * 发送密文GET请求,获取密文数据
-         */
-     /*   public Result GetEncryptedData(string url)
-        {
-            try
-            {
-                RSA rsa = new RSA();
-                AES aes = new AES();
-                //加密数据
-                string aesKey = aes.GetKey();
-                MessageBox.Show("1");
-
-                Result data = new Result();
-                data.data = aes.AesEncrypt(url, aesKey); //AES加密后的数据
-                data.aesKey = rsa.EncryptByPublicKey(aesKey, TokenManager.javaPublicKey); //后端RSA公钥加密后的AES的key
-                data.publicKey = TokenManager.csKey["publickey"];//前端公钥
-                string dataStr = JsonHelper.DateObjectTOJson(data);//将加密后的Result对象转换为json类型
-
-                var responseString = client.GetStringAsync(dataStr);
-                Result result = JsonHelper.JSONToObject<Result>(responseString.Result); //包含data，aeskey
-                // rsa私钥解密获得aeskey
-                string aesKeyByRsaDecode = rsa.DecryptByPrivateKey(result.aesKey, TokenManager.csKey["privatekey"]);
-
-                string Resultdata = result.data.ToString();
-
-                return JsonHelper.JSONToObject<Result>(aes.AesDecrypt(result.data.ToString(), aesKeyByRsaDecode));
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }*/
-        /**
-         * 发送密文POST请求,获取密文数据，参数含@RequestBody不能用
-         */
-        public Result PostEncryptedData(string url, string strJson)
-        {
-            try
-            {
-                //加密再传输
-                AES aes = new AES();
-                RSA rsa = new RSA();
-
-
-                string aesKey = aes.GetKey();
-           
-                Result data = new Result();
-                data.data = aes.AesEncrypt(strJson, aesKey); //AES加密后的数据
-                data.aesKey = rsa.EncryptByPublicKey(aesKey, TokenManager.javaPublicKey); //后端RSA公钥加密后的AES的key
-                data.publicKey = TokenManager.csKey["publickey"];//前端公钥
-                string dataStr = JsonHelper.DateObjectTOJson(data);//将加密后的Result对象转换为json类型
-     
-                HttpContent content = new StringContent(dataStr);
-                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                
-                //由HttpClient发出Post请求
-                Task<HttpResponseMessage> res = client.PostAsync(url, content);
-                if (res.Result.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-         
-                    string resMsgStr = res.Result.Content.ReadAsStringAsync().Result;
-
-                    Result result = JsonHelper.JSONToObject<Result>(resMsgStr); //包含data，aeskey
-                    // rsa私钥解密获得aeskey
-                    string aesKeyByRsaDecode = rsa.DecryptByPrivateKey(result.aesKey, TokenManager.csKey["privatekey"]);
-            
-                    string Resultdata = result.data.ToString();
-                  
-                    return JsonHelper.JSONToObject<Result>(aes.AesDecrypt(result.data.ToString(), aesKeyByRsaDecode));
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
-
         /// <summary>
         /// 制造单例
         /// </summary>
@@ -237,6 +93,7 @@ namespace wms.utils
             }
             catch (Exception)
             {
+                MessageBox.Show("服务器异常");
                 return null;
             }
         }
@@ -267,40 +124,8 @@ namespace wms.utils
             }
             catch (Exception ex)
             {
+                MessageBox.Show("服务器异常");
                 return null;
-            }
-        }
-        /// <summary>
-        /// 异步Post请求
-        /// </summary>
-        /// <typeparam name="TResult">返回参数的数据类型</typeparam>
-        /// <param name="url">请求地址</param>
-        /// <param name="data">传入的数据</param>
-        /// <returns></returns>
-        public async Task<TResult> PostAsync<TResult>(string url, object data)
-        {
-            try
-            {
-                var jsonData = JsonConvert.SerializeObject(data);
-                HttpContent content = new StringContent(jsonData);
-                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                HttpResponseMessage res = await client.PostAsync(url, content);
-                if (res.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    string resMsgStr = await res.Content.ReadAsStringAsync();
-                    var result = JsonConvert.DeserializeObject<ResultDto<TResult>>(resMsgStr);
-                    return result != null ? result.Data : default;
-                }
-                else
-                {
-                    MessageBox.Show(res.StatusCode.ToString());
-                    return default;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return default;
             }
         }
         /// <summary>
@@ -317,53 +142,168 @@ namespace wms.utils
             }
             catch (Exception ex)
             {
+                MessageBox.Show("服务器异常");
                 return null;
             }
         }
-        /// <summary>
-        /// 异步Get请求
-        /// </summary>
-        /// <param name="url">请求地址</param>
-        /// <returns></returns>
-        public async Task<string> GetAsync(string url)
+        /**
+        * 发送明文GET请求,获取密文数据
+        */
+        public Result GetDncryptedData(string url)
         {
             try
             {
-                var responseString = await client.GetStringAsync(url);
-                return responseString;
+                RSA rsa = new RSA();
+                AES aes = new AES();
+                SetPublicKeyHeader(TokenManager.csKey["publickey"]);
+                var responseString = client.GetStringAsync(url);
+                Result result = JsonHelper.JSONToObject<Result>(responseString.Result); //包含data，aeskey
+                // rsa私钥解密获得aeskey
+                string aesKeyByRsaDecode = rsa.DecryptByPrivateKey(result.aesKey, TokenManager.csKey["privatekey"]);
+
+                string Resultdata = result.data.ToString();
+
+                return JsonHelper.JSONToObject<Result>(aes.AesDecrypt(result.data.ToString(), aesKeyByRsaDecode));
             }
             catch (Exception ex)
             {
+                MessageBox.Show("服务器异常");
                 return null;
             }
         }
-        /// <summary>
-        /// 异步Get请求
-        /// </summary>
-        /// <typeparam name="TResult">返回参数的数据</typeparam>
-        /// <param name="url">请求地址</param>
-        /// <returns></returns>
-        public async Task<TResult> GetAsync<TResult>(string url)
+        /**
+         * 发送明文POST请求,获取密文数据
+         */
+        public Result PostDncryptedData(string url, string strJson)
         {
             try
             {
-                var resMsgStr = await client.GetStringAsync(url);
-                var result = JsonConvert.DeserializeObject<ResultDto<TResult>>(resMsgStr);
-                return result != null ? result.Data : default;
+                RSA rsa = new RSA();
+                AES aes = new AES();
+                HttpContent content = new StringContent(strJson);
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                SetPublicKeyHeader(TokenManager.csKey["publickey"]);
+
+                //由HttpClient发出Post请求
+                Task<HttpResponseMessage> res = client.PostAsync(url, content);
+                if (res.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+
+                    string resMsgStr = res.Result.Content.ReadAsStringAsync().Result;
+
+                    Result result = JsonHelper.JSONToObject<Result>(resMsgStr); //包含data，aeskey
+                    // rsa私钥解密获得aeskey
+                    string aesKeyByRsaDecode = rsa.DecryptByPrivateKey(result.aesKey, TokenManager.csKey["privatekey"]);
+
+                    string Resultdata = result.data.ToString();
+
+                    return JsonHelper.JSONToObject<Result>(aes.AesDecrypt(result.data.ToString(), aesKeyByRsaDecode));
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception ex)
             {
-                return default(TResult);
+                MessageBox.Show("服务器异常");
+                return null;
+            }
+        }
+        /**
+         * 发送密文POST请求,获取密文数据，参数含@RequestBody不能用
+         */
+        public Result PostEncryptedData(string url, string strJson)
+        {
+            try
+            {
+                AES aes = new AES();
+                RSA rsa = new RSA();
+                string aesKey = aes.GetKey();
+
+                //加密再传输
+                Result data = new Result();
+                //用AES加密传输的数据
+                data.data = aes.AesEncrypt(strJson, aesKey); 
+                //用RSA加密AES的Key
+                data.aesKey = rsa.EncryptByPublicKey(aesKey, TokenManager.javaPublicKey);
+                //前端RSA公钥
+                data.publicKey = TokenManager.csKey["publickey"];
+                //将加密后的Result对象转换为json类型
+                string dataStr = JsonHelper.DateObjectTOJson(data);
+                //设置请求体
+                HttpContent content = new StringContent(dataStr);
+                //设置请求的 Content-Type 为 "application/json"
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+                //由HttpClient发出Post请求
+                Task<HttpResponseMessage> res = client.PostAsync(url, content);
+                if (res.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+
+                    string resMsgStr = res.Result.Content.ReadAsStringAsync().Result;
+                    // 后端返回的数据包含data，aeskey
+                    Result result = JsonHelper.JSONToObject<Result>(resMsgStr); 
+                    // 用RSA私钥解密获得aeskey
+                    string aesKeyByRsaDecode = rsa.DecryptByPrivateKey(result.aesKey, TokenManager.csKey["privatekey"]);
+
+                    string Resultdata = result.data.ToString();
+                    // 返回aesKey解密出的数据
+                    return JsonHelper.JSONToObject<Result>(aes.AesDecrypt(result.data.ToString(), aesKeyByRsaDecode));
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("服务器异常");
+                return null;
+            }
+        }
+        //发送密文，返回明文
+        public Result PostAndEncryptData(string url, string strJson)
+        {
+            try
+            {
+                //加密再传输
+                AES aes = new AES();
+                RSA rsa = new RSA();
+                string aesKey = aes.GetKey();
+                Result data = new Result();
+
+                data.data = aes.AesEncrypt(strJson, aesKey); //AES加密后的数据
+
+                data.aesKey = rsa.EncryptByPublicKey(aesKey, TokenManager.javaPublicKey); //后端RSA公钥加密后的AES的key
+
+                data.publicKey = TokenManager.csKey["publickey"];//前端公钥
+
+                string dataStr = JsonHelper.DateObjectTOJson(data);//将加密后的Result对象转换为json类型
+
+                HttpContent content = new StringContent(dataStr);
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+                //由HttpClient发出Post请求
+                Task<HttpResponseMessage> res = client.PostAsync(url, content);
+                if (res.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string resMsgStr = res.Result.Content.ReadAsStringAsync().Result;
+                    return JsonHelper.JSONToObject<Result>(resMsgStr);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("服务器异常");
+                return null;
             }
         }
 
     }
 
-    public class ResultDto<TResult>
-    {
-        public string Msg { get; set; }
-        public TResult Data { get; set; }
-        public bool Success { get; set; }
-    }
 }
 

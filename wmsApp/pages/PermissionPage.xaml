@@ -20,8 +20,8 @@
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Horizontal" Margin="9,-10,200,21" HorizontalAlignment="Center">
-                <Button Content="增加权限类型"  Margin="0,6,20,5.333" Click="Button_Click_1" FontSize="24"/>
-                <Button Content="删除权限类型"  Margin="0,6,20,5.333" VerticalAlignment="Stretch" Click="Button_Click_2" FontSize="24"/>
+                <Button Content="增加权限类型"  Margin="0,6,20,5.333" Click="AddPermissionType" FontSize="24"/>
+                <Button Content="删除权限类型"  Margin="0,6,20,5.333" VerticalAlignment="Stretch" Click="DelPermissionType" FontSize="24"/>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -74,33 +74,13 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <Button x:Name="select" Content="选中" Margin="5" FontSize="16" Click="SelectAllButton_Click">
-                                            <Button.Style>
-                                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                                    <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
-                                                    <Setter Property="Foreground" Value="Black"/>
-                                                    <Setter Property="BorderThickness" Value="0"/>
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Background" Value="{DynamicResource PrimaryDarkColor}"/>
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Button.Style>
+                                        <Button x:Name="select" Margin="5" FontSize="16" Click="SelectAllButton_Click" Width="38" Height="38">
+                                           
+                                            <ui:SymbolIcon Symbol="Accept" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         </Button>
-                                        <Button x:Name="cancel" Content="取消" Margin="5" FontSize="16" Click="CancelButton_Click">
-                                            <Button.Style>
-                                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                                    <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
-                                                    <Setter Property="Foreground" Value="Black"/>
-                                                    <Setter Property="BorderThickness" Value="0"/>
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Background" Value="{DynamicResource PrimaryDarkColor}"/>
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Button.Style>
+                                        <Button x:Name="cancel"  Margin="5" FontSize="16" Click="CancelButton_Click" Width="38" Height="38">
+                                         
+                                            <ui:SymbolIcon Symbol="Cancel" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         </Button>
                                     </StackPanel>
                                 </DataTemplate>

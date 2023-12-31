@@ -18,7 +18,7 @@ namespace wmsApp.dialog
 {
     public  partial class PermissionDialog : ContentDialog, INotifyPropertyChanged
     {
-        public ObservableCollection<Person> People { get; set; }
+        public List<Person> People { get; set; }
 
         long resourceId;
 
@@ -31,41 +31,25 @@ namespace wmsApp.dialog
         { 
             this.resources = resources;
             this.resourceId = resourceId;
-            Result result = PermissionApi.getUserNamesAndIds();
+     
+            Result result = PermissionTypesApi.getSelectMap(resourceId);
+         
             if (!result.success)
             {
                 throw new Exception(result.errorMsg.ToString());
             }
+
+            types = JsonHelper.ConvertToMap<String, long>(result.data.ToString());
+
+            types = JsonHelper.ConvertToMap<String, long>(result.data.ToString());
             
-            Result result1 = PermissionTypesApi.getSelectMap(resourceId);
-         
-            if (!result1.success)
-            {
-                throw new Exception(result.errorMsg.ToString());
-            }
-
-            types = JsonHelper.ConvertToMap<String, long>(result1.data.ToString());
-
-            types = JsonHelper.ConvertToMap<String, long>(result1.data.ToString());
-
-            userList = JsonHelper.JsonToList<User>(result.data.ToString());
             InitializeComponent();
-           
-            initPeople();
+ 
             initResource();
             initTypes();
             DataContext = this;
         }
-        private void initPeople()
-        {
-            // 初始化人员列表数据源
-            People = new ObservableCollection<Person>();
-            foreach (User user in userList)
-            {
-                Person p = new Person { Name = user.id + " " + user.name, IsSelected = false, Id = user.id };
-                People.Add(p);
-            }
-        }
+    
 
         private void initResource()
         {
@@ -92,12 +76,16 @@ namespace wmsApp.dialog
             typeTextBox.ItemsSource = items;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            // 点击 "选择人员" 按钮时的逻辑处理
-            userListView.Visibility = userListView.Visibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
-   
+            SelectPersonDialog dialog = new SelectPersonDialog();
+            Result result = await dialog.Show();
+
+            People = result.data as List<Person>;
+
         }
+
+
         private bool ValidateFields()
         {
             // 验证资源名称是否为空
@@ -172,48 +160,5 @@ namespace wmsApp.dialog
         }
     }
 
-    public class Person : INotifyPropertyChanged
-    {
-        private string _name;
-        private bool _isSelected;
-        private long _id;
-
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
-                OnPropertyChanged("Name");
-            }
-        }
-
-        public bool IsSelected
-        {
-            get { return _isSelected; }
-            set
-            {
-                _isSelected = value;
-                OnPropertyChanged("IsSelected");
-            }
-        }
-
-        public long Id
-        {
-            get { return _id; }
-            set
-            {
-                _id = value;
-                OnPropertyChanged("Id");
-            }
-        }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
+   
 }

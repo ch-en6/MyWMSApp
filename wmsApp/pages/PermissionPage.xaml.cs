@@ -273,6 +273,7 @@ namespace wmsApp.pages
                     if (condition == "")
                     {
                         ModernMessageBox.showMessage("参数不能为空!!");
+                        IsSearching = !IsSearching;
                         return;
                     }
                     long parsedValue;
@@ -346,7 +347,7 @@ namespace wmsApp.pages
 
 
                 // 更新页码显示
-                PageNumberTextBlock.Text = currentPage.ToString();
+                PageNumberTextBlock.Text = currentPage.ToString()+"/"+totalPage.ToString();
 
                 // 更新数据源
                 dataGrid.ItemsSource = IsSearching ? usersearchPermissionList : userPermissionList;
@@ -417,16 +418,17 @@ namespace wmsApp.pages
                     column.Header = permissionName;
                     column.Width = DataGridLength.SizeToCells; // 设置单元格宽度
                     column.IsReadOnly = false; //设置为可修改
+                    
 
                     // 创建一个数据模板，包含一个CheckBox
                     FrameworkElementFactory factory = new FrameworkElementFactory(typeof(CheckBox));
                     factory.AddHandler(CheckBox.ClickEvent, new RoutedEventHandler(OnCheckBoxClick));
-                    //factory.SetValue(CheckBox.VerticalAlignmentProperty, VerticalAlignment.Center); // 设置复选框垂直居中
                     factory.SetValue(CheckBox.MarginProperty, new Thickness(20, 0, 0, 0)); // 设置内容水平居中
 
                     DataTemplate cellTemplate = new DataTemplate();
                     cellTemplate.VisualTree = factory;
                     column.CellTemplate = cellTemplate;
+
 
                     // 将列添加到DataGrid中
                     dataGrid.Columns.Add(column);
@@ -533,7 +535,7 @@ namespace wmsApp.pages
                     UpdatePermissionParams param = new UpdatePermissionParams(long.Parse(userId), resourceId, columnName,isChecked);
                     try
                     {
-                        Result result = PermissionApi.updatePermission( param);
+                        Result result = PermissionApi.updatePermission(param);
                         if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
                         if (!result.success)
                         {
@@ -542,13 +544,13 @@ namespace wmsApp.pages
 
                         }
                     }
-                    catch (TokenExpiredException ex) { }
+                    catch (TokenExpiredException ex) {
+                    }
 
                 }
             }
 
-            // 处理点击事件逻辑
-            // ...
+        
         }
 
         private async void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -680,7 +682,10 @@ namespace wmsApp.pages
             UpdatePageNumber();
         }
 
-        private async void Button_Click_1(object sender, RoutedEventArgs e)
+  
+
+
+        private async void AddPermissionType(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -705,13 +710,12 @@ namespace wmsApp.pages
             }
         }
 
-        private async void Button_Click_2(object sender, RoutedEventArgs e)
+        private async void DelPermissionType(object sender, RoutedEventArgs e)
         {
-
             try
             {
                 DelPermissionTypeDialog dialog = new DelPermissionTypeDialog(resourceId);
-              
+
                 ContentDialogResult result = await dialog.ShowAsync();
 
                 if (result == ContentDialogResult.Secondary) return;
@@ -729,7 +733,5 @@ namespace wmsApp.pages
                 ModernMessageBox.showMessage(ex.Message);
             }
         }
-
-
     }
 }

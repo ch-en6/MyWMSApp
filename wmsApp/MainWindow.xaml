@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wmsApp"
         mc:Ignorable="d"
-        Title="仓库管理系统" Height="800" Width="1280"
+        Title="仓库管理系统" 
         xmlns:ui="http://schemas.modernwpf.com/2019"
          WindowStartupLocation="CenterScreen"
     ui:WindowHelper.UseModernWindowStyle="True">
@@ -19,16 +19,18 @@
                 <ui:NavigationViewItem Content="物料管理" Tag="pages/MaterialPage.xaml"/>
                 <ui:NavigationViewItem Content="进仓管理" Tag="pages/StorePage.xaml"/>
                 <ui:NavigationViewItem Content="出仓管理" Tag="pages/DeliverPage.xaml" />
+                <ui:NavigationViewItem Content="出库统计" Tag="pages/OutStatisticPage.xaml" />
             </ui:NavigationView.MenuItems>
             
             <Frame x:Name="ContentFrame"/>
             <ui:NavigationView.PaneFooter>
                 <StackPanel Margin="0,3,10,0">
                     <!-- 其他设置选项 -->
-                    <Button Content="退出登录" Click="LogoutButton_Click" FontSize="22"/>
+                    <Button Click="LogoutButton_Click" Width="34" Height="34" Background="LightGray" BorderThickness="0" >
+                        <Image Source="./assets/logout.png" HorizontalAlignment="Center" Width="20" Height="22"/>
+                    </Button>
                 </StackPanel>
             </ui:NavigationView.PaneFooter>
-
         </ui:NavigationView>
       
 

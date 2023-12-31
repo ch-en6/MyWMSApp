@@ -1,0 +1,131 @@
+﻿<Window x:Class="wmsApp.dialog.SelectPersonDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wmsApp.dialog"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="选择人员" Height="510.5" Width="734"    
+       >
+    <Window.Resources>
+        <DropShadowEffect x:Key="ShadowEffect" Color="Black" Direction="270" ShadowDepth="7" Opacity="0.6" BlurRadius="15"/>
+    </Window.Resources>
+    <Grid Effect="{StaticResource ShadowEffect}" Background="White" Height="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4.4*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="LightGray" Height="71" Margin="0,0,0.333,59" Grid.RowSpan="2" VerticalAlignment="Bottom">
+            <TextBlock Text="选择人员" Foreground="DimGray" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+        <!-- 搜索框 -->
+        <Grid Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,-0.333,0.333" Width="750">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ComboBox Grid.Column="0" Width="89" Margin="5,10,0,0" x:Name="comboBox" SelectedValue="user" Height="32">
+                <ComboBoxItem x:Name="userName" Content="按姓名查询"/>
+                <ComboBoxItem x:Name="userId" Content="按id查询"/>
+            </ComboBox>
+
+            <TextBox x:Name="textBox" Grid.Column="1" Margin="10,10,9.667,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" KeyDown="TextBox_PreviewKeyDown"/>
+
+            <Button Grid.Column="2" Width="39" Height="32" FontSize="24" RenderTransformOrigin="0.526,0.258" Margin="4.333,10,0,13.667" Click="SearchButton_Click">
+                <ui:SymbolIcon Symbol="Find" Height="20" Width="20" RenderTransformOrigin="0.324,0.495"/>
+            </Button>
+            <Button x:Name="btnBack"  Click="btnBack_Click" Grid.Column="2" Margin="59.333,10,0,13.667" Height="32" FontSize="24" Width="38" Grid.ColumnSpan="2">
+                <ui:SymbolIcon Symbol="Forward"/>
+            </Button>
+        </Grid>
+
+
+        <!-- ListView -->
+        <Grid Grid.Row="2" Margin="0,10.667,-0.333,0.333" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="750" Background="#FFEBEBEB">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!-- 全选CheckBox和列头信息 -->
+            <Grid Width="750" HorizontalAlignment="Left" Margin="12,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <CheckBox Grid.Column="0" IsChecked="{Binding AllSelected, Mode=TwoWay}" VerticalAlignment="Center" x:Name="SelectAllCheckBox" Checked="SelectAllCheckBox_Checked" Unchecked="SelectAllCheckBox_Unchecked"/>
+                <TextBlock Grid.Column="1" Text="ID" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="2" Text="姓名" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="3" Text="角色" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+            <Border BorderThickness="0,0,0,1" BorderBrush="LightGray"/>
+            <!-- ListView -->
+            <ListView x:Name="userListView" SelectionMode="Multiple" Grid.Row="1"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="822" Margin="0,0,-72,0.333" Background="White">
+                <ListView.ItemsSource>
+                    <x:Array Type="{x:Type local:Person}">
+                        <local:Person Id="1" Name="张三" Role="管理员"/>
+                        <local:Person Id="2" Name="李四" Role="普通用户"/>
+                        <local:Person Id="3" Name="王五" Role="管理员"/>
+                        <local:Person Id="2" Name="李四" Role="普通用户"/>
+                        <local:Person Id="3" Name="王五" Role="管理员"/>
+                    </x:Array>
+                </ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="750">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox IsChecked="{Binding IsSelected}" Grid.Column="0" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Id}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding Name}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding Role}" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+
+
+        <!-- 翻页按钮 -->
+        <StackPanel Grid.Row="3" Width="211" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="278,0,238.333,49.333" Height="49" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <StackPanel.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="0.735"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="0.321"/>
+                </TransformGroup>
+            </StackPanel.RenderTransform>
+            <Button x:Name="PreviousButton" Margin="5,10" Width="33" Click="PreviousButton_Click" >
+                <Image Source="../assets/left.png" HorizontalAlignment="Center" Width="17"/>
+            </Button>
+            <TextBlock x:Name="PreviousPageButton" Text="第" Margin="5,10,5,5" FontSize="18"/>
+            <TextBlock x:Name="PageNumberTextBlock" Margin="5,10,5,5" FontSize="18"/>
+            <TextBlock Text="页" Margin="5,10,5,5" FontSize="18"/>
+            <Button x:Name="NextButton" Margin="5,10" Width="33" Click="NextButton_Click">
+                <Image Source="../assets/right.png" HorizontalAlignment="Center" Width="17"/>
+            </Button>
+        </StackPanel>
+
+
+        <!-- 确定/取消按钮 -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,53.667,10.333,4.333">
+            <Button Content="确定" Width="80" Margin="5" FontSize="20" Click="ConfirmButton_Click"/>
+            <Button Content="取消" Width="80" Margin="5" FontSize="20" Click="CancelButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

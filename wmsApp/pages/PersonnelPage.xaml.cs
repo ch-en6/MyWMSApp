@@ -27,49 +27,21 @@ namespace wmsApp.pages
     /// </summary>
     public partial class PersonalPage : System.Windows.Controls.Page
     {
-        private int currentPage = 1;
-        private int itemsPerPage = 2; // 每页显示10条数据
-        private long totalPage;
-        private int col_num;
-        private Dictionary<string, string> resources;
-        private long resourceId;
-        //标记展示
+        int currentPage = 1;
+        long totalPage = 0;
         int flag = 0;
-        /*public PersonnelPage()
-        {
-            InitializeComponent();
-            PageNumberTextBlock.Text = currentPage.ToString();
-            Result result = UserApi.getUserMap(currentPage);
-            Dictionary<String, Object> map = JsonHelper.ConvertToMap<String, Object>(result.data.ToString());
-            List<User> list = JsonHelper.JsonToList<User>(map["records"].ToString());
-            totalPage = long.Parse(map["totalPage"].ToString());
-
-            //List<User> list =JsonHelper.JsonToList<User>(result.data.ToString());
-            InitializeComponent();
-            // 上一页按钮点击事件处理程序
-            PreviousPageButton.Click += PreviousPageButton_Click;
-
-            // 下一页按钮点击事件处理程序
-            NextPageButton.Click += NextPageButton_Click;
-            dataGrid.ItemsSource = list;
-
-        }*/
+        string pageNumText;
 
         public PersonalPage()
         {
-            flag = 0;
-            Result result = UserApi.search(currentPage);
-            if (!result.success)
-            {
-                ModernMessageBox.showMessage(result.errorMsg);
-            }
-            List<User> userList = JsonHelper.JsonToList<User>(result.data.ToString());
-            totalPage = result.total;
-
             InitializeComponent();
-            PageNumberTextBlock.Text = currentPage.ToString();
+            flag = 0;
+            Result result = UserApi.search(currentPage); 
+            List<User> userList = JsonHelper.JsonToList<User>(result.data.ToString());
+            totalPage = result.total;          
+            pageNumText = currentPage.ToString() + "/" + totalPage.ToString();
+            PageNumberTextBlock.Text = pageNumText;
             dataGrid.ItemsSource = userList;
-
         }
 
         private Result searchByName(string userInput)
@@ -79,50 +51,47 @@ namespace wmsApp.pages
                 userInput = "...";
             }
             Result result = UserApi.searchByName(currentPage, userInput);
-            if (!result.success)
-            {
-                ModernMessageBox.showMessage(result.errorMsg);
-            }
             return result;
         }
 
         private Result searchById(string userInput)
         {
             long id;
-            long.TryParse(userInput, out id);
-            Result result = UserApi.searchById(currentPage, id);
-            if (!result.success)
+            if (userInput == "")
             {
-                ModernMessageBox.showMessage(result.errorMsg);
+                id = -1;
             }
+            else
+            {
+                long.TryParse(userInput, out id);
+            }
+            Result result = UserApi.searchById(currentPage, id);
             return result;
         }
 
         public void UpdatePage()
         {
-            Result result;
+            Result result=null;
             List<User> userList = null;
 
             switch (flag)
             {
                 case 0:
-                    result = UserApi.search(currentPage);
-                    if (!result.success)
-                    {
-                        ModernMessageBox.showMessage(result.errorMsg);
-                    }
-                    userList = JsonHelper.JsonToList<User>(result.data.ToString());
+                    result = UserApi.search(currentPage);                                                    
+                    userList = JsonHelper.JsonToList<User>(result.data.ToString());                 
                     break;
                 case 1:
                     result = searchByName(textBox.Text);
-                    if (!result.success)
-                    {
-                        ModernMessageBox.showMessage(result.errorMsg);
-                    }
+                    userList = JsonHelper.JsonToList<User>(result.data.ToString());
+                    break;
+                case 2:
+                    result = searchById(textBox.Text);
                     userList = JsonHelper.JsonToList<User>(result.data.ToString());
                     break;
             }
-            PageNumberTextBlock.Text = currentPage.ToString();
+            totalPage = result.total;
+            pageNumText = currentPage.ToString() + "/" + totalPage.ToString();
+            PageNumberTextBlock.Text = pageNumText;
             dataGrid.ItemsSource = userList;
         }
 
@@ -145,22 +114,11 @@ namespace wmsApp.pages
         }
 
         private async void Add_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
+        {           
                 AddUserDialog dialog = new AddUserDialog();
-
                 ContentDialogResult result = await dialog.ShowAsync();
-
                 if (result == ContentDialogResult.Secondary) return;
-
-                UpdatePage();
-
-            }
-            catch (Exception ex)
-            {
-                ModernMessageBox.showMessage(ex.Message);
-            }
+                UpdatePage(); 
         }
 
         public void resetPassword_Click(object sender, RoutedEventArgs e)
@@ -229,10 +187,6 @@ namespace wmsApp.pages
         }
 
 
-
-
-
-
         private void TextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -270,15 +224,15 @@ namespace wmsApp.pages
             }
             userList = JsonHelper.JsonToList<User>(result.data.ToString());
             totalPage = result.total;
-
-            PageNumberTextBlock.Text = currentPage.ToString();
+            pageNumText = currentPage.ToString() + "/" + totalPage.ToString();
+            PageNumberTextBlock.Text = pageNumText;
             dataGrid.ItemsSource = userList;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
-        {
-            //IsSearching = false;
+        {            
             currentPage = 1;
+            flag = 0;
             UpdatePage();
         }
     }

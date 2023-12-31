@@ -9,39 +9,24 @@ namespace wmsApp.pojo
     public class Deliver
     {
 
-        public long DeliverId { get; set; }
+        public long deliverId { get; set; }
 
-        public long DeliverNo {  get; set; }
+        public long deliverNo {  get; set; }
 
-        public string HouseName { get; set; }
+        public string houseName { get; set; }
 
-        public DateTime DeliverTime { get; set; }
+        public DateTime deliverTime { get; set; }
 
-        public long MaterialId { get; set; }
+        public long materialId { get; set; }
 
-        public int DeliverCount { get; set; }
+        public int deliverCount { get; set; }
 
-        public int RemainCount { get; set; }
+        public int remainCount { get; set; }
 
-        public long UserId { get; set; }
+        public long userId { get; set; }
 
-        public string Notes { get; set; }
+        public string notes { get; set; }
 
-        //public int Stock { get; set; }
-        public string Category { get; set; }
-        public Deliver(long deliverId, string houseName, DateTime deliverTime, long materialId, int deliverCount, long userId, string notes)
-        {
-            DeliverId = deliverId;
-            HouseName = houseName;
-            DeliverTime = deliverTime;
-            MaterialId = materialId;
-            DeliverCount = deliverCount;
-            UserId = userId;
-            Notes = notes;
-        }
 
-        public Deliver()
-        {
-        }
     }
 }

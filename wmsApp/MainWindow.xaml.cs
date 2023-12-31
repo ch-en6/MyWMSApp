@@ -20,6 +20,8 @@ using wms.utils;
 using wmsApp.pojo;
 using wmsApp.controls;
 using wmsApp.utils;
+using System.IO;
+using Path = System.IO.Path;
 
 namespace wmsApp
 {
@@ -66,25 +68,35 @@ namespace wmsApp
         }
 
 
-        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private async void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            // 显示提示框询问用户是否确认关闭窗口
-            MessageBoxResult result = MessageBox.Show("确定要关闭窗口吗？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            e.Cancel = true; // 取消默认的窗口关闭操作
 
-            // 如果用户点击“是”，则关闭窗口；否则取消关闭操作
-            if (result == MessageBoxResult.No)
+            // 显示提示框询问用户是否确认关闭窗口
+            ContentDialog dialog = new ContentDialog()
             {
-                e.Cancel = true; // 取消关闭操作
-            }
-            else
+                Title = "提示",
+                Content = "确定要关闭窗口退出登录吗？",
+                SecondaryButtonText = "取消",
+                PrimaryButtonText = "确定"
+            };
+
+            // 在 UI 线程上显示对话框并等待用户的响应
+            ContentDialogResult result =await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
             {
-                Result result1 = LoginApi.logout();
-                if (result1.success) MessageBox.Show("退出成功"); 
+                Result logoutResult = LoginApi.logout();
+                if (logoutResult.success)
+                {
+                    ModernMessageBox.showMessage("退出成功");
+                }
                 TokenManager.token = "null";
                 TokenManager.userId = 0;
                 Application.Current.Shutdown(); // 触发应用程序的 Exit
             }
         }
+
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
              Close();
@@ -139,39 +151,45 @@ namespace wmsApp
         }
         private async void NavigationView_ItemInvoked(ModernWpf.Controls.NavigationView sender, ModernWpf.Controls.NavigationViewItemInvokedEventArgs args)
         {
-            if (args.IsSettingsInvoked)
+       
+            // 进行文件存在性检查
+            string selectedPage = args.InvokedItemContainer.Tag.ToString();
+            bool fileExists = File.Exists("../../"+selectedPage);
+            if (fileExists)
             {
-                // 处理“设置”项的点击事件
-                // ...
-            }
-            else
-            {
-                // 获取点击的导航菜单项的Tag
-                string selectedPage = args.InvokedItemContainer.Tag.ToString();
-
                 // 获取自定义的URI属性
                 MyNavigationViewItem selectedItem = args.InvokedItemContainer as MyNavigationViewItem;
                 if (selectedItem != null)
                 {
                     string uri = selectedItem.Uri;
-                    if (uri == "")
-                    {
-                        ContentFrame.Navigate(new Uri(selectedPage, UriKind.Relative));
-                        return;
-                    }
-                    try {
-                    Result result = PermissionApi.enter(uri);
-                        if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
-                        // 根据Tag更改Frame的导航
-                        if (result.success) ContentFrame.Navigate(new Uri(selectedPage, UriKind.Relative));
-                        else ModernMessageBox.showMessage(result.errorMsg);
-                    }catch(TokenExpiredException ex) {
-                        Close();
-                    };
-
-
+              
+                        if (uri == "")
+                        {
+                            ContentFrame.Navigate(new Uri(selectedPage, UriKind.Relative));
+                            return;
+                        }
+                        try
+                        {
+                            Result result = PermissionApi.enter(uri);
+                            if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
+                            // 根据Tag更改Frame的导航
+                            if (result.success) ContentFrame.Navigate(new Uri(selectedPage, UriKind.Relative));
+                            else ModernMessageBox.showMessage(result.errorMsg);
+                        }
+                        catch (TokenExpiredException ex)
+                        {
+                            Close();
+                        };
+                    
+                  
                 }
             }
+            else
+            {
+                ModernMessageBox.showMessage("模块未开发");
+                return;
+            }
+           
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

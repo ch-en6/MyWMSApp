@@ -117,14 +117,14 @@ namespace wmsApp.dialog
                 {
                     PrintAccountParam account = new PrintAccountParam
                     {
-                        Id = deliver.DeliverId,
+                        Id = deliver.deliverId,
                         Type = "出库",
-                        No = deliver.DeliverNo,
-                        count = deliver.DeliverCount,
-                        remainCount = deliver.DeliverCount,
-                        dateTime = deliver.DeliverTime,
-                        uerId = deliver.UserId,
-                        notes = deliver.Notes
+                        No = deliver.deliverNo,
+                        count = deliver.deliverCount,
+                        remainCount = deliver.deliverCount,
+                        dateTime = deliver.deliverTime,
+                        uerId = deliver.userId,
+                        notes = deliver.notes
                     };
                     accountDetials.Add(account);
                 }
