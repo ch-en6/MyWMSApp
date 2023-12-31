@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace wmsApp.param
 {
-    public class AccountDetialFormParam
+    public class PrintAccountParam
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string Type { get; set; }
 
@@ -16,7 +16,7 @@ namespace wmsApp.param
 
         public int count { get; set; }
 
-        public int remainCoutn { get; set; }
+        public int remainCount { get; set; }
 
         public DateTime dateTime { get; set; }
 

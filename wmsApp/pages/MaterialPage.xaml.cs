@@ -217,6 +217,10 @@ namespace wmsApp.pages
             {
                 MessageBox.Show("该物料库存大于0，不允许删除！");
             }
+            else if (MaterialApi.ifStoreOrDeliver(selectedItem.id).success)
+            {
+                MessageBox.Show("该物料有出库或入库记录，不允许删除！");
+            }
             else
             {
                 MessageBoxResult result = MessageBox.Show("确定要删除吗？", "确认删除", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -279,6 +283,12 @@ namespace wmsApp.pages
         private void TypeManagementButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void PrintAccount_Click(object sender, RoutedEventArgs e)
+        {
+            PrintAccountDialog dialog = new PrintAccountDialog();
+            dialog.ShowAsync();
         }
     }
 }

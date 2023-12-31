@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Xml.Linq;
 using WindowsFormsApp1.dto;
 using wms.param;
 using wms.pojo;
 using wms.utils;
 using wmsApp.param;
 using wmsApp.pojo;
+using static System.Net.WebRequestMethods;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace wms
@@ -266,6 +268,22 @@ namespace wms
             var jsonData = JsonConvert.SerializeObject(data);
             return http.PostEncryptedData($"/material/getMaterialByNameAndHouse", jsonData);
         }
+
+        public static Result ifStoreOrDeliver(long materialId)
+        {
+            return http.GetDncryptedData($"/material/ifStoreOrDeliver/{materialId}");
+        }
+
+        public static Result houseByYearAndMaterialName(string year, string materialName)
+        {
+            var data = new
+            {
+                Year = year,
+                MaterialName = materialName
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/material/houseByYearAndMaterialName", jsonData);
+        }
     }
 
     class StoreApi
@@ -303,6 +321,36 @@ namespace wms
             var jsonData = JsonConvert.SerializeObject(data);
             return http.PostEncryptedData($"/store/selectStoreByDate", jsonData);
         }
+
+        public static Result getStoreByYear(string year, Material material)
+        {
+            var data = new
+            {
+                Year = year,
+                id = material.id,
+                HouseName = material.houseName
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/store/storeByYear", jsonData);
+        }
+    }
+
+    class DeliverApi
+    {
+        public static HttpHelper http = new HttpHelper();
+
+        public static Result getDeliverByYear(string year, Material material)
+        {
+            var data = new
+            {
+                Year = year,
+                id = material.id,
+                HouseName = material.houseName
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/deliver/deliverByYear", jsonData);
+        }
+
     }
 
     class PermissionTypesApi
