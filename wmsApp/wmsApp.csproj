@@ -136,8 +136,8 @@
     <Compile Include="pages\PermissionPage.xaml.cs">
       <DependentUpon>PermissionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="pages\Personnel.xaml.cs">
-      <DependentUpon>Personnel.xaml</DependentUpon>
+    <Compile Include="pages\PersonnelPage.xaml.cs">
+      <DependentUpon>PersonnelPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\StorePage.xaml.cs">
       <DependentUpon>StorePage.xaml</DependentUpon>
@@ -263,7 +263,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="pages\Personnel.xaml">
+    <Page Include="pages\PersonnelPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
