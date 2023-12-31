@@ -148,6 +148,8 @@
     <Compile Include="pages\OutStatisticPage.xaml.cs">
       <DependentUpon>OutStatisticPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="param\DeliverConSearchParams.cs" />
+    <Compile Include="param\DeliverDetailParam.cs" />
     <Compile Include="pages\Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>

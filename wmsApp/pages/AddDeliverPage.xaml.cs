@@ -1,24 +1,14 @@
-﻿using ModernWpf.Controls;
+﻿using Microsoft.ReportingServices.ReportProcessing.ReportObjectModel;
+using ModernWpf.Controls;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.WebControls;
+
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WindowsFormsApp1.dto;
 using wms;
 using wms.pojo;
 using wms.utils;
-using wmsApp.controls;
 using wmsApp.dialog;
 using wmsApp.pojo;
 
@@ -31,10 +21,14 @@ namespace wmsApp.pages
     {
         private List<IOMaterial> dataList;
 
+       
         List<string> typeMaterialList;
         public AddDeliverPage()
         {
             InitializeComponent();
+            Result result = UserApi.getNowUser();
+            wms.pojo.User user = JsonHelper.JSONToObject<wms.pojo.User>(result.data.ToString());
+            UserTextBox.Text = user.id.ToString();
             dataList = new List<IOMaterial>();
         }
 
@@ -79,9 +73,13 @@ namespace wmsApp.pages
                 // 获取 DataGrid 中每行对应的数据项
                 var rowData = item as IOMaterial; // 请替换成你实际的数据类型
 
+                Result result = UserApi.getNowUser();
+                wms.pojo.User user = JsonHelper.JSONToObject<wms.pojo.User>(result.data.ToString());
+
                 // 创建一个 Deliver 对象并将数据添加到 List<Deliver> 中
                 Deliver deliver = new Deliver
                 {
+                    userId=user.id,
                     materialId = rowData.id,
                     houseName = rowData.houseName,
                     deliverCount = rowData.count,
@@ -90,8 +88,8 @@ namespace wmsApp.pages
 
                 // 将 Deliver 对象添加到 List<Deliver> 中
                 deliverList.Add(deliver);
-                Result result=DeliverApi.multiDelivery(deliverList);
-                if(result.success)
+                Result deliverResult=DeliverApi.multiDelivery(deliverList);
+                if(deliverResult.success)
                 {
                     MessageBox.Show("入库成功!");
                 }

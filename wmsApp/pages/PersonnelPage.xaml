@@ -14,7 +14,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Margin="9,-10,1,21">
+        <StackPanel Orientation="Horizontal" Margin="9,0,0,10" HorizontalAlignment="Center">
             <Button Content="增加人员"  Margin="0,0,10,0" Click="Add_Click" />
 
 
@@ -36,29 +36,20 @@
                     <ui:SymbolIcon Symbol="Find" Height="20" Width="20" RenderTransformOrigin="0.5,0.5"/>
                 </Button>
 
-                <Button x:Name="btnBack"  Click="btnBack_Click" Grid.Column="2" Margin="150,5,-105,5.333" Height="33" >
+                <Button x:Name="btnBack"  Click="btnBack_Click" Grid.Column="2" Margin="50,5,-105,5.333" Height="33" >
                     <ui:SymbolIcon Symbol="Forward"/>
                 </Button>
-
-               
-
             </Grid>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="26,0.333,-1,0" >
-            <DataGrid x:Name="dataGrid" 
-                      Margin="-17,-11,-0.333,0.333"
-                      HorizontalAlignment="Right"
-                      Width="2000" 
-                      CanUserAddRows="False"
-                      IsReadOnly="True"
-                      AutoGenerateColumns="False">
+        <StackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Center">
+            <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="人员ID" Binding="{Binding id}"></DataGridTextColumn>
                     <DataGridTextColumn Header="姓名" Binding="{Binding name}"></DataGridTextColumn>
                     <DataGridTextColumn Header="角色"  Binding="{Binding role}"></DataGridTextColumn>
                     <DataGridTextColumn Header="性别"  Binding="{Binding sex}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="出生日期"  Binding="{Binding birthDate, StringFormat=\{0:yyyy-MM-dd\}}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="出生日期"  Binding="{Binding birthDate, StringFormat='yyyy-MM-dd'}"></DataGridTextColumn>
                     <DataGridTextColumn Header="身份证号" Binding="{Binding idNumber}" ></DataGridTextColumn>
                     <DataGridTextColumn Header="籍贯"  Binding="{Binding nativePlace}"></DataGridTextColumn>
                     <DataGridTextColumn Header="家庭住址"  Binding="{Binding address}"></DataGridTextColumn>
