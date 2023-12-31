@@ -374,8 +374,6 @@ namespace wms
             return http.PostEncryptedData($"/deliver/deliverByYear", jsonData);
         }
 
-    
-
         public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)
         {
             var data = new { startTime = startTime, endTime = endTime };
