@@ -142,6 +142,8 @@
     <Compile Include="pages\OutStatisticPage.xaml.cs">
       <DependentUpon>OutStatisticPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="param\DeliverConSearchParams.cs" />
+    <Compile Include="param\DeliverDetailParam.cs" />
     <Compile Include="param\LoginParams.cs" />
     <Compile Include="param\PrintStoreParam.cs" />
     <Compile Include="param\SearchPermissionParams.cs" />

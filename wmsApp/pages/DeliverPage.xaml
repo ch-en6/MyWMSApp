@@ -10,7 +10,6 @@
       xmlns:ui="http://schemas.modernwpf.com/2019">
 
     <Grid>
-        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="42"/>
             <RowDefinition/>
@@ -36,26 +35,26 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="进仓单号:" VerticalAlignment="Center" Margin="5" />
-                <TextBox Grid.Row="0" Grid.Column="1" Margin="5" x:Name="storeNoTextBox" Width="200" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="出仓单号:" VerticalAlignment="Center" Margin="5" />
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="5" x:Name="deliverNoTextBox" Width="200" />
 
                 <TextBlock Grid.Row="0" Grid.Column="2" Text="物料ID:" VerticalAlignment="Center" Margin="5" />
                 <TextBox Grid.Row="0" Grid.Column="3" Margin="5" x:Name="materialIdTextBox" Width="200" />
 
                 <TextBlock Grid.Row="0" Grid.Column="4" Text="仓库名:" VerticalAlignment="Center" Margin="5" />
-                <TextBox Grid.Row="0" Grid.Column="5" Margin="5" x:Name="warehouseNameTextBox" Width="200" />
+                <ComboBox Grid.Row="0" Grid.Column="5" Margin="5" x:Name="warehouseNameComboBox" Width="200" />
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="开始日期:" VerticalAlignment="Center" Margin="5" />
-                <DatePicker Grid.Row="1" Grid.Column="1" Margin="5" x:Name="startTimeTextBox" Width="200" />
+                <DatePicker Grid.Row="1" Grid.Column="1" Margin="5" x:Name="startTimeTextBox" Width="200" DisplayDateStart="2000-01-01" />
 
                 <TextBlock Grid.Row="1" Grid.Column="2" Text="结束日期:" VerticalAlignment="Center" Margin="5" />
-                <DatePicker Grid.Row="1" Grid.Column="3" Margin="5" x:Name="endTimeTextBox" Width="200" />
+                <DatePicker Grid.Row="1" Grid.Column="3" Margin="5" x:Name="endTimeTextBox" Width="200" DisplayDateStart="2022-01-01" />
 
                 <TextBlock Grid.Row="1" Grid.Column="4" Text="操作人员ID:" VerticalAlignment="Center" Margin="5" />
                 <TextBox Grid.Row="1" Grid.Column="5" Margin="5" x:Name="operatorIdTextBox" Width="200" />
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="备注:" VerticalAlignment="Center" Margin="5" />
-                <TextBox Grid.Row="2" Grid.Column="1" Margin="5" x:Name="storeNotes" Width="200" />
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="5" x:Name="deliverNotes" Width="200" />
 
                 <Button Grid.Row="2" Grid.Column="5" Width="39" Margin="15,0,0,0" Click="Button_Click" Height="33">
                     <ui:SymbolIcon Symbol="Find" Height="20" Width="20" RenderTransformOrigin="0.324,0.495"/>
@@ -65,8 +64,15 @@
                     <ui:SymbolIcon Symbol="Forward"/>
                 </Button>
 
+                <Button x:Name="btnClear" Grid.Row="2" Grid.Column="5" Margin="115,0,0,0" Height="33" Click="btnClear_Click">
+                    <ui:SymbolIcon Symbol="Delete"/>
+                </Button>
 
                 <Button x:Name="addButton" Grid.Row="2" Grid.Column="4" Margin="0,0,0,0" Height="33" Click="Add_Click" Content="创建出库单" >
+                </Button>
+
+                <Button x:Name="printButton" Grid.Row="2" Grid.Column="3" Margin="65,0,0,0" Height="33" Click="Print_Click">
+                    <ui:SymbolIcon Symbol="Print"/>
                 </Button>
 
             </Grid>
@@ -82,12 +88,14 @@
                 <DataGrid x:Name="datagrid" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="True">
                     <!-- 定义列 -->
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="序号" Binding="{Binding storeId}" />
-                        <DataGridTextColumn Header="出仓单号" Binding="{Binding storeNo}" />
-                        <DataGridTextColumn Header="仓库名" Binding="{Binding houseName}" />
-                        <DataGridTextColumn Header="出仓日期" Binding="{Binding storeTime, StringFormat='yyyy-MM-dd'}" />
+                        <DataGridTextColumn Header="出仓单号" Binding="{Binding deliverNo}" />
+                        <DataGridTextColumn Header="物料名称" Binding="{Binding material.name}" />
                         <DataGridTextColumn Header="物料ID" Binding="{Binding materialId}" />
-                        <DataGridTextColumn Header="出仓数量" Binding="{Binding storeCount}" />
+                        <DataGridTextColumn Header="物料类型" Binding="{Binding material.type}" />
+                        <DataGridTextColumn Header="所在仓库" Binding="{Binding houseName}" />
+                        <DataGridTextColumn Header="进仓数量" Binding="{Binding deliverCount}" />
+                        <DataGridTextColumn Header="物料单位" Binding="{Binding material.unit}" />
+                        <DataGridTextColumn Header="入库日期" Binding="{Binding deliverTime, StringFormat='yyyy-MM-dd'}" />
                         <DataGridTextColumn Header="操作人员ID" Binding="{Binding userId}" />
                         <DataGridTextColumn Header="备注" Binding="{Binding notes}" />
 
@@ -102,6 +110,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
+
                 </DataGrid>
             </StackPanel>
         </Grid>

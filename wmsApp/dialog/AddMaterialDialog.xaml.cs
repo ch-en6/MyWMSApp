@@ -26,7 +26,7 @@ namespace wmsApp.dialog
     public partial class AddMaterialDialog : ContentDialog
     {
         public AddMaterialDialog()
-        {
+        {            
             InitializeComponent();
         }
 

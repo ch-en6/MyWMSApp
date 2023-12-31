@@ -33,6 +33,7 @@ namespace wms
         }
         public static Result updatePhone(String newPhone)
         {
+            
             return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePhone/{newPhone}"));
         }
         public static Result updatePassword(string newPassword)
@@ -124,7 +125,10 @@ namespace wms
         {
             return JsonHelper.JSONToObject<Result>(http.Get($"/user/findAllUserName"));
         }
-       
+        public static Result getNowUser()
+        {
+            return JsonHelper.JSONToObject<Result>(http.Get($"/user/getNowUser"));
+        }
 
     }
 
@@ -325,9 +329,42 @@ namespace wms
        
         public static Result multiDelivery(List<Deliver> deliverList)
         {
+            MessageBox.Show("哈哈");
             return JsonHelper.JSONToObject<Result>(http.Post("/deliver/multiDelivery", JsonHelper.ObjectToJSON(deliverList)));
         }
-     
+
+        public static Result searchAll(int page)
+        {
+            return http.GetDncryptedData($"/deliver/searchAll/{page}");
+        }
+
+        public static Result searchCondition(long deliverNo, string houseName, DateTime? startTime, DateTime? endTime, long materialId,
+            long userId, string notes, int page)
+        {
+            if (startTime == null)
+            {
+                startTime = new DateTime(1970, 1, 1);
+            }
+            if (endTime == null)
+            {
+                endTime = DateTime.Now;
+            }
+
+            DeliverConSearchParams deliver = new DeliverConSearchParams(deliverNo, houseName, startTime, endTime, materialId, userId, notes, page);
+            return http.PostEncryptedData($"/deliver/conditionSearch", JsonHelper.DateObjectToJson<DeliverConSearchParams>(deliver));
+        }
+
+        public static Result getdeliverByDate(string Year, string Month)
+        {
+            var data = new
+            {
+                year = Year,
+                month = Month
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/deliver/selectdeliverByDate", jsonData);
+        }
+
     }
 
     class PermissionTypesApi
