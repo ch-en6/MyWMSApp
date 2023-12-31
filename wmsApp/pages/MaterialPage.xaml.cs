@@ -89,7 +89,7 @@ namespace wmsApp.pages
         private Result searchId(string userInput)
         {
             long id;
-            if(userInput == "")
+            if (userInput == "")
             {
                 id = -1;
             }
@@ -103,7 +103,7 @@ namespace wmsApp.pages
 
         private Result searchName(string userInput)
         {
-            if(userInput == "")
+            if (userInput == "")
             {
                 userInput = "...";
             }
@@ -113,7 +113,7 @@ namespace wmsApp.pages
 
         private Result searchHouseName(string userInput)
         {
-            if(userInput == "")
+            if (userInput == "")
             {
                 userInput = "...";
             }
@@ -206,11 +206,14 @@ namespace wmsApp.pages
             if (dialogResult == ContentDialogResult.Secondary) return;
 
             updatePage();
-            
-        }
-       
 
-            if(selectedItem.stock > 0)
+        }
+
+        private void DeleteMaterialButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = datagrid.SelectedItem as Material;
+
+            if (selectedItem.stock > 0)
             {
                 MessageBox.Show("该物料库存大于0，不允许删除！");
             }

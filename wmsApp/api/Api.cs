@@ -354,6 +354,8 @@ namespace wms
         }
     }
 
+
+
     class DeliverApi
     {
         public static HttpHelper http = new HttpHelper();
@@ -369,12 +371,6 @@ namespace wms
             var jsonData = JsonConvert.SerializeObject(data);
             return http.PostEncryptedData($"/deliver/deliverByYear", jsonData);
         }
-
-    }
-
-    class DeliverApi
-    {
-        public static HttpHelper http = new HttpHelper();
         public static Result getMaterialNamesByDeliverTime(DateTime? startTime, DateTime? endTime)
         {           
             var data = new { startTime = startTime, endTime = endTime }; 

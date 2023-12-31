@@ -36,9 +36,9 @@ namespace wmsApp.pages
         {
             InitializeComponent();
             flag = 0;
-            Result result = UserApi.search(currentPage); 
+            Result result = UserApi.search(currentPage);
             List<User> userList = JsonHelper.JsonToList<User>(result.data.ToString());
-            totalPage = result.total;          
+            totalPage = result.total;
             pageNumText = currentPage.ToString() + "/" + totalPage.ToString();
             PageNumberTextBlock.Text = pageNumText;
             dataGrid.ItemsSource = userList;
@@ -71,14 +71,14 @@ namespace wmsApp.pages
 
         public void UpdatePage()
         {
-            Result result=null;
+            Result result = null;
             List<User> userList = null;
 
             switch (flag)
             {
                 case 0:
-                    result = UserApi.search(currentPage);                                                    
-                    userList = JsonHelper.JsonToList<User>(result.data.ToString());                 
+                    result = UserApi.search(currentPage);
+                    userList = JsonHelper.JsonToList<User>(result.data.ToString());
                     break;
                 case 1:
                     result = searchByName(textBox.Text);
@@ -114,11 +114,11 @@ namespace wmsApp.pages
         }
 
         private async void Add_Click(object sender, RoutedEventArgs e)
-        {           
-                AddUserDialog dialog = new AddUserDialog();
-                ContentDialogResult result = await dialog.ShowAsync();
-                if (result == ContentDialogResult.Secondary) return;
-                UpdatePage(); 
+        {
+            AddUserDialog dialog = new AddUserDialog();
+            ContentDialogResult result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Secondary) return;
+            UpdatePage();
         }
 
         public void resetPassword_Click(object sender, RoutedEventArgs e)
@@ -230,7 +230,7 @@ namespace wmsApp.pages
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
-        {            
+        {
             currentPage = 1;
             flag = 0;
             UpdatePage();
