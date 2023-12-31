@@ -3,6 +3,7 @@ using Squirrel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using WindowsFormsApp1.dto;
 using wms;
@@ -28,23 +29,23 @@ namespace wmsApp
         protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            //更新程序
-            //Upgrade();
-            //弹出登录框
+            // 更新程序
+            //await Upgrade();
+            // 弹出登录框
             LoginWindow window = new LoginWindow();
             window.Show();
         }
 
-        private async void Upgrade()
+        private async Task Upgrade()
         {
             UpgradeWindow updateWindow = null;
             // 确保更新完成后启动应用程序
             try
             {
                 /**
-                 * 192.168.200.138:80 IP为服务器IP，端口为服务器端口号，"Setup.exe"是更新文件
+                 * 192.168.0.105:80 IP为服务器IP，端口为服务器端口号，"Setup.exe"是更新文件
                  */
-                using (var manager = new UpdateManager("http://10.22.38.112:80", "Setup.exe"))
+                using (var manager = new UpdateManager("http://192.168.0.105:80", "Setup.exe"))
                 {
 
                     var updateInfo = await manager.CheckForUpdate();
@@ -52,12 +53,15 @@ namespace wmsApp
                     //判断是否有更新
                     if (updateInfo.ReleasesToApply.Any())
                     {
+                        //用户选择是否更新
                         var result = MessageBox.Show("检测到有新版本，是否更新?", "更新提示", MessageBoxButton.YesNo);
                         if (result == MessageBoxResult.Yes)
                         {
+                            //显示更新窗口
                             updateWindow = new UpgradeWindow();
                             updateWindow.Show();
 
+                            //显示进度条
                             var progress = new Action<int>(value =>
                             {
                                 updateWindow.Dispatcher.Invoke(() =>
@@ -66,12 +70,13 @@ namespace wmsApp
                                     updateWindow.UpdateProgress(value);
                                 });
                             });
+                            
+                            //下载安装最新版本
                             await manager.UpdateApp(progress);
-
-                            await manager.DownloadReleases(updateInfo.ReleasesToApply, progress);
-
-                            await manager.ApplyReleases(updateInfo, progress);
-
+                            await manager.DownloadReleases(updateInfo.ReleasesToApply);
+                            await manager.ApplyReleases(updateInfo);
+                            
+                            //关闭窗口，提示更新完毕
                             updateWindow.Close();
                             MessageBox.Show("更新完毕，请重新启动");
                             System.Windows.Forms.Application.Restart();
