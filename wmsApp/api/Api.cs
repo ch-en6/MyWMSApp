@@ -1,5 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Xml.Linq;
+=========
+=========
 using System.Collections.Generic;
 using System.Xml.Linq;
 using WindowsFormsApp1.dto;
@@ -353,13 +356,10 @@ namespace wms
         }
     }
 
+
+
     class DeliverApi
     {
-        public static HttpHelper http = new HttpHelper();
-        public static Result getMaterialNamesByDeliverTime(DateTime? startTime, DateTime? endTime)
-        {
-            var data = new { startTime = startTime, endTime = endTime };
-            return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/getNames", JsonHelper.DateObjectToJson(data)));
         }
 
         public static Result getDeliverByYear(string year, Material material)
@@ -371,8 +371,19 @@ namespace wms
                 HouseName = material.houseName
             };
             var jsonData = JsonConvert.SerializeObject(data);
-            return http.PostEncryptedData($"/deliver/deliverByYear", jsonData);
+        public static Result getMaterialNamesByDeliverTime(DateTime? startTime, DateTime? endTime)
+        {           
+            var data = new { startTime = startTime, endTime = endTime }; 
+            return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/getNames", JsonHelper.DateObjectToJson(data)));
         }
+
+        public static HttpHelper http = new HttpHelper();
+        public static Result getMaterialNamesByDeliverTime(DateTime? startTime, DateTime? endTime)
+        {           
+            var data = new { startTime = startTime, endTime = endTime }; 
+            return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/getNames", JsonHelper.DateObjectToJson(data)));
+        }
+
 
         public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)
         {

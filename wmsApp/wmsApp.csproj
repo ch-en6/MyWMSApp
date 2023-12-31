@@ -78,6 +78,15 @@
     <Compile Include="dialog\HouseManagementWindow.xaml.cs">
       <DependentUpon>HouseManagementWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dialog\MaterialDialog.xaml.cs">
+      <DependentUpon>MaterialDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dialog\MaterialWindow.xaml.cs">
+      <DependentUpon>MaterialWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dialog\PrintAccountDialog.xaml.cs">
+      <DependentUpon>PrintAccountDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="dialog\PrintAccountWinForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,9 +95,6 @@
     </Compile>
     <Compile Include="dialog\PrintMonthDialog.xaml.cs">
       <DependentUpon>PrintMonthDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="dialog\MaterialWindow.xaml.cs">
-      <DependentUpon>MaterialWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="dialog\SelectPersonDialog.xaml.cs">
       <DependentUpon>SelectPersonDialog.xaml</DependentUpon>
@@ -165,10 +171,10 @@
     <Compile Include="param\UpdatePermissionParams.cs" />
     <Compile Include="pojo\Deliver.cs" />
     <Compile Include="pojo\House.cs" />
+    <Compile Include="pojo\IOMaterial.cs" />
     <Compile Include="pojo\Material.cs" />
     <Compile Include="pojo\MaterialType.cs" />
     <Compile Include="pojo\PermissionType.cs" />
-    <Compile Include="pojo\IOMaterial.cs" />
     <Compile Include="pojo\Resource.cs" />
     <Compile Include="pojo\Store.cs" />
     <Compile Include="UpgradeWindow.xaml.cs">
@@ -191,28 +197,33 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="dialog\HouseManagementWindow.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="dialog\MaterialDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="dialog\MaterialWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="dialog\PrintMonthDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="dialog\SelectPersonDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="dialog\StoreDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="dialog\HouseManagementWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="dialog\PrintAccountDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="dialog\StoreDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="dialog\MaterialWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="dialog\StoreDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="dialog\DelPermissionTypeDialog.xaml">
       <SubType>Designer</SubType>
@@ -258,8 +269,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="pages\AddDeliverPage.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="pages\DeliverPage.xaml">
       <SubType>Designer</SubType>
@@ -318,6 +329,9 @@
     <EmbeddedResource Include="dialog\PrintAccountWinForm.resx">
       <DependentUpon>PrintAccountWinForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="report\Account.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="dialog\StoreWinForm.resx">
       <DependentUpon>StoreWinForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -325,14 +339,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="report\Account.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="report\StoreReport.rdlc" />
     <None Include="Properties\DataSources\wms.pojo.Material.datasource" />
+    <None Include="Properties\DataSources\wmsApp.pojo.Store.datasource" />
     <None Include="Properties\DataSources\wmsApp.param.AccountDetialFormParam.datasource" />
     <None Include="Properties\DataSources\wmsApp.param.PrintAcountParam.datasource" />
-    <None Include="Properties\DataSources\wmsApp.pojo.Store.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

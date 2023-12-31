@@ -14,17 +14,15 @@
     </Window.Resources>
     <Grid Effect="{StaticResource ShadowEffect}" Background="White" Height="Auto">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1.2*"/>
+
             <RowDefinition Height="*"/>
             <RowDefinition Height="4.4*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="LightGray" Height="71" Margin="0,0,0.333,59" Grid.RowSpan="2" VerticalAlignment="Bottom">
-            <TextBlock Text="选择人员" Foreground="DimGray" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </Grid>
+
         <!-- 搜索框 -->
-        <Grid Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,-0.333,0.333" Width="750">
+        <Grid Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,-0.333,0.333" Width="750">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="8*"/>
@@ -39,17 +37,17 @@
 
             <TextBox x:Name="textBox" Grid.Column="1" Margin="10,10,9.667,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" KeyDown="TextBox_PreviewKeyDown"/>
 
-            <Button Grid.Column="2" Width="39" Height="32" FontSize="24" RenderTransformOrigin="0.526,0.258" Margin="4.333,10,0,13.667" Click="SearchButton_Click">
+            <Button Grid.Column="2" Width="39" Height="32" FontSize="24" RenderTransformOrigin="0.526,0.258" Margin="4.333,10,0,23" Click="SearchButton_Click">
                 <ui:SymbolIcon Symbol="Find" Height="20" Width="20" RenderTransformOrigin="0.324,0.495"/>
             </Button>
-            <Button x:Name="btnBack"  Click="btnBack_Click" Grid.Column="2" Margin="59.333,10,0,13.667" Height="32" FontSize="24" Width="38" Grid.ColumnSpan="2">
+            <Button x:Name="btnBack"  Click="btnBack_Click" Grid.Column="2" Margin="59.333,10,0,23" Height="32" FontSize="24" Width="38" Grid.ColumnSpan="2">
                 <ui:SymbolIcon Symbol="Forward"/>
             </Button>
         </Grid>
 
 
         <!-- ListView -->
-        <Grid Grid.Row="2" Margin="0,10.667,-0.333,0.333" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="750" Background="#FFEBEBEB">
+        <Grid Grid.Row="1" Margin="0,10.667,-0.333,0.333" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="750" Background="#FFEBEBEB">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -101,7 +99,7 @@
 
 
         <!-- 翻页按钮 -->
-        <StackPanel Grid.Row="3" Width="211" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="278,0,238.333,49.333" Height="49" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+        <StackPanel Grid.Row="2" Width="211" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="278,0,238.333,49.333" Height="49" ScrollViewer.VerticalScrollBarVisibility="Disabled">
             <StackPanel.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

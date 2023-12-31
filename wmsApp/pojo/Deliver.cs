@@ -8,10 +8,9 @@ namespace wmsApp.pojo
 {
     public class Deliver
     {
-
         public long deliverId { get; set; }
 
-        public long deliverNo {  get; set; }
+        public long deliverNo { get; set; }
 
         public string houseName { get; set; }
 
@@ -21,12 +20,22 @@ namespace wmsApp.pojo
 
         public int deliverCount { get; set; }
 
-        public int remainCount { get; set; }
-
         public long userId { get; set; }
 
         public string notes { get; set; }
 
+        public Deliver() { }
 
+        public Deliver(long deliverId, long deliverNo, string houseName, DateTime deliverTime, long materialId, int deliverCount, long userId, string notes)
+        {
+            this.deliverId = deliverId;
+            this.deliverNo = deliverNo;
+            this.houseName = houseName;
+            this.deliverTime = deliverTime;
+            this.materialId = materialId;
+            this.deliverCount = deliverCount;
+            this.userId = userId;
+            this.notes = notes;
+        }
     }
 }

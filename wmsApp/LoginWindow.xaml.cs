@@ -27,6 +27,11 @@ namespace wmsApp
             Application.Current.Shutdown();
         }
 
+        private void HintTextBlock_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            // 将焦点设置到PasswordBox
+            Keyboard.Focus(PasswordBox);
+        }
 
         private void GenerateKey()
         {
