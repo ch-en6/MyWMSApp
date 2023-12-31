@@ -653,7 +653,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>入库数量</Value>
+                                  <Value>操作数量</Value>
                                   <Style>
                                     <FontFamily>宋体</FontFamily>
                                     <FontSize>12pt</FontSize>

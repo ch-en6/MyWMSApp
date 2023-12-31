@@ -7,7 +7,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>2a5cf734-7ec1-4e4f-912e-d2fc317eefe1</rd:DataSourceID>
+      <rd:DataSourceID>5136ceb4-4262-4deb-80a9-01a27e3abc0d</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -17,6 +17,18 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
+        <Field Name="deliverCount">
+          <DataField>deliverCount</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="deliverNo">
+          <DataField>deliverNo</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="deliverTime">
+          <DataField>deliverTime</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="houseName">
           <DataField>houseName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -41,22 +53,6 @@
           <DataField>notes</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="number">
-          <DataField>number</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="storeCount">
-          <DataField>storeCount</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="storeNo">
-          <DataField>storeNo</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
-        <Field Name="storeTime">
-          <DataField>storeTime</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="userId">
           <DataField>userId</DataField>
           <rd:TypeName>System.Int64</rd:TypeName>
@@ -64,8 +60,8 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>wmsApp.param</rd:DataSetName>
-        <rd:TableName>PrintStoreParam</rd:TableName>
-        <rd:ObjectDataSourceType>wmsApp.param.PrintStoreParam, wmsApp, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>PrintDeliverParam</rd:TableName>
+        <rd:ObjectDataSourceType>wmsApp.param.PrintDeliverParam, wmsApp, Version=1.5.7.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -94,7 +90,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>2.24197cm</Top>
+            <Top>2.06558cm</Top>
             <Left>18.77007cm</Left>
             <Height>0.5365cm</Height>
             <Width>7.75314cm</Width>
@@ -292,7 +288,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>入库数量</Value>
+                                  <Value>出库数量</Value>
                                   <Style>
                                     <FontFamily>宋体</FontFamily>
                                     <FontSize>12pt</FontSize>
@@ -362,7 +358,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>入库时间</Value>
+                                  <Value>出库时间</Value>
                                   <Style>
                                     <FontFamily>宋体</FontFamily>
                                     <FontSize>12pt</FontSize>
@@ -605,14 +601,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="storeCount">
+                        <Textbox Name="deliverCount">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!storeCount.Value</Value>
+                                  <Value>=Fields!deliverCount.Value</Value>
                                   <Style>
                                     <FontFamily>宋体</FontFamily>
                                     <FontSize>12pt</FontSize>
@@ -624,7 +620,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>storeCount</rd:DefaultName>
+                          <rd:DefaultName>deliverCount</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -682,7 +678,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!storeTime.Value</Value>
+                                  <Value>=Fields!deliverTime.Value</Value>
                                   <Style>
                                     <FontFamily>宋体</FontFamily>
                                     <FontSize>12pt</FontSize>
@@ -808,7 +804,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>入库单号</Value>
+                                <Value>出库单号</Value>
                                 <Style>
                                   <FontFamily>宋体</FontFamily>
                                   <FontSize>12pt</FontSize>
@@ -843,27 +839,27 @@
                   <RepeatOnNewPage>true</RepeatOnNewPage>
                 </TablixMember>
                 <TablixMember>
-                  <Group Name="storeNo">
+                  <Group Name="deliverNo">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!storeNo.Value</GroupExpression>
+                      <GroupExpression>=Fields!deliverNo.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
-                      <Value>=Fields!storeNo.Value</Value>
+                      <Value>=Fields!deliverNo.Value</Value>
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
                     <Size>3.79152cm</Size>
                     <CellContents>
-                      <Textbox Name="storeNo1">
+                      <Textbox Name="deliverNo">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Fields!storeNo.Value</Value>
+                                <Value>=Fields!deliverNo.Value</Value>
                                 <Style>
                                   <FontFamily>宋体</FontFamily>
                                   <FontSize>12pt</FontSize>
@@ -875,7 +871,7 @@
                             </Style>
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>storeNo1</rd:DefaultName>
+                        <rd:DefaultName>deliverNo</rd:DefaultName>
                         <Style>
                           <Border>
                             <Color>LightGrey</Color>
@@ -899,7 +895,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet1</DataSetName>
-            <Top>3.37819cm</Top>
+            <Top>3.2018cm</Top>
             <Height>1.53866cm</Height>
             <Width>26.52322cm</Width>
             <ZIndex>1</ZIndex>
@@ -930,7 +926,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox3</rd:DefaultName>
-            <Top>0.37253cm</Top>
+            <Top>0.19614cm</Top>
             <Left>11.25768cm</Left>
             <Height>0.727cm</Height>
             <Width>6.69334cm</Width>
@@ -952,7 +948,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="共入库" &amp; Parameters!TotalStoreNo.Value &amp; "单,总入库数量"  &amp; Parameters!TotalStoreCount.Value &amp; "."</Value>
+                    <Value>="共出库" &amp; Parameters!TotalDeliverNo.Value &amp; "单,总出库数量"  &amp; Parameters!TotalDeliverCount.Value &amp; "."</Value>
                     <Style>
                       <FontFamily>宋体</FontFamily>
                       <FontSize>12pt</FontSize>
@@ -965,7 +961,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox15</rd:DefaultName>
-            <Top>5.26203cm</Top>
+            <Top>5.08564cm</Top>
             <Left>19.38499cm</Left>
             <Height>0.6cm</Height>
             <Width>7.13823cm</Width>
@@ -1001,7 +997,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>1.52908cm</Top>
+            <Top>1.35269cm</Top>
             <Left>18.77007cm</Left>
             <Height>0.5365cm</Height>
             <Width>7.75314cm</Width>
@@ -1017,10 +1013,10 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>3.81666in</Height>
+        <Height>2.33011in</Height>
         <Style />
       </Body>
-      <Width>10.75888in</Width>
+      <Width>10.44221in</Width>
       <Page>
         <PageFooter>
           <Height>2.54cm</Height>
@@ -1058,7 +1054,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0.17639cm</Top>
+              <Top>0.41036cm</Top>
               <Left>11.25768cm</Left>
               <Height>0.6cm</Height>
               <Width>7.09317cm</Width>
@@ -1081,8 +1077,8 @@
         </PageFooter>
         <PageHeight>21cm</PageHeight>
         <PageWidth>29.7cm</PageWidth>
-        <LeftMargin>1cm</LeftMargin>
-        <RightMargin>1cm</RightMargin>
+        <LeftMargin>2cm</LeftMargin>
+        <RightMargin>2cm</RightMargin>
         <TopMargin>2cm</TopMargin>
         <BottomMargin>2cm</BottomMargin>
         <ColumnSpacing>0.13cm</ColumnSpacing>
@@ -1095,11 +1091,11 @@
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
-    <ReportParameter Name="TotalStoreNo">
+    <ReportParameter Name="TotalDeliverNo">
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
-    <ReportParameter Name="TotalStoreCount">
+    <ReportParameter Name="TotalDeliverCount">
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
@@ -1121,12 +1117,12 @@
         <CellDefinition>
           <ColumnIndex>1</ColumnIndex>
           <RowIndex>0</RowIndex>
-          <ParameterName>TotalStoreNo</ParameterName>
+          <ParameterName>TotalDeliverNo</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>0</RowIndex>
-          <ParameterName>TotalStoreCount</ParameterName>
+          <ParameterName>TotalDeliverCount</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>3</ColumnIndex>
@@ -1137,5 +1133,5 @@
     </GridLayoutDefinition>
   </ReportParametersLayout>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
-  <rd:ReportID>8cfcbfbc-17f6-44c0-989c-d66c2717ea87</rd:ReportID>
+  <rd:ReportID>f2a76cbb-9c3e-4002-8220-22c374072ea7</rd:ReportID>
 </Report>

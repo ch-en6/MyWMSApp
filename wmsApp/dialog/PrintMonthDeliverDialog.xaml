@@ -1,5 +1,5 @@
 ﻿<ui:ContentDialog 
-    x:Class="wmsApp.dialog.PrintMonthDialog"
+    x:Class="wmsApp.dialog.PrintMonthDeliverDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
@@ -15,11 +15,10 @@
     <Grid Width="500">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
             <TextBlock Text="选择日期：" VerticalAlignment="Center" Margin="20,0,0,0" />
-            <TextBox x:Name="CalendarTextBox" Width="200" Margin="5" />
-            <Image x:Name="CalenderImage" Source="/assets/calendar.png" Width="30" Height="30" MouseLeftButtonUp="CalendarImage_MouseLeftButtonUp"></Image>
+            <TextBox x:Name="YearTextBox" Width="85" Margin="5" />
+            <TextBlock Text="年" VerticalAlignment="Center" Margin="0,0,10,0" />
+            <TextBox x:Name="MonthTextBox" Width="55" Margin="0,0,5,0" Height="32" />
+            <TextBlock Text="月" VerticalAlignment="Center" Margin="0,0,10,0" />
         </StackPanel>
-        <Popup x:Name="CalendarPop" PopupAnimation="None" Width="200" Height="320" PlacementTarget="{Binding ElementName=CalendarTextBox}" Placement="Bottom" AllowsTransparency="True" StaysOpen="False" VerticalAlignment="Top" Margin="-200,0,0,0">
-            <Calendar x:Name="Calendar" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top" DisplayMode="Year" DisplayModeChanged="Calendar_DisplayModeChanged" DisplayDateChanged="Calendar_DisplayDateChanged" />
-        </Popup>
     </Grid>
 </ui:ContentDialog>

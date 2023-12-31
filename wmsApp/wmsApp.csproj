@@ -75,6 +75,12 @@
     <Compile Include="dialog\AddUserDialog.xaml.cs">
       <DependentUpon>AddUserDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="dialog\DeliverWinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dialog\DeliverWinForm.Designer.cs">
+      <DependentUpon>DeliverWinForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="dialog\HouseManagementWindow.xaml.cs">
       <DependentUpon>HouseManagementWindow.xaml</DependentUpon>
     </Compile>
@@ -93,8 +99,11 @@
     <Compile Include="dialog\PrintAccountWinForm.Designer.cs">
       <DependentUpon>PrintAccountWinForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="dialog\PrintMonthDialog.xaml.cs">
-      <DependentUpon>PrintMonthDialog.xaml</DependentUpon>
+    <Compile Include="dialog\PrintMonthDeliverDialog.xaml.cs">
+      <DependentUpon>PrintMonthDeliverDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dialog\PrintMonthStoreDialog.xaml.cs">
+      <DependentUpon>PrintMonthStoreDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="dialog\SelectPersonDialog.xaml.cs">
       <DependentUpon>SelectPersonDialog.xaml</DependentUpon>
@@ -164,6 +173,7 @@
     <Compile Include="param\DeliverDetailParam.cs" />
     <Compile Include="param\PrintAccountParam.cs" />
     <Compile Include="param\LoginParams.cs" />
+    <Compile Include="param\PrintDeliverParam.cs" />
     <Compile Include="param\PrintStoreParam.cs" />
     <Compile Include="param\SearchPermissionParams.cs" />
     <Compile Include="param\StoreConSearchParams.cs" />
@@ -205,7 +215,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="dialog\PrintMonthDialog.xaml">
+    <Page Include="dialog\PrintMonthDeliverDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="dialog\PrintMonthStoreDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -326,6 +340,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="dialog\DeliverWinForm.resx">
+      <DependentUpon>DeliverWinForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="dialog\PrintAccountWinForm.resx">
       <DependentUpon>PrintAccountWinForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -339,8 +356,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="report\DeliverReport.rdlc" />
     <EmbeddedResource Include="report\StoreReport.rdlc" />
     <None Include="Properties\DataSources\wms.pojo.Material.datasource" />
+    <None Include="Properties\DataSources\wmsApp.param.PrintDeliverParam.datasource" />
     <None Include="Properties\DataSources\wmsApp.pojo.Store.datasource" />
     <None Include="Properties\DataSources\wmsApp.param.AccountDetialFormParam.datasource" />
     <None Include="Properties\DataSources\wmsApp.param.PrintAcountParam.datasource" />
