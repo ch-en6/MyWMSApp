@@ -1,14 +1,7 @@
 ﻿using ModernWpf.Controls;
-using Newtonsoft.Json.Converters;
-using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Drawing.Drawing2D;
-using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Controls;
-
 using WindowsFormsApp1.dto;
 using wms;
 using wms.pojo;
@@ -23,6 +16,7 @@ namespace wmsApp.pages
         int currentPage = 1;
         long totalPage = 0;
         int flag = 0;
+        string pageNumText;
 
         public MaterialPage()
         {
@@ -32,7 +26,8 @@ namespace wmsApp.pages
             totalPage = result.total;
 
             InitializeComponent();
-            PageNumberTextBlock.Text = currentPage.ToString();
+            pageNumText = currentPage.ToString() + "/" + totalPage.ToString();
+            PageNumberTextBlock.Text = pageNumText;
             datagrid.ItemsSource = materialList;
         }
 
@@ -68,8 +63,8 @@ namespace wmsApp.pages
                     materialList = JsonHelper.JsonToList<Material>(result.data.ToString());
                     break;
             }
-
-            PageNumberTextBlock.Text = currentPage.ToString();
+            pageNumText = currentPage.ToString() + "/" + totalPage.ToString();
+            PageNumberTextBlock.Text = pageNumText;
             datagrid.ItemsSource = materialList;
         }
 
@@ -181,7 +176,8 @@ namespace wmsApp.pages
             materialList = JsonHelper.JsonToList<Material>(result.data.ToString());
             totalPage = result.total;
 
-            PageNumberTextBlock.Text = currentPage.ToString();
+            pageNumText = currentPage.ToString() + "/" + totalPage.ToString();
+            PageNumberTextBlock.Text = pageNumText;
             datagrid.ItemsSource = materialList;
         }
 
@@ -214,7 +210,36 @@ namespace wmsApp.pages
         }
        
 
-        private async void Add_Click(object sender, RoutedEventArgs e)
+            if(selectedItem.stock > 0)
+            {
+                MessageBox.Show("该物料库存大于0，不允许删除！");
+            }
+            else if (MaterialApi.ifStoreOrDeliver(selectedItem.id).success)
+            {
+                MessageBox.Show("该物料有出库或入库记录，不允许删除！");
+            }
+            else
+            {
+                MessageBoxResult result = MessageBox.Show("确定要删除吗？", "确认删除", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Result result1 = MaterialApi.deleteMaterial(selectedItem.id);
+                    if (result1.success)
+                    {
+                        MessageBox.Show("删除成功");
+                        datagrid.Items.Refresh();
+                        updatePage();
+                    }
+                    else
+                    {
+                        MessageBox.Show("删除失败");
+                    }
+                }
+
+            }
+        }
+
+        private async void AddMaterialButton_Click_1(object sender, RoutedEventArgs e)
         {
             Result houseNameResult = MaterialApi.searchHouseName();
             List<string> houseList = JsonHelper.JsonToList<string>(houseNameResult.data.ToString());
@@ -241,8 +266,26 @@ namespace wmsApp.pages
             List<Material> materialList = JsonHelper.JsonToList<Material>(result.data.ToString());
             totalPage = result.total;
 
-            PageNumberTextBlock.Text = currentPage.ToString();
+            pageNumText = currentPage.ToString() + "/" + totalPage.ToString();
+            PageNumberTextBlock.Text = pageNumText;
             datagrid.ItemsSource = materialList;
+        }
+
+        private void HouseManagementButton_Click(object sender, RoutedEventArgs e)
+        {
+            HouseManagementWindow window = new HouseManagementWindow();
+            window.Show();
+        }
+
+        private void TypeManagementButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PrintAccount_Click(object sender, RoutedEventArgs e)
+        {
+            PrintAccountDialog dialog = new PrintAccountDialog();
+            dialog.ShowAsync();
         }
     }
 }

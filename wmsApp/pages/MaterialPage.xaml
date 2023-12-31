@@ -17,7 +17,10 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="9,-10,1,21" HorizontalAlignment="Center">
-            <!--<Button Content="新增物料"  Margin="0,0,10,0" Click="AddMaterialButton_Click_1"/>-->
+            <Button Content="仓库管理" Margin="0,0,10,0" Click="HouseManagementButton_Click"/>
+            <Button Content="物料类型管理" Margin="0,0,10,0" Click="TypeManagementButton_Click"/>
+            <Button Content="打印仓库账本" Margin="0,0,10,0" Click="PrintAccount_Click"/>
+            <Button Content="新增物料" Margin="0,0,10,0" Click="AddMaterialButton_Click_1"/>
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -49,7 +52,7 @@
             </Grid>
 
         </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="26,0.333,-1,0" >
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="26,0.333,-1,0" >
 
             <DataGrid x:Name="datagrid" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="True">
                 <!-- 定义列 -->

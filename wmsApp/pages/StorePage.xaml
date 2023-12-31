@@ -93,10 +93,11 @@
                         <DataGridTextColumn Header="物料名称" Binding="{Binding material.name}" />
                         <DataGridTextColumn Header="物料ID" Binding="{Binding materialId}" />
                         <DataGridTextColumn Header="物料类型" Binding="{Binding material.type}" />
-                        <DataGridTextColumn Header="所在仓库" Binding="{Binding houseName}" />
+                        <DataGridTextColumn Header="仓库名" Binding="{Binding houseName}" />
                         <DataGridTextColumn Header="进仓数量" Binding="{Binding storeCount}" />
+                        <DataGridTextColumn Header="剩余库存" Binding="{Binding remainCount}" />
                         <DataGridTextColumn Header="物料单位" Binding="{Binding material.unit}" />
-                        <DataGridTextColumn Header="入库日期" Binding="{Binding storeTime, StringFormat='yyyy-MM-dd'}" />
+                        <DataGridTextColumn Header="入库日期" Binding="{Binding storeTime, StringFormat='yyyy-MM-dd HH:mm:ss'}" />
                         <DataGridTextColumn Header="操作人员ID" Binding="{Binding userId}" />
                         <DataGridTextColumn Header="备注" Binding="{Binding notes}" />
 

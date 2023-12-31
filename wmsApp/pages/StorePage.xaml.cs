@@ -24,6 +24,7 @@ namespace wmsApp.pages
         int currentPage = 1;
         long totalPage = 0;
         int flag = 0;
+        string pageNumText;
         
         public StorePage()
         {
@@ -43,8 +44,9 @@ namespace wmsApp.pages
             Result result = StoreApi.searchAll(page);
             List<StoreDetailParam> storeList = JsonHelper.JsonToList<StoreDetailParam>(result.data.ToString());
             totalPage = result.total;
-
-            PageNumberTextBlock.Text = currentPage.ToString();
+            
+            pageNumText = currentPage.ToString() + "/" + totalPage.ToString();
+            PageNumberTextBlock.Text = pageNumText;
             datagrid.ItemsSource = storeList;
         }
 
@@ -68,7 +70,8 @@ namespace wmsApp.pages
             List<StoreDetailParam> storeList = JsonHelper.JsonToList<StoreDetailParam>(result.data.ToString());
             totalPage = result.total;
 
-            PageNumberTextBlock.Text = currentPage.ToString();
+            pageNumText = currentPage.ToString() + "/" + totalPage.ToString();
+            PageNumberTextBlock.Text = pageNumText;
             datagrid.ItemsSource = storeList;
 
         }

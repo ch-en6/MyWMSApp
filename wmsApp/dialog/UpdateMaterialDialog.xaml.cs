@@ -2,21 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web.Management;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WindowsFormsApp1.dto;
 using wms;
-using wms.pojo;
+using wmsApp.pojo;
 using wms.utils;
 using wmsApp.pages;
+using wms.pojo;
 
 namespace wmsApp.dialog
 {
@@ -25,9 +18,17 @@ namespace wmsApp.dialog
     /// </summary>
     public partial class UpdateMaterialDialog : ContentDialog
     {
+        private string previousMaterialName;
+        private string previousMaterialType;
         public UpdateMaterialDialog()
         {
             InitializeComponent();
+        }
+
+        private void ContentDialog_Loaded(object sender, RoutedEventArgs e)
+        {
+            previousMaterialName = MaterialNameTextBox.Text;
+            previousMaterialType = MaterialTypeComboBox.SelectedItem.ToString();
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -56,9 +57,6 @@ namespace wmsApp.dialog
             }
             else
             {
-                Result AllMaterial = MaterialApi.searchAll();
-                List<Material> materials = JsonHelper.JsonToList<Material>(AllMaterial.data.ToString());
-
                 Material updatedMaterial = new Material()
                 {
                     id = materialId,
@@ -71,26 +69,75 @@ namespace wmsApp.dialog
                     createTime = DateTime.Now
                 };
 
-                bool exits = materials.Any(m => m.name == updatedMaterial.name && m.houseName == updatedMaterial.houseName);
-
-                if (exits)
+                Result AllMaterial = MaterialApi.searchAll();
+                List<Material> materials = JsonHelper.JsonToList<Material>(AllMaterial.data.ToString());
+                
+                if(materialName != previousMaterialName)
                 {
-                    args.Cancel = true;
-                    MessageBox.Show("该物料在该仓库已存在!");
-                }
-                else
-                {
-                    Result result = MaterialApi.updateMaterial(updatedMaterial);
-
-                    if (result.success)
+                    bool exits = materials.Any(m => m.name == materialName && m.houseName == materialHouseName);
+                    if (exits)
                     {
-                        MessageBox.Show("更新成功");
+                        args.Cancel = true;
+                        MessageBox.Show("该物料在该仓库已存在!");
                     }
                     else
                     {
-                        MessageBox.Show("更新失败");
+                        judgeTypeIsEqual(materials, updatedMaterial, args);
                     }
                 }
+                else
+                {
+                    judgeTypeIsEqual(materials, updatedMaterial, args);
+                }
+            }
+        }
+
+        private void modifyMaterial(Material material)
+        {
+            Result result = MaterialApi.updateMaterial(material);
+            if (result.success)
+            {
+                MessageBox.Show("更新成功");
+            }
+            else
+            {
+                MessageBox.Show("更新失败");
+            }
+        }
+
+        private void judgeTypeIsEqual(List<Material> materials, Material updateMaterial, ContentDialogButtonClickEventArgs args)
+        {
+            if (updateMaterial.type != previousMaterialType)
+            {
+                bool exits = materials.Any(m => m.name == updateMaterial.name && m.houseName != updateMaterial.houseName);
+                if (exits)
+                {
+                    MessageBoxResult message = MessageBox.Show("修改该物料类型，将会同时修改其他仓库中同名物料的类型，是否继续修改？", "提示", MessageBoxButton.YesNo);
+                    if (message == MessageBoxResult.Yes)
+                    {
+                        Result result = MaterialApi.updateEqualType(updateMaterial);
+                        if (result.success)
+                        {
+                            MessageBox.Show("更新成功");
+                        }
+                        else
+                        {
+                            MessageBox.Show("更新失败");
+                        }
+                    }
+                    else
+                    {
+                        args.Cancel = true;
+                    }
+                }
+                else
+                {
+                    modifyMaterial(updateMaterial);
+                }
+            }
+            else
+            {
+                modifyMaterial(updateMaterial);
             }
         }
 

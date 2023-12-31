@@ -28,26 +28,25 @@
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="*" Foreground="Red"/>
-                <TextBlock Text="库存" Margin="5, 0, 0, 0"/>
-            </StackPanel>
-            <TextBox x:Name="MaterialStockTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200" Text="0"/>
-
-            <TextBlock Text="备注"/>
-            <TextBox x:Name="MaterialCommentsTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200"/>
-        </StackPanel>
-
-        <StackPanel Grid.Column="1" Margin="20, 0, 0, 0">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="*" Foreground="Red"/>
                 <TextBlock Text="仓库" Margin="5, 0, 0, 0"/>
             </StackPanel>
-            <ComboBox x:Name="MaterialHouseNameComboBox" Margin="0,0,0,10" Width="200" />
+            <ComboBox x:Name="MaterialHouseNameComboBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200" />
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="*" Foreground="Red"/>
                 <TextBlock Text="规格型号" Margin="5, 0, 0, 0"/>
             </StackPanel>
-            <ComboBox x:Name="MaterialTypeComboBox" Margin="0,0,0,10" Width="200" />
+            <ComboBox x:Name="MaterialTypeComboBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200" />
+
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Margin="20, 0, 0, 0">
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="*" Foreground="Red"/>
+                <TextBlock Text="库存" Margin="5, 0, 0, 0"/>
+            </StackPanel>
+            <TextBox x:Name="MaterialStockTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200" Text="0"/>
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="*" Foreground="Red"/>
@@ -68,6 +67,9 @@
                 <ComboBoxItem Content="升" />
                 <ComboBoxItem Content="米" />
             </ComboBox>
+
+            <TextBlock Text="备注"/>
+            <TextBox x:Name="MaterialCommentsTextBox" Margin="0,0,0,10" HorizontalAlignment="Left" Width="200"/>
 
         </StackPanel>
 

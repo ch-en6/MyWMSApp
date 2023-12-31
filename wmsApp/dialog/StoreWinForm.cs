@@ -41,11 +41,18 @@ namespace wmsApp.dialog
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ReportParameter parameter1 = new ReportParameter("Title", ReportTitle);
+            int totalStoreNo = dataset.Count;
+            int totalStoreCount = dataset.Sum(s => s.storeCount);
+            
             //ReportParameter parameter2 = new ReportParameter("user", User);
+            List<ReportParameter> parameters = new List<ReportParameter>
+            {
+                new ReportParameter("Title", ReportTitle),
+                new ReportParameter("TotalStoreNo", totalStoreNo.ToString()),
+                new ReportParameter("TotalStoreCount", totalStoreCount.ToString())
+            };
+            reportViewer1.LocalReport.SetParameters(parameters);
 
-            reportViewer1.LocalReport.SetParameters(new ReportParameter[] { parameter1 });
-            //reportViewer1.LocalReport.SetParameters(parameter1);
             ReportDataSource reportDataSource = new ReportDataSource("DataSet1", dataset);
             reportViewer1.LocalReport.DataSources.Add(reportDataSource);
 

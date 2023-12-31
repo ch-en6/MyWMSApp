@@ -58,7 +58,7 @@ namespace wmsApp.dialog
                             houseName = param.material.houseName,
                             storeCount = param.storeCount,
                             materialUnit = param.material.unit,
-                            storeTime = param.storeTime.ToString("yyyy-MM-dd"),
+                            storeTime = param.storeTime.ToString(),
                             userId = param.userId,
                             notes = param.notes
                         };

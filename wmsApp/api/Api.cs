@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Xml.Linq;
 using System.Collections.Generic;
 using WindowsFormsApp1.dto;
 using wms.param;
@@ -220,13 +221,23 @@ namespace wms
 
         public static Result addMaterial(Material material)
         {
-            return JsonHelper.JSONToObject<Result>(http.Post($"/material/save", JsonHelper.DateObjectTOJson(material)));
+            return http.PostEncryptedData($"/material/save", JsonHelper.DateObjectTOJson(material));
+        }
+
+        public static Result addMaterialEqual(Material material)
+        {
+            return http.PostEncryptedData($"/material/saveEqual", JsonHelper.DateObjectToJson<Material>(material));
         }
 
         //修改
         public static Result updateMaterial(Material material)
         {
-            return JsonHelper.JSONToObject<Result>(http.Post("/material/update", JsonHelper.DateObjectToJson(material)));
+            return http.PostEncryptedData($"/material/update", JsonHelper.DateObjectToJson(material));
+        }
+
+        public static Result updateEqualType(Material material)
+        {
+            return http.PostEncryptedData($"/material/updateEqualType", JsonHelper.DateObjectToJson(material));
         }
 
         public static Result deleteMaterial(long id)
@@ -268,6 +279,22 @@ namespace wms
             var jsonData = JsonConvert.SerializeObject(data);
             return http.PostEncryptedData($"/material/getMaterialByNameAndHouse", jsonData);
         }
+
+        public static Result ifStoreOrDeliver(long materialId)
+        {
+            return http.GetDncryptedData($"/material/ifStoreOrDeliver/{materialId}");
+        }
+
+        public static Result houseByYearAndMaterialName(string year, string materialName)
+        {
+            var data = new
+            {
+                Year = year,
+                MaterialName = materialName
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/material/houseByYearAndMaterialName", jsonData);
+        }
     }
 
     class StoreApi
@@ -305,6 +332,36 @@ namespace wms
             var jsonData = JsonConvert.SerializeObject(data);
             return http.PostEncryptedData($"/store/selectStoreByDate", jsonData);
         }
+
+        public static Result getStoreByYear(string year, Material material)
+        {
+            var data = new
+            {
+                Year = year,
+                id = material.id,
+                HouseName = material.houseName
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/store/storeByYear", jsonData);
+        }
+    }
+
+    class DeliverApi
+    {
+        public static HttpHelper http = new HttpHelper();
+
+        public static Result getDeliverByYear(string year, Material material)
+        {
+            var data = new
+            {
+                Year = year,
+                id = material.id,
+                HouseName = material.houseName
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/deliver/deliverByYear", jsonData);
+        }
+
     }
 
     class DeliverApi
