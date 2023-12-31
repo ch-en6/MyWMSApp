@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using WindowsFormsApp1.dto;
 using wms.param;
 using wms.pojo;
@@ -87,7 +88,8 @@ namespace wms
 
         public static Result search(int page)
         {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/user/search/{page}"));
+            return http.GetDncryptedData($"/user/search/{page}");
+            //return JsonHelper.JSONToObject<Result>(http.Get($"/user/search/{page}"));
         }
       
 
@@ -98,13 +100,15 @@ namespace wms
         //通过名称查询
         public static Result searchByName(int page, string name)
         {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/user/searchByName/{page}/{name}"));
+            return http.GetDncryptedData($"/user/searchByName/{page}/{name}");
+            //return JsonHelper.JSONToObject<Result>(http.Get($"/user/searchByName/{page}/{name}"));
         }
 
         //通过id查询
         public static Result searchById(int page, long id)
         {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/user/searchById/{page}/{id}"));
+            return http.GetDncryptedData($"/user/searchById/{page}/{id}");
+            //return JsonHelper.JSONToObject<Result>(http.Get($"/user/searchById/{page}/{id}"));
         }
 
         public static Result delete(long id)

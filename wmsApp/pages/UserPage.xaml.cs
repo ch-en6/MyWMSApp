@@ -29,15 +29,15 @@ namespace wmsApp.pages
         private User user;
         public UserPage()
         {
-            
-            Result result = UserInfoApi.show();
+
+            Result result = UserApi.getNowUser();
             if (!result.success)
             {
                 ModernMessageBox.showMessage(result.errorMsg);
                 return;
             }
             InitializeComponent();
-            User user =JsonHelper.JSONToObject<User>(result.data.ToString());
+            user =JsonHelper.JSONToObject<User>(result.data.ToString());
             DataContext = user;
         }
 
