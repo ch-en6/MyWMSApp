@@ -19,7 +19,7 @@
 
             <StackPanel Orientation="Horizontal" Margin="0 5">
                 <TextBlock Text="新手机号" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Grid.Column="0"/>
-                <TextBox x:Name="phoneTextBox" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" LostFocus="phoneTextBox_LostFocus"/>
+                <TextBox x:Name="phoneTextBox" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" TextChanged="phoneTextBox_LostFocus"/>
             </StackPanel>
             <TextBlock x:Name="phoneTextBlock" Foreground="Red" FontSize="12" Width="216"/>
             <StackPanel Orientation="Horizontal" Margin="0 5">

@@ -44,7 +44,7 @@ namespace wmsApp.pages
         public async void updatePassword_MouseDown(object sender, RoutedEventArgs e)
         {
             UpdatePasswordDialog dialog = new UpdatePasswordDialog();
-            dialog.phoneTextBlock.Text = user.phone;
+            dialog.phoneTextBox.Text = user.phone;
             ContentDialogResult result = await dialog.ShowAsync();
         }
 

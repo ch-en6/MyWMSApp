@@ -35,12 +35,23 @@ namespace wms
         }
         public static Result updatePhone(String newPhone)
         {
-            
-            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePhone/{newPhone}"));
+            var data = new
+            {
+                newPhone = newPhone
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/userInfo/updatePhone", jsonData);
+            //return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePhone/{newPhone}"));
         }
         public static Result updatePassword(string newPassword)
         {
-            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePassword/{newPassword}"));
+            var data = new
+            {
+                newPassword = newPassword
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/userInfo/updatePassword", jsonData);
+            //return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePassword/{newPassword}"));
         }
 
     } 
@@ -90,7 +101,6 @@ namespace wms
         public static Result search(int page)
         {
             return http.GetDncryptedData($"/user/search/{page}");
-            //return JsonHelper.JSONToObject<Result>(http.Get($"/user/search/{page}"));
         }
       
 
@@ -102,14 +112,12 @@ namespace wms
         public static Result searchByName(int page, string name)
         {
             return http.GetDncryptedData($"/user/searchByName/{page}/{name}");
-            //return JsonHelper.JSONToObject<Result>(http.Get($"/user/searchByName/{page}/{name}"));
         }
 
         //通过id查询
         public static Result searchById(int page, long id)
         {
             return http.GetDncryptedData($"/user/searchById/{page}/{id}");
-            //return JsonHelper.JSONToObject<Result>(http.Get($"/user/searchById/{page}/{id}"));
         }
 
         public static Result delete(long id)
@@ -352,6 +360,18 @@ namespace wms
             var jsonData = JsonConvert.SerializeObject(data);
             return http.PostEncryptedData($"/store/storeByYear", jsonData);
         }
+
+        public static Result findNameBetweenDates(DateTime? startTime, DateTime? endTime)
+        {
+            var data = new { startTime = startTime, endTime = endTime };
+            return JsonHelper.JSONToObject<Result>(http.Post($"/store/findNames", JsonHelper.DateObjectToJson(data)));
+        }
+
+        public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)
+        {
+            var data = new { startTime = startTime, endTime = endTime };
+            return JsonHelper.JSONToObject<Result>(http.Post($"/store/findCountByNames", JsonHelper.DateObjectToJson(data)));
+        }
     }
 
 
@@ -371,10 +391,10 @@ namespace wms
             var jsonData = JsonConvert.SerializeObject(data);
             return http.PostEncryptedData($"/deliver/deliverByYear", jsonData);
         }
-        public static Result getMaterialNamesByDeliverTime(DateTime? startTime, DateTime? endTime)
+        public static Result findNameBetweenDates(DateTime? startTime, DateTime? endTime)
         {           
             var data = new { startTime = startTime, endTime = endTime }; 
-            return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/getNames", JsonHelper.DateObjectToJson(data)));
+            return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/findNames", JsonHelper.DateObjectToJson(data)));
         }
 
         public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)

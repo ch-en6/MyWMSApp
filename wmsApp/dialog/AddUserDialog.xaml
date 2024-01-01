@@ -37,10 +37,8 @@
             <DatePicker x:Name="birthdatePicker" Width="200"/>
 
             <TextBlock Text="身份证号"/>
-            <!--<StackPanel Orientation="Horizontal">-->
-            <TextBox x:Name="idNumberTextBox" LostFocus="idNumberTextBox_LostFocus" />
+            <TextBox x:Name="idNumberTextBox" TextChanged="idNumberTextBox_LostFocus" />
             <TextBlock x:Name="idNumberErrorTextBlock" Foreground="Red" VerticalAlignment="Center" FontSize="12"/>
-            <!--</StackPanel>-->
 
             <TextBlock Text="籍贯"/>
             <TextBox x:Name="nativePlaceTextBox" Width="200"/>
@@ -49,7 +47,7 @@
             <TextBox x:Name="addressTextBox" Width="200"/>
 
             <TextBlock Text="联系电话"/>
-            <TextBox x:Name="phoneTextBox"  LostFocus="phoneTextBox_LostFocus" Width="200"/>
+            <TextBox x:Name="phoneTextBox"  TextChanged="phoneTextBox_LostFocus" Width="200"/>
             <TextBlock x:Name="phoneTextBlock" Foreground="Red" VerticalAlignment="Center" FontSize="12"/>
         </StackPanel>
 
