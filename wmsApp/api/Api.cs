@@ -381,24 +381,14 @@ namespace wms
     class DeliverApi
     {
         public static HttpHelper http = new HttpHelper();
-        public static Result findNameBetweenDates(DateTime? startTime, DateTime? endTime)
-        {
-            var data = new
-            {
-                Year = year,
-                id = material.id,
-                HouseName = material.houseName
-            };
-            var jsonData = JsonConvert.SerializeObject(data);
-            return http.PostEncryptedData($"/deliver/deliverByYear", jsonData);
-        }
-        public static Result findNameBetweenDates(DateTime? startTime, DateTime? endTime)
-        {           
-            var data = new { startTime = startTime, endTime = endTime }; 
-            return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/findNames", JsonHelper.DateObjectToJson(data)));
-        }
+    public static Result findNameBetweenDates(DateTime? startTime, DateTime? endTime)
+    {
+        var data = new { startTime = startTime, endTime = endTime };
+        return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/findNames", JsonHelper.DateObjectToJson(data)));
+    }
 
-        public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)
+
+    public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)
         {
             var data = new { startTime = startTime, endTime = endTime };
             return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/findCountByNames", JsonHelper.DateObjectToJson(data)));
@@ -570,4 +560,4 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get("/user/getAll"));
         }
     }
-}
+
