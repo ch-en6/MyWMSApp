@@ -2,8 +2,18 @@
 using ModernWpf.Controls;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using WindowsFormsApp1.dto;
 using wms;
 using wms.pojo;
@@ -47,7 +57,7 @@ namespace wmsApp.pages
                 MessageBox.Show("结束时间不能早于开始时间，请重新选择");
                 return;
             }
-            if(flag==0)
+            if (flag == 0)
             {
                 StoreUpdateChartData(startTime, endTime);
             }
@@ -56,7 +66,7 @@ namespace wmsApp.pages
                 DeliverUpdateChartData(startTime, endTime);
             }
             // 执行数据检索和初始化
-            
+
         }
 
         private void StoreUpdateChartData(DateTime? startTime, DateTime? endTime)

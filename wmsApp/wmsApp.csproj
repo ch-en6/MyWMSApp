@@ -139,7 +139,6 @@
       <DependentUpon>UpdateUserDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="dto\Constants.cs" />
-    <Compile Include="dto\LvcView.cs" />
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>

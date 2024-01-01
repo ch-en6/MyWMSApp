@@ -385,7 +385,6 @@ namespace wms
 
         public static Result multiDelivery(List<Deliver> deliverList)
         {
-            MessageBox.Show("哈哈");
             return JsonHelper.JSONToObject<Result>(http.Post("/deliver/multiDelivery", JsonHelper.ObjectToJSON(deliverList)));
         }
 
