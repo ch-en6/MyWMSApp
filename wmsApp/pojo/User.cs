@@ -59,7 +59,7 @@ namespace wms.pojo
          */
         public String phone { get; set; }
 
-        public User(long id,string name, string role, string sex, DateTime birthDate, string idNumber, string nativePlace, string address, string phone)
+        public User(long id, string name, string role, string sex, DateTime birthDate, string idNumber, string nativePlace, string address, string phone)
         {
             this.id = id;
             this.name = name;

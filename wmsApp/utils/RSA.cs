@@ -126,7 +126,6 @@ namespace wmsApp.utils
         /// <returns>返回明文</returns>
         public string DecryptByPrivateKey(string data, string privateKey)
         {
-            data = data.Replace("\r", "").Replace("\n", "").Replace(" ", "");
             //非对称加密算法，加解密用
             IAsymmetricBlockCipher engine = new Pkcs1Encoding(new RsaEngine());
 

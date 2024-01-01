@@ -37,6 +37,7 @@ namespace wmsApp.pages
             InitializeComponent();
             flag = 0;
             Result result = UserApi.search(currentPage);
+            MessageBox.Show(result.data.ToString());
             List<User> userList = JsonHelper.JsonToList<User>(result.data.ToString());
             totalPage = result.total;
             pageNumText = currentPage.ToString() + "/" + totalPage.ToString();

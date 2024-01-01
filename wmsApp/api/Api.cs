@@ -92,7 +92,7 @@ namespace wms
             return http.GetDncryptedData($"/user/search/{page}");
             //return JsonHelper.JSONToObject<Result>(http.Get($"/user/search/{page}"));
         }
-      
+
 
         public static Result save(User user)
         {

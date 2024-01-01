@@ -99,7 +99,7 @@
 
 
         <!-- 翻页按钮 -->
-        <StackPanel Grid.Row="2" Width="211" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="278,0,238.333,49.333" Height="49" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+        <StackPanel Grid.Row="2" Width="211" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="278,0,238.333,49.333" Height="49">
             <StackPanel.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
