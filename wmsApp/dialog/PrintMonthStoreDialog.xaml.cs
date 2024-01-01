@@ -1,41 +1,54 @@
 ﻿using ModernWpf.Controls;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 using WindowsFormsApp1.dto;
 using wms;
 using wms.utils;
 using wmsApp.param;
-using Microsoft.Reporting.WinForms;
-using System.IO;
-using System;
 
 namespace wmsApp.dialog
 {
     /// <summary>
     /// PrintMonthDialog.xaml 的交互逻辑
     /// </summary>
-    public partial class PrintMonthDialog : ContentDialog
+    public partial class PrintMonthStoreDialog : ContentDialog
     {
-        public PrintMonthDialog()
+        public PrintMonthStoreDialog()
         {
             InitializeComponent();
         }
 
+        public bool IsValidDate(string year, string month)
+        {
+            int parsedYear;
+            if (year.Length != 4 || !int.TryParse(year, out parsedYear))
+            {
+                return false;
+            }
+            int parsedMonth = int.Parse(month);
+            if(parsedMonth < 1 || parsedMonth > 12)
+            {
+                return false;
+            }
+            return true;
+        }
+
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            string date = CalendarTextBox.Text;
-            if (string.IsNullOrEmpty(date))
+            string year = YearTextBox.Text;
+            string month = MonthTextBox.Text;
+            if (string.IsNullOrEmpty(year) || string.IsNullOrEmpty(month))
             {
                 args.Cancel = true;
-                MessageBox.Show("请选择日期");
+                MessageBox.Show("请填写日期");
+            }
+            else if (!IsValidDate(year, month))
+            {
+                args.Cancel= true;
+                MessageBox.Show("输入日期无效！");
             }
             else
-            {
-                string year = date.Substring(0, date.IndexOf("年")); // 获取年份
-                string month = date.Substring(date.IndexOf("年") + 1, date.IndexOf("月") - date.IndexOf("年") - 1);
-               
+            {               
                 Result result = StoreApi.getStoreByDate(year, month);
                 List<StoreDetailParam> list = JsonHelper.JsonToList<StoreDetailParam>(result.data.ToString());
 
@@ -65,7 +78,7 @@ namespace wmsApp.dialog
                         dataset.Add(data);
                     }
 
-                    string ReportTitle = date + "入库单";
+                    string ReportTitle = year + "年" + month + "月入库单";
 
                     StoreWinForm form = new StoreWinForm(ReportTitle, dataset);
                     form.Show();
@@ -77,35 +90,6 @@ namespace wmsApp.dialog
         {
             // 关闭对话框
             sender.Hide();
-        }
-
-        private void Calendar_DisplayModeChanged(object sender, CalendarModeChangedEventArgs e)
-        {
-            if(Calendar.DisplayMode == CalendarMode.Month || Calendar.DisplayMode == CalendarMode.Decade)
-            {
-                Calendar.DisplayMode = CalendarMode.Year;
-                e.Handled = true;
-            }
-        }
-
-        private void Calendar_DisplayDateChanged(object sender, CalendarDateChangedEventArgs e)
-        {
-            var year = Calendar.DisplayDate.Date.Year;
-            var month = Calendar.DisplayDate.Date.Month;
-            CalendarTextBox.Text = year + "年" + month + "月";
-            CalendarPop.IsOpen = false;
-        }
-
-        private void CalendarImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (CalendarPop.IsOpen)
-            {
-                CalendarPop.IsOpen = false;
-            }
-            else
-            {
-                CalendarPop.IsOpen = true;
-            }
         }
     }
 }

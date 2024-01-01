@@ -2,7 +2,6 @@
 using System;
 using System.Xml.Linq;
 using System.Collections.Generic;
-using System.Xml.Linq;
 using WindowsFormsApp1.dto;
 using wms.param;
 using wms.pojo;
@@ -359,23 +358,12 @@ namespace wms
     class DeliverApi
     {
         public static HttpHelper http = new HttpHelper();
-
-        public static Result getDeliverByYear(string year, Material material)
-        {
-            var data = new
-            {
-                Year = year,
-                id = material.id,
-                HouseName = material.houseName
-            };
-            var jsonData = JsonConvert.SerializeObject(data);
-            return http.PostEncryptedData($"/deliver/deliverByYear", jsonData);
-        }
         public static Result getMaterialNamesByDeliverTime(DateTime? startTime, DateTime? endTime)
         {           
             var data = new { startTime = startTime, endTime = endTime }; 
             return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/getNames", JsonHelper.DateObjectToJson(data)));
         }
+
 
         public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)
         {
@@ -421,6 +409,30 @@ namespace wms
             var jsonData = JsonConvert.SerializeObject(data);
             return http.PostEncryptedData($"/deliver/selectdeliverByDate", jsonData);
         }
+
+        public static Result getDeliverByDate(string Year, string Month)
+        {
+            var data = new
+            {
+                year = Year,
+                month = Month
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/deliver/selectDeliverByDate", jsonData);
+        }
+
+        public static Result getDeliverByYear(string year, Material material)
+        {
+            var data = new
+            {
+                Year = year,
+                id = material.id,
+                HouseName = material.houseName
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            return http.PostEncryptedData($"/deliver/deliverByYear", jsonData);
+        }
+
 
     }
 

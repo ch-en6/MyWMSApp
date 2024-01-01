@@ -109,7 +109,7 @@ namespace wmsApp.pages
 
         public void Print_Click(object sender, RoutedEventArgs e)
         {
-            PrintMonthDialog dialog = new PrintMonthDialog();
+            PrintMonthStoreDialog dialog = new PrintMonthStoreDialog();
             dialog.ShowAsync();
         }
 
