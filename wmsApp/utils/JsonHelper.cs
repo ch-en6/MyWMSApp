@@ -67,7 +67,6 @@
         /// <returns></returns>
         public static List<T> JsonToList<T>(string html)
         {
-            MessageBox.Show(html);
             var settings = new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
