@@ -98,9 +98,10 @@ namespace wmsApp
         {
             // 在此处添加程序退出时的操作
             // 例如保存数据、清理资源等
+           /* TokenManager.token = "null";*/
+           /* TokenManager.userId = 0;*/
+            LoginApi.logout();
             TokenManager.token = "null";
-            TokenManager.userId = 0;
-            Result result = LoginApi.logout();
         }
         
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -109,9 +110,10 @@ namespace wmsApp
             if (ex != null)
             {
                 // 退出登录
-                TokenManager.token = "null";
-                TokenManager.userId = 0;
+               /* TokenManager.token = "null";*/
+      /*          TokenManager.userId = 0;*/
                 LoginApi.logout();
+                TokenManager.token = "null";
                 // 关闭应用程序
                 Current.Shutdown(-1); // 传入非零值表示应用程序异常退出
             }

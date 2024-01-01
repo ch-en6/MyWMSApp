@@ -35,14 +35,16 @@ namespace wmsApp
             InitializeComponent();
             //窗口自适应
             Loaded += OnWindowLoaded;
-            //设置默认选中在首页
-            NavigationView.SelectedItem = NavigationView.MenuItems.OfType<NavigationViewItem>().FirstOrDefault(item => item.Content.ToString() == "首页");
+         
 
             GenerateItems();
-  
+
+
             // 添加导航菜单项的点击事件处理程序
             NavigationView.ItemInvoked += NavigationView_ItemInvoked;
-            NavigationView navigation;
+
+            //设置默认选中在首页
+            NavigationView.SelectedItem = NavigationView.MenuItems.OfType<NavigationViewItem>().FirstOrDefault(item => item.Content.ToString() == "首页");
 
             // 设置初始导航页面
             ContentFrame.Navigate(new Uri("pages/HomePage.xaml", UriKind.Relative));
@@ -91,8 +93,6 @@ namespace wmsApp
                 {
                     ModernMessageBox.showMessage("退出成功");
                 }
-                TokenManager.token = "null";
-                TokenManager.userId = 0;
                 Application.Current.Shutdown(); // 触发应用程序的 Exit
             }
         }
@@ -121,7 +121,7 @@ namespace wmsApp
             {
                 Content = "首页",  // 设置内容
                 Tag = "pages/HomePage.xaml",  // 设置标签
-                Uri="",
+                Uri="/home",
                 FontSize = 22
             };
             menuItems.Add(item1);
@@ -162,8 +162,7 @@ namespace wmsApp
                 if (selectedItem != null)
                 {
                     string uri = selectedItem.Uri;
-              
-                        if (uri == "")
+                        if (uri == "/home")
                         {
                             ContentFrame.Navigate(new Uri(selectedPage, UriKind.Relative));
                             return;
@@ -180,8 +179,6 @@ namespace wmsApp
                         {
                             Close();
                         };
-                    
-                  
                 }
             }
             else

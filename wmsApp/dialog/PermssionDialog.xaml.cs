@@ -40,8 +40,6 @@ namespace wmsApp.dialog
             }
 
             types = JsonHelper.ConvertToMap<String, long>(result.data.ToString());
-
-            types = JsonHelper.ConvertToMap<String, long>(result.data.ToString());
             
             InitializeComponent();
  
@@ -101,8 +99,6 @@ namespace wmsApp.dialog
                 MessageBox.Show("请填写权限名称");
                 return false;
             }
-
-
             return true;
         }
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -114,9 +110,10 @@ namespace wmsApp.dialog
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            //参数判断
             bool isValid = ValidateFields();
             if (!isValid) return;
-            // 点击 "Save" 按钮时的逻辑处理
+
             // 遍历 People 集合，检查每个人员的 IsSelected 属性来确定用户选择了哪些人员
             List<long> userIds = new List<long>();
             foreach (Person person in People)

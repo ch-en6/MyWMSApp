@@ -51,8 +51,6 @@ namespace wmsApp.pages
         int currentPage = 1;
         //总页数
         int totalPage = 0;
-        //页大小
-        int pageSize = 4;
 
         //当前访问的资源id
         long resourceId = 1;
@@ -66,28 +64,25 @@ namespace wmsApp.pages
         //固定人员信息展示列数  id、name、role、操作
         int col_num = 4;
 
-        //所有资源，value为id，key为资源名
-        Dictionary<String, Resource> resources;
+        //所有资源，资源名，Resource
+        private Dictionary<String, Resource> resources;
 
-        //所有资源类型
-        Dictionary<long, List<String>> permissionTypes;
-
-        //所有资源类型
-        Dictionary<String, String> resourceTypes;
+        //所有资源对应权限类型map resourceId ，所有权限类型
+        private Dictionary<long, List<String>> permissionTypes;
+/*
+        //所有权限类型 typeId ，
+        private Dictionary<String, String> resourceTypes;*/
 
         //当前显示资源的所有权限类型
-        List<String> typeList;
+        private List<String> typeList;
 
-        List<UserPermission> userPermissionList;
-
-        List<UserPermission> usersearchPermissionList;
+        //所有用户权限信息
+        private List<UserPermission> userPermissionList;
+        //所有搜索的用户权限信息
+        private List<UserPermission> usersearchPermissionList;
 
         //标记是否是搜索 true是  false不是
-        bool IsSearching = false;
-
-        //用户id
-        long userId = 3;
-
+        private bool IsSearching = false;
 
         private string currentOption;
 
@@ -109,7 +104,7 @@ namespace wmsApp.pages
 
                 resources = JsonHelper.ConvertToMap<String, Resource>(result.data.ToString());
               
-
+/*
                 //请求返回资源类型
                 Result result1 = PermissionApi.get_resourcetypesMap();
                 if (!result1.success)
@@ -118,9 +113,9 @@ namespace wmsApp.pages
                     ModernMessageBox.showMessage(result.errorMsg.ToString());
                     return;
                 }
-                resourceTypes = JsonHelper.ConvertToMap<String, String>(result.data.ToString());
+                resourceTypes = JsonHelper.ConvertToMap<String, String>(result.data.ToString());*/
 
-                //请求返回
+                //请求返回资源所对应的权限类型
                 Result result2 = PermissionTypesApi.getPermissionTypesMap();
                 if (!result2.success)
                 {
@@ -139,23 +134,19 @@ namespace wmsApp.pages
             InitializeComponent();
 
 
-
+            // 初始化表格
 
             dataGrid.Loaded += (sender, e) =>
             {
                 setCheckBoxValue();
             };
 
-            // 初始化页码
-
             UpdatePageNumber();
 
             // 初始化MenuItems
             GenerateMenuItems();
 
-
-
-
+            // 添加当前资源的权限类型列
             AddPermissionColumns();
 
 
@@ -188,10 +179,12 @@ namespace wmsApp.pages
 
         private void GenerateMenuItems()
         {
+            // 遍历资源
             foreach (KeyValuePair<string, Resource> kvp in resources)
             {
                 string key = kvp.Key;
                 Resource value = kvp.Value;
+                //获取图标对象
                 Symbol iconSymbol = GetIconFromName(value.icon);
                 // 创建新的 NavigationViewItem 对象
                 NavigationViewItem newItem = new NavigationViewItem
@@ -216,8 +209,10 @@ namespace wmsApp.pages
         {
             if (args.InvokedItemContainer is NavigationViewItem selectedItem)
             {
+                //获取到点击的资源的id
                 long selectedResource = long.Parse(selectedItem.Tag.ToString());
                 resourceId = selectedResource;
+                //选中导航项
                 navigationView.Header = selectedItem.Content;
 
                 currentPage = 1;
@@ -229,6 +224,7 @@ namespace wmsApp.pages
                 }
 
                 AddPermissionColumns();
+
                 UpdatePageNumber();
 
             }
@@ -242,8 +238,6 @@ namespace wmsApp.pages
             if (selectedItem != null)
             {
                 currentOption = selectedItem.Name.ToString();
-
-                // 在此处处理选项更改后的逻辑
             }
         }
 
@@ -283,14 +277,14 @@ namespace wmsApp.pages
                     if (long.TryParse(condition, out parsedValue))
                     {
                         // 转换成功，可以使用 parsedValue 进行后续操作
-                        param = new SearchPermissionParams(
-                            parsedValue, condition, condition, resourceId, currentPage);
+                        param = new SearchPermissionParams(parsedValue, condition, condition, resourceId, currentPage);
                     }
                     else
                     {
                         // 转换失败，可以根据需要进行处理
                         param = new SearchPermissionParams(null, condition, condition, resourceId, currentPage);
                     }
+
                     Result result;
                     Dictionary<String, Object> map;
                     List<UserPermission> list;
@@ -304,6 +298,7 @@ namespace wmsApp.pages
                                 return;
                             }
                             if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
+                            
                             if (result.data != null)
                             {
                                 map = JsonHelper.ConvertToMap<String, Object>(result.data.ToString());
@@ -315,6 +310,7 @@ namespace wmsApp.pages
                                 list = new List<UserPermission>();
                                 totalPage = 1;
                             }
+
                             usersearchPermissionList = list;
                             break;
                         case "role":
@@ -366,8 +362,8 @@ namespace wmsApp.pages
 
         private int CalculateTotalPages()
         {
-            int totalPage = PermissionApi.get_totalpage() | 0;
-            return totalPage; // 这里只是示例，你需要根据实际情况修改
+            int totalPage = PermissionApi.get_totalpage() | 1;
+            return totalPage; 
         }
 
         private void PreviousPageButton_Click(object sender, RoutedEventArgs e)
@@ -396,19 +392,21 @@ namespace wmsApp.pages
         {
             try
             {
-                //请求返回
+             /*   //请求返回当前资源对应的所有权限类型
                 Result result2 = PermissionTypesApi.getPermissionTypesMap();
                 if (result2.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
                 if (result2.data == null) return;
                 permissionTypes = JsonHelper.ConvertToMap<long, List<String>>(result2.data.ToString());
 
                 if (permissionTypes == null || resourceId == null || !permissionTypes.ContainsKey(resourceId))
-                    return;
-
+                    return;*/
+                
+                //获取当前资源的权限类型列表
                 List<string> types = permissionTypes[resourceId];
 
                 int count = types.Count;
 
+                //遍历权限类型列表
                 for (int i = 0; i < count; i++)
                 {
                     string permissionName = types[i];
@@ -440,21 +438,26 @@ namespace wmsApp.pages
 
         public void setCheckBoxValue()
         {
-
+            //判断现在如果是全部 ，就取userPermissionList，如果是查询就取usersearchPermissionList
             List<UserPermission> list = IsSearching ? usersearchPermissionList : userPermissionList;
 
             for (int i = 0; i < list.Count; i++)
             {
+                //获取一行用户权限数据
                 var userPermission = list[i];
+                //获取该用户的权限有哪些
                 List<string> permissionList = userPermission.permissionList;
-
+                //遍历用户的权限
                 for (int j = 0; j < permissionList.Count; j++)
                 {
+                    //获得权限名称
                     string type = permissionList[j];
+                    //获取当前选中资源的权限类型列表
                     List<string> Types = permissionTypes[resourceId];
-
+                    //用户是否有这个权限
                     if (Types.Contains(type))
                     {
+                        //有的话就获取行号列号
                         int columnIndex = GetColumnIndex(type);
 
                         if (columnIndex >= 0 && columnIndex < dataGrid.Columns.Count)
@@ -477,40 +480,9 @@ namespace wmsApp.pages
             }
         }
 
-        // 查找可视化子元素
-        public static T FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
-        {
-            if (obj == null)
-            {
-                return null;
-            }
-
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
-
-                if (child is T result)
-                {
-                    return result;
-                }
-
-                T childResult = FindVisualChild<T>(child);
-
-                if (childResult != null)
-                {
-                    return childResult;
-                }
-            }
-
-            return null;
-        }
-
-
-
-
-
         private void OnCheckBoxClick(object sender, RoutedEventArgs e)
         {
+            //获取到当前点击的checkbox
             CheckBox checkBox = (CheckBox)sender;
             bool isChecked = checkBox.IsChecked ?? false;
 
@@ -524,12 +496,13 @@ namespace wmsApp.pages
 
                 if (row != null)
                 {
-                    // 获取行索引
+                    // 获取行号
                     int rowIndex = dataGrid.ItemContainerGenerator.IndexFromContainer(row);
 
                     // 获取列名
                     string columnName = GetColumnName(cell.Column);
-                    // 获取DataGrid中第1列第i行单元格数据
+
+                    // 获取第一列该行的用户id
                     var userId = (dataGrid.Columns[0].GetCellContent(dataGrid.Items[rowIndex]) as TextBlock).Text;
 
                     UpdatePermissionParams param = new UpdatePermissionParams(long.Parse(userId), resourceId, columnName,isChecked);
@@ -564,7 +537,7 @@ namespace wmsApp.pages
             // 获取行数据
             int rowIndex = row.GetIndex();
 
-            // 处理点击的行数据
+            // 处理点击的行的用户的id
             var userId = (dataGrid.Columns[0].GetCellContent(dataGrid.Items[rowIndex]) as TextBlock).Text;
 
             ContentDialog dialog = new ContentDialog()
@@ -575,8 +548,11 @@ namespace wmsApp.pages
                 SecondaryButtonText = "取消"
             };
             ContentDialogResult select = await dialog.ShowAsync();
+     
             if (select == ContentDialogResult.Secondary) return;
+
             Result result = PermissionApi.updatePermissionByuserId(long.Parse(userId), resourceId, false);
+
             if (!result.success) ModernMessageBox.showMessage(result.errorMsg);
             else ModernMessageBox.showMessage("已取消");
             UpdatePageNumber();
@@ -593,7 +569,7 @@ namespace wmsApp.pages
             // 获取行数据
             int rowIndex = row.GetIndex();
 
-            // 处理点击的行数据
+            // 处理点击的行的用户id
             var userId = (dataGrid.Columns[0].GetCellContent(dataGrid.Items[rowIndex]) as TextBlock).Text;
 
             ContentDialog dialog = new ContentDialog()
@@ -612,50 +588,6 @@ namespace wmsApp.pages
             UpdatePageNumber();
         }
 
-        // 递归查找指定类型的父级元素
-        private T FindVisualParent<T>(DependencyObject child) where T : DependencyObject
-        {
-            DependencyObject parent = VisualTreeHelper.GetParent(child);
-
-            if (parent == null)
-                return null;
-
-            if (parent is T parentOfType)
-                return parentOfType;
-            else
-                return FindVisualParent<T>(parent);
-        }
-
-        // 获取列名
-        private string GetColumnName(DataGridColumn column)
-        {
-            foreach (DataGridColumn col in dataGrid.Columns)
-            {
-                if (col == column)
-                {
-                    // 返回列名
-                    return col.Header.ToString();
-                }
-            }
-
-            return string.Empty;
-        }
-        /*获取列索引*/
-        private int GetColumnIndex(string columnName)
-        {
-            for (int i = 0; i < dataGrid.Columns.Count; i++)
-            {
-                DataGridColumn column = dataGrid.Columns[i];
-                if (column.Header.ToString() == columnName)
-                {
-                    // 返回列索引
-                    return i;
-                }
-            }
-
-            // 如果找不到匹配的列名，则返回-1表示未找到
-            return -1;
-        }
         private void TextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -732,6 +664,80 @@ namespace wmsApp.pages
             {
                 ModernMessageBox.showMessage(ex.Message);
             }
+        }
+
+
+        // 查找可视化子元素
+        public static T FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
+        {
+            if (obj == null)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+
+                if (child is T result)
+                {
+                    return result;
+                }
+
+                T childResult = FindVisualChild<T>(child);
+
+                if (childResult != null)
+                {
+                    return childResult;
+                }
+            }
+
+            return null;
+        }
+
+        // 递归查找指定类型的父级元素
+        private T FindVisualParent<T>(DependencyObject child) where T : DependencyObject
+        {
+            DependencyObject parent = VisualTreeHelper.GetParent(child);
+
+            if (parent == null)
+                return null;
+
+            if (parent is T parentOfType)
+                return parentOfType;
+            else
+                return FindVisualParent<T>(parent);
+        }
+
+        // 获取列名
+        private string GetColumnName(DataGridColumn column)
+        {
+            foreach (DataGridColumn col in dataGrid.Columns)
+            {
+                if (col == column)
+                {
+                    // 返回列名
+                    return col.Header.ToString();
+                }
+            }
+
+            return string.Empty;
+        }
+        /*获取列索引*/
+        private int GetColumnIndex(string columnName)
+        {
+            for (int i = 0; i < dataGrid.Columns.Count; i++)
+            {
+                DataGridColumn column = dataGrid.Columns[i];
+                if (column.Header.ToString() == columnName)
+                {
+                    // 返回列索引
+                    return i;
+                }
+            }
+
+            // 如果找不到匹配的列名，则返回-1表示未找到
+            return -1;
         }
     }
 }

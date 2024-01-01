@@ -19,7 +19,7 @@ namespace wmsApp
             InitializeComponent();
             UsernameTextBox.KeyDown += UsernameTextBox_KeyDown;
             PasswordBox.KeyDown += PasswordBox_KeyDown;
-            Loaded += OnWindowLoaded;
+          /*  Loaded += OnWindowLoaded;*/
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -38,6 +38,7 @@ namespace wmsApp
             //生成前端RSA密钥
             RSA rsa = new RSA();
             RSAKEY Rsakey = rsa.GetKey();
+            
             TokenManager.csKey = new Dictionary<string, string>();
             TokenManager.csKey["publickey"] = Rsakey.PublicKey;
             TokenManager.csKey["privatekey"] = Rsakey.PrivateKey;
@@ -48,7 +49,7 @@ namespace wmsApp
 
         }
 
-        private void OnWindowLoaded(object sender, RoutedEventArgs e)
+/*        private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
             // 获取当前屏幕的工作区尺寸
             double screenWidth = SystemParameters.WorkArea.Width;
@@ -60,7 +61,7 @@ namespace wmsApp
             WindowStartupLocation = WindowStartupLocation.Manual; // 设置窗口的启动位置为手动模式
         }
 
-
+*/
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -122,7 +123,7 @@ namespace wmsApp
                 {
                     string token = result.data.ToString();
                     TokenManager.token = token;
-                    TokenManager.userId = userId;
+                   /* TokenManager.userId = userId;*/
 
                     // 登录成功，打开主窗口
                     MainWindow mainWindow = new MainWindow();
