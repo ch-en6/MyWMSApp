@@ -139,6 +139,7 @@
       <DependentUpon>UpdateUserDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="dto\Constants.cs" />
+    <Compile Include="dto\LvcView.cs" />
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -150,6 +151,9 @@
     </Compile>
     <Compile Include="pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="pages\InStatisticPage.xaml.cs">
+      <DependentUpon>InStatisticPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\MaterialPage.xaml.cs">
       <DependentUpon>MaterialPage.xaml</DependentUpon>
@@ -293,6 +297,10 @@
     <Page Include="pages\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\InStatisticPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="pages\MaterialPage.xaml">
       <SubType>Designer</SubType>

@@ -36,7 +36,7 @@
                 <DataGridTemplateColumn Header="出库数量" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding count}" Margin="5" Width="5"/>
+                            <TextBox Text="{Binding count}" Margin="5" Width="50" LostFocus="CountTextBox_LostFocus"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -44,7 +44,7 @@
                 <DataGridTemplateColumn Header="备注" Width="150">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding notes}" Margin="5" />
+                                <TextBox Text="{Binding notes}" Margin="5" LostFocus="NotesTextBox_LostFocus"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
