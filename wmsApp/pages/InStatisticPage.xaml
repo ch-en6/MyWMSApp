@@ -23,7 +23,7 @@
                 <ComboBoxItem x:Name="deliver" Content="出库"/>
             </ComboBox>
 
-
+        
             <TextBlock Grid.Row="1" Grid.Column="0" Text="开始日期:" VerticalAlignment="Center" Margin="5" />
             <DatePicker Grid.Row="1" Grid.Column="1" Margin="5" x:Name="startTimeTextBox" Width="200" DisplayDateStart="2000-01-01" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
 

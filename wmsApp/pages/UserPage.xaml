@@ -14,17 +14,18 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,30,0,0" >
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"  >
+            
             <StackPanel.Resources>
                 <Style TargetType="TextBlock">
-                    <Setter Property="Margin" Value="13"/>
-                    <Setter Property="FontSize" Value="18"/>
+                    <Setter Property="Margin" Value="30,15,30,15"/>
+                    <Setter Property="FontSize" Value="16"/>
                 </Style>
                 <Style x:Key="BoldText" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                     <Setter Property="FontWeight" Value="Bold"/>
                 </Style>
             </StackPanel.Resources>
-
+            <TextBlock Text="个人信息" FontSize="28" FontWeight="Bold" Margin="0,13,0,30" HorizontalAlignment="Center"/>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Style="{StaticResource BoldText}" Text="工号:"/>
                 <TextBlock Text="{Binding id}"/>
@@ -75,7 +76,6 @@
                 <TextBlock Style="{StaticResource BoldText}" Text="密码:"/>
                 <TextBlock Style="{StaticResource BoldText}" Text="******"/>
                 <TextBlock Text="修改密码" MouseDown="updatePassword_MouseDown"  Foreground="Blue"/>
-
             </StackPanel>
         </StackPanel>
     </Grid>

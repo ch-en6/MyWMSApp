@@ -51,7 +51,7 @@ namespace wmsApp.dialog
         /// <param name="args"></param>
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            string phone = phoneTextBlock.Text;
+            string phone = phoneTextBox.Text;
             string code = codeTextBox.Text;
             string newPassword = confirmPasswordBox.Password;
             Result result = MsmApi.checkCode(phone,code);
@@ -82,7 +82,7 @@ namespace wmsApp.dialog
             args.Cancel = false;
         }
 
-        private void newPasswordBox_LostFocus(object sender, RoutedEventArgs e)
+        private void newPasswordBox_Changed(object sender, RoutedEventArgs e)
         {
             string confirmPassword = confirmPasswordBox.Password;
             string newPassword = newPasswordBox.Password;
@@ -101,7 +101,7 @@ namespace wmsApp.dialog
             UpdateConfirmButtonState();
         }
 
-        private void confirmPasswordBox_LostFocus(object sender, RoutedEventArgs e)
+        private void confirmPasswordBox_Changed(object sender, RoutedEventArgs e)
         {
             string confirmPassword = confirmPasswordBox.Password;
             string newPassword = newPasswordBox.Password;
@@ -138,7 +138,7 @@ namespace wmsApp.dialog
         private void Code_Click(object sender, RoutedEventArgs e)
         {
             // 获取按钮所在行
-            string phone = phoneTextBlock.Text;
+            string phone = phoneTextBox.Text;
             Result result = MsmApi.sendCode(phone);
             if(result.success)
             {

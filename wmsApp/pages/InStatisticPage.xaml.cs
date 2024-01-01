@@ -57,7 +57,7 @@ namespace wmsApp.pages
                 MessageBox.Show("结束时间不能早于开始时间，请重新选择");
                 return;
             }
-            if (flag == 0)
+            if(flag==0)
             {
                 StoreUpdateChartData(startTime, endTime);
             }
@@ -66,7 +66,7 @@ namespace wmsApp.pages
                 DeliverUpdateChartData(startTime, endTime);
             }
             // 执行数据检索和初始化
-
+            
         }
 
         private void StoreUpdateChartData(DateTime? startTime, DateTime? endTime)
