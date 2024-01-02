@@ -20,29 +20,30 @@
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Horizontal" Margin="9,-10,200,21" HorizontalAlignment="Center">
-                <Button Content="增加权限类型"  Margin="0,6,20,5.333" Click="AddPermissionType" FontSize="24"/>
-                <Button Content="删除权限类型"  Margin="0,6,20,5.333" VerticalAlignment="Stretch" Click="DelPermissionType" FontSize="24"/>
+                <Button Content="增加权限类型"  Margin="0,6,20,5.333" Click="AddPermissionType" FontSize="18" Height="44"/>
+                <Button Content="删除权限类型"  Margin="0,6,20,5.333" VerticalAlignment="Stretch" Click="DelPermissionType" FontSize="18"/>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox Grid.Column="0" Width="200" Margin="5" x:Name="comboBox" SelectedValue="user" FontSize="24">
+                    <ComboBox Grid.Column="0" Width="171" Margin="5,5,0,0" x:Name="comboBox" SelectedValue="user" FontSize="18" Height="45">
                         <!-- 下拉选择框内容 -->
-                        <ComboBoxItem x:Name="user" Content="按用户查询" FontSize="24"/>
-                        <ComboBoxItem x:Name="role" Content="按角色查询" FontSize="24"/>
+                        <ComboBoxItem x:Name="user" Content="按用户查询" FontSize="18"/>
+                        <ComboBoxItem x:Name="role" Content="按角色查询" FontSize="18"/>
                     </ComboBox>
 
-                    <TextBox Grid.Column="1" Width="200" Margin="5" x:Name="textBox"  PreviewKeyDown="TextBox_PreviewKeyDown" FontSize="24"/>
+                    <TextBox Grid.Column="1" Width="250" Margin="5,5,0,5.333" x:Name="textBox" PreviewKeyDown="TextBox_PreviewKeyDown" FontSize="18" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
 
-                    <Button Grid.Column="2" Width="42" Margin="6,7,0,6.333" Click="Button_Click" Height="42" FontSize="24" RenderTransformOrigin="0.526,0.258">
+
+                    <Button Grid.Column="2" Width="46" Margin="21,5,0,6.333" Click="Button_Click" Height="44" FontSize="24" RenderTransformOrigin="0.526,0.258">
                         <ui:SymbolIcon Symbol="Find" Height="20" Width="20" RenderTransformOrigin="0.324,0.495"/>
                     </Button>
 
-                    <Button x:Name="btnBack"  Click="btnBack_Click" Grid.Column="2" Margin="312,6,-117.667,5.333" Height="44" FontSize="24" Width="45">
+                    <Button x:Name="btnBack"  Click="btnBack_Click" Grid.Column="2" Margin="311.667,5,-120.333,5.333" Height="45" FontSize="24" Width="48">
                         <ui:SymbolIcon Symbol="Forward"/>
                     </Button>
 
@@ -67,19 +68,37 @@
                         </Style>
                     </DataGrid.Resources>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="人员ID" Binding="{Binding id}" FontSize="22"></DataGridTextColumn>
-                        <DataGridTextColumn Header="姓名" Binding="{Binding name}" FontSize="22"></DataGridTextColumn>
-                        <DataGridTextColumn Header="角色"  Binding="{Binding role}" FontSize="22"></DataGridTextColumn>
+                        <DataGridTextColumn Header="人员ID" Binding="{Binding id}" FontSize="18" >
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="姓名" Binding="{Binding name}" FontSize="18">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="角色"  Binding="{Binding role}" FontSize="18">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
                         <DataGridTemplateColumn Header="全选操作" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                         <Button x:Name="select" Margin="5" FontSize="16" Click="SelectAllButton_Click" Width="38" Height="38">
-                                           
+
                                             <ui:SymbolIcon Symbol="Accept" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         </Button>
                                         <Button x:Name="cancel"  Margin="5" FontSize="16" Click="CancelButton_Click" Width="38" Height="38">
-                                         
+
                                             <ui:SymbolIcon Symbol="Cancel" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         </Button>
                                     </StackPanel>
@@ -92,11 +111,11 @@
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <Button x:Name="PreviousPageButton" Content="上一页" Click ="PreviousPageButton_Click" Margin="5" FontSize="22"/>
-                <TextBlock Text="第" Margin="5" FontSize="22"/>
-                <TextBlock x:Name="PageNumberTextBlock" Margin="5" FontSize="22"/>
-                <TextBlock Text="页" Margin="5" FontSize="22"/>
-                <Button x:Name="NextPageButton" Content="下一页" Margin="5" Click="NextPageButton_Click" FontSize="22"/>
+                <Button x:Name="PreviousPageButton" Content="上一页" Click ="PreviousPageButton_Click" Margin="5" FontSize="18"/>
+                <TextBlock Text="第" Margin="5" FontSize="18"/>
+                <TextBlock x:Name="PageNumberTextBlock" Margin="5" FontSize="18"/>
+                <TextBlock Text="页" Margin="5" FontSize="18"/>
+                <Button x:Name="NextPageButton" Content="下一页" Margin="5" Click="NextPageButton_Click" FontSize="18"/>
             </StackPanel>
 
         </Grid>

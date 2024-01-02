@@ -34,6 +34,8 @@ namespace wmsApp
             // 弹出登录框
             LoginWindow window = new LoginWindow();
             window.Show();
+
+        
         }
 
         private async Task Upgrade()

@@ -79,7 +79,17 @@ namespace wms
             User user = new User();
             user.id = 1;
             user.name = "hi";
-            Result result = http.PostDncryptedData("/rsa/test1/1",JsonHelper.ObjectToJSON(user));
+            List<User> list = new List<User>();
+            
+            list.Add(user);
+            string listJson = JsonConvert.SerializeObject(list);
+            var data = new
+            {
+                list = listJson
+            };
+         
+            string json = JsonConvert.SerializeObject(data);
+            Result result = http.PostEncryptedData("/rsa/test",json);
             MessageBox.Show(result.data.ToString());
 
         }
@@ -489,13 +499,6 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get(uri));
         }
 
-
-        /*获取所有用户的姓名和id*/
-        public static Result getUserNamesAndIds()
-        {
-            return JsonHelper.JSONToObject<Result>(http.Get("/user/getNamesAndIds"));
-        }
-
         /*获取所有资源*/
         public static Result get_resources()
         {
@@ -524,13 +527,6 @@ namespace wms
         {
             return http.PostEncryptedData("/permission/update", JsonHelper.ObjectToJSON(permissionParams));
             //return JsonHelper.JSONToObject<Result>(http.Post("/permission/update", JsonHelper.ObjectToJSON(permissionParams)));
-        }
-
-        internal static int get_totalpage()
-        {
-            string str = http.Get("/user/totalpage");
-            if (str == null) return 0;
-            return int.Parse(http.Get("/user/totalpage"));
         }
 
         internal static Result updatePermissionByuserId(long userId, long resourceId, bool? isChecked)

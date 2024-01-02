@@ -55,12 +55,6 @@ namespace wmsApp.pages
         //当前访问的资源id
         long resourceId = 1;
 
-        //表示是否已经加载过当前资源的权限列
-        bool flag = true;
-
-        //表示是否已经加载过当前资源的权限列数
-        int flag_num = 0;
-
         //固定人员信息展示列数  id、name、role、操作
         int col_num = 4;
 
@@ -84,6 +78,7 @@ namespace wmsApp.pages
         //标记是否是搜索 true是  false不是
         private bool IsSearching = false;
 
+        //ComboBox选项
         private string currentOption;
 
 
@@ -248,8 +243,7 @@ namespace wmsApp.pages
             {
                 if (!IsSearching)
                 {
-                    // 计算总页数
-                    totalPage = CalculateTotalPages();
+                   
                     // 更新当前页数
                     Result permissons = PermissionApi.get_permissions(currentPage, resourceId);
                     if (permissons.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
@@ -259,6 +253,7 @@ namespace wmsApp.pages
                         userPermissionList = new List<UserPermission>();
                         return;
                     }
+                    totalPage = (int)permissons.total;
                     userPermissionList = JsonHelper.JsonToList<UserPermission>(permissons.data.ToString());
                 }
                 else
@@ -301,9 +296,8 @@ namespace wmsApp.pages
                             
                             if (result.data != null)
                             {
-                                map = JsonHelper.ConvertToMap<String, Object>(result.data.ToString());
-                                list = JsonHelper.JsonToList<UserPermission>(map["records"].ToString());
-                                totalPage = int.Parse(map["totalPage"].ToString());
+                                list = JsonHelper.JsonToList<UserPermission>(result.data.ToString());
+                                totalPage = (int)result.total;
                             }
                             else
                             {
@@ -324,9 +318,8 @@ namespace wmsApp.pages
                             if (result.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
                             if (result.data != null)
                             {
-                                map = JsonHelper.ConvertToMap<String, Object>(result.data.ToString());
-                                list = JsonHelper.JsonToList<UserPermission>(map["records"].ToString());
-                                totalPage = int.Parse(map["totalPage"].ToString());
+                                list = JsonHelper.JsonToList<UserPermission>(result.data.ToString());
+                                totalPage = (int)result.total;
                             }
                             else
                             {
@@ -358,14 +351,6 @@ namespace wmsApp.pages
 
         }
 
-
-
-        private int CalculateTotalPages()
-        {
-            int totalPage = PermissionApi.get_totalpage() | 1;
-            return totalPage; 
-        }
-
         private void PreviousPageButton_Click(object sender, RoutedEventArgs e)
         {
             if (currentPage > 1)
@@ -392,15 +377,15 @@ namespace wmsApp.pages
         {
             try
             {
-             /*   //请求返回当前资源对应的所有权限类型
+                //请求返回当前资源对应的所有权限类型
                 Result result2 = PermissionTypesApi.getPermissionTypesMap();
                 if (result2.code == Constants.TOKEN_ILLEGAL_EXIST) throw new TokenExpiredException();
                 if (result2.data == null) return;
                 permissionTypes = JsonHelper.ConvertToMap<long, List<String>>(result2.data.ToString());
 
                 if (permissionTypes == null || resourceId == null || !permissionTypes.ContainsKey(resourceId))
-                    return;*/
-                
+                    return;
+
                 //获取当前资源的权限类型列表
                 List<string> types = permissionTypes[resourceId];
 

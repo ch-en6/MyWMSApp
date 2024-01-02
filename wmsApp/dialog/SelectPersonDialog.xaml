@@ -40,7 +40,7 @@
             <Button Grid.Column="2" Width="39" Height="32" FontSize="24" RenderTransformOrigin="0.526,0.258" Margin="4.333,10,0,23" Click="SearchButton_Click">
                 <ui:SymbolIcon Symbol="Find" Height="20" Width="20" RenderTransformOrigin="0.324,0.495"/>
             </Button>
-            <Button x:Name="btnBack"  Click="btnBack_Click" Grid.Column="2" Margin="59.333,10,0,23" Height="32" FontSize="24" Width="38" Grid.ColumnSpan="2">
+            <Button x:Name="btnBack"  Click="btnBack_Click" Grid.Column="2" Margin="56.333,10,0,23" Height="32" FontSize="24" Width="38" Grid.ColumnSpan="2">
                 <ui:SymbolIcon Symbol="Forward"/>
             </Button>
         </Grid>
@@ -70,6 +70,11 @@
             <ListView x:Name="userListView" SelectionMode="Multiple" Grid.Row="1"  VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="822" Margin="0,0,-72,0.333" Background="White">
                 <ListView.ItemsSource>
                     <x:Array Type="{x:Type local:Person}">
+                        <local:Person Id="1" Name="张三" Role="管理员"/>
+                        <local:Person Id="2" Name="李四" Role="普通用户"/>
+                        <local:Person Id="3" Name="王五" Role="管理员"/>
+                        <local:Person Id="2" Name="李四" Role="普通用户"/>
+                        <local:Person Id="3" Name="王五" Role="管理员"/>
                         <local:Person Id="1" Name="张三" Role="管理员"/>
                         <local:Person Id="2" Name="李四" Role="普通用户"/>
                         <local:Person Id="3" Name="王五" Role="管理员"/>

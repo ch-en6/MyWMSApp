@@ -116,16 +116,20 @@ namespace wmsApp.dialog
 
             // 遍历 People 集合，检查每个人员的 IsSelected 属性来确定用户选择了哪些人员
             List<long> userIds = new List<long>();
-            foreach (Person person in People)
+            if (People != null)
             {
-                if (person.IsSelected)
+               
+                foreach (Person person in People)
                 {
-                    // 处理选中的人员
-                    userIds.Add(person.Id);
-                    
-                }
-            }
+                    if (person.IsSelected)
+                    {
+                        // 处理选中的人员
+                        userIds.Add(person.Id);
 
+                    }
+                }
+
+            }
             string type = typeTextBox.Text;
             string permissionName = typeTextBox.Text;
            
