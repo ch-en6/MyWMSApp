@@ -383,15 +383,16 @@ namespace wms
 
         public static Result findNameBetweenDates(DateTime? startTime, DateTime? endTime)
         {
-            var data = new { startTime = startTime, endTime = endTime };
-            string json = JsonConvert.SerializeObject(data);
-            return JsonHelper.JSONToObject<Result>(http.Post($"/store/findNames", json));
+            TimeParam time = new TimeParam(startTime, endTime);
+            return http.PostDncryptedData($"/store/findNames", JsonHelper.DateObjectToJson<TimeParam>(time));
+ 
         }
 
         public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)
         {
-            var data = new { startTime = startTime, endTime = endTime };
-            return JsonHelper.JSONToObject<Result>(http.Post($"/store/findCountByNames", JsonHelper.DateObjectToJson(data)));
+            TimeParam time = new TimeParam(startTime, endTime);
+            return http.PostDncryptedData($"/store/findCountByNames", JsonHelper.DateObjectToJson<TimeParam>(time));
+
         }
     }
 
@@ -405,15 +406,15 @@ namespace wms
         public static HttpHelper http = new HttpHelper();
         public static Result findNameBetweenDates(DateTime? startTime, DateTime? endTime)
         {
-            var data = new { startTime = startTime, endTime = endTime };
-            return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/findNames", JsonHelper.DateObjectToJson(data)));
+             TimeParam time = new TimeParam(startTime, endTime);
+            return http.PostDncryptedData($"/deliver/findNames", JsonHelper.DateObjectToJson<TimeParam>(time));
         }
 
 
         public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)
         {
-            var data = new { startTime = startTime, endTime = endTime };
-            return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/findCountByNames", JsonHelper.DateObjectToJson(data)));
+            TimeParam time = new TimeParam(startTime, endTime);
+            return http.PostDncryptedData($"/deliver/findCountByNames", JsonHelper.DateObjectToJson<TimeParam>(time));
         }
 
 

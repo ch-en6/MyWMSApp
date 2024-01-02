@@ -184,6 +184,7 @@
     <Compile Include="param\SearchPermissionParams.cs" />
     <Compile Include="param\StoreConSearchParams.cs" />
     <Compile Include="param\StoreDetailParam.cs" />
+    <Compile Include="param\TimeParam.cs" />
     <Compile Include="param\UpdatePermissionParams.cs" />
     <Compile Include="pojo\Deliver.cs" />
     <Compile Include="pojo\House.cs" />
