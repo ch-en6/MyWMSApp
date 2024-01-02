@@ -62,8 +62,8 @@ DataContext="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, 
         </StackPanel>
 
         <StackPanel  Orientation="Horizontal" Width="Auto" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Button Content="取消"  Click="Cancel_Click" Margin="10"/>
             <Button Content="确认"  Click="Confirm_Click"  Margin="10"/>
+            <Button Content="取消"  Click="Cancel_Click" Margin="10"/>
         </StackPanel>
 
     </Grid>
