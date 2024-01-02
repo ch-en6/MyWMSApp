@@ -1,4 +1,5 @@
 ﻿using ModernWpf.Controls;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -212,12 +213,14 @@ namespace wmsApp.pages
         private void DeleteMaterialButton_Click(object sender, RoutedEventArgs e)
         {
             var selectedItem = datagrid.SelectedItem as Material;
+            Result ifResult = MaterialApi.ifStoreOrDeliver(selectedItem.id);
+            bool ifData = (bool)ifResult.data;
 
             if (selectedItem.stock > 0)
             {
                 MessageBox.Show("该物料库存大于0，不允许删除！");
             }
-            else if (MaterialApi.ifStoreOrDeliver(selectedItem.id).success)
+            else if (ifData)
             {
                 MessageBox.Show("该物料有出库或入库记录，不允许删除！");
             }
@@ -272,17 +275,6 @@ namespace wmsApp.pages
             pageNumText = currentPage.ToString() + "/" + totalPage.ToString();
             PageNumberTextBlock.Text = pageNumText;
             datagrid.ItemsSource = materialList;
-        }
-
-        private void HouseManagementButton_Click(object sender, RoutedEventArgs e)
-        {
-            HouseManagementWindow window = new HouseManagementWindow();
-            window.Show();
-        }
-
-        private void TypeManagementButton_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void PrintAccount_Click(object sender, RoutedEventArgs e)

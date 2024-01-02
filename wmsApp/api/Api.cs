@@ -351,6 +351,16 @@ namespace wms
             var jsonData = JsonConvert.SerializeObject(data);
             return http.PostEncryptedData($"/store/storeByYear", jsonData);
         }
+
+        public static Result storeProcedure(List<Store> stores)
+        {
+            string storesJson = JsonConvert.SerializeObject(stores);
+            var data = new
+            {
+                storeList = storesJson
+            };
+            return http.PostEncryptedData($"/store/callStoreProcedure", JsonHelper.DateObjectToJson(data));
+        }
     }
 
 
