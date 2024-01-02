@@ -53,21 +53,21 @@ namespace wms
             //return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePassword/{newPassword}"));
         }
 
-    } 
+    }
     class RsaApi
     {
         public static HttpHelper http = new HttpHelper();
 
-/*        public static void test(string type)
-        {
-            var data = new
-            {
-                typeName = type
-            };
-            string jsonData = JsonConvert.SerializeObject(data);
-            MessageBox.Show(jsonData);
-            MessageBox.Show(http.PostDncryptedData("/material/typeMaterial", jsonData).data.ToString());
-        }*/
+        /*        public static void test(string type)
+                {
+                    var data = new
+                    {
+                        typeName = type
+                    };
+                    string jsonData = JsonConvert.SerializeObject(data);
+                    MessageBox.Show(jsonData);
+                    MessageBox.Show(http.PostDncryptedData("/material/typeMaterial", jsonData).data.ToString());
+                }*/
 
         public static String getJavaPublicKey()
         {
@@ -80,16 +80,16 @@ namespace wms
             user.id = 1;
             user.name = "hi";
             List<User> list = new List<User>();
-            
+
             list.Add(user);
             string listJson = JsonConvert.SerializeObject(list);
             var data = new
             {
                 list = listJson
             };
-         
+
             string json = JsonConvert.SerializeObject(data);
-            Result result = http.PostEncryptedData("/rsa/test",json);
+            Result result = http.PostEncryptedData("/rsa/test", json);
             MessageBox.Show(result.data.ToString());
 
         }
@@ -177,7 +177,7 @@ namespace wms
         {
             LoginParams loginParams = new LoginParams(userId, password);
             //Result result = JsonHelper.JSONToObject<Result>(http.Post("/login", JsonHelper.ObjectToJSON(loginParams)));
-            Result result =http.PostAndEncryptData("/login", JsonHelper.ObjectToJSON(loginParams));
+            Result result = http.PostAndEncryptData("/login", JsonHelper.ObjectToJSON(loginParams));
             if (!result.success) MessageBox.Show(result.errorMsg);
             return result;
         }
@@ -379,7 +379,7 @@ namespace wms
             };
             return http.PostEncryptedData($"/store/callStoreProcedure", JsonHelper.DateObjectToJson(data));
         }
-    }
+
 
         public static Result findNameBetweenDates(DateTime? startTime, DateTime? endTime)
         {
@@ -395,21 +395,21 @@ namespace wms
     }
 
 
-    }
+
 
 
 
     class DeliverApi
     {
         public static HttpHelper http = new HttpHelper();
-    public static Result findNameBetweenDates(DateTime? startTime, DateTime? endTime)
-    {
-        var data = new { startTime = startTime, endTime = endTime };
-        return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/findNames", JsonHelper.DateObjectToJson(data)));
-    }
+        public static Result findNameBetweenDates(DateTime? startTime, DateTime? endTime)
+        {
+            var data = new { startTime = startTime, endTime = endTime };
+            return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/findNames", JsonHelper.DateObjectToJson(data)));
+        }
 
 
-    public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)
+        public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)
         {
             var data = new { startTime = startTime, endTime = endTime };
             return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/findCountByNames", JsonHelper.DateObjectToJson(data)));
@@ -542,8 +542,8 @@ namespace wms
 
         internal static Result updatePermissionByuserId(long userId, long resourceId, bool? isChecked)
         {
-            UpdatePermissionParams update =   new UpdatePermissionParams(userId, resourceId, null, isChecked);
-            return http.PostEncryptedData("/permission/update/all",JsonHelper.ObjectToJSON(update));
+            UpdatePermissionParams update = new UpdatePermissionParams(userId, resourceId, null, isChecked);
+            return http.PostEncryptedData("/permission/update/all", JsonHelper.ObjectToJSON(update));
             /*return JsonHelper.JSONToObject<Result>(http.Post($"/permission/update/{userId}/{resourceId}/{isChecked}", ""));*/
         }
 
@@ -567,4 +567,5 @@ namespace wms
             return JsonHelper.JSONToObject<Result>(http.Get("/user/getAll"));
         }
     }
+}
 

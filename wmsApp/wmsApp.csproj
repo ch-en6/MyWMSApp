@@ -154,6 +154,9 @@
     <Compile Include="pages\HouseManagementPage.xaml.cs">
       <DependentUpon>HouseManagementPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pages\InStatisticPage.xaml.cs">
+      <DependentUpon>InStatisticPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pages\MaterialPage.xaml.cs">
       <DependentUpon>MaterialPage.xaml</DependentUpon>
     </Compile>

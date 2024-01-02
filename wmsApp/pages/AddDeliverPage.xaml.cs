@@ -141,39 +141,5 @@ namespace wmsApp.pages
             }
         }
 
-        private void CountTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (textBox != null)
-            {
-                // 获取当前行的数据对象
-                //IOMaterial selectedItem = (IOMaterial)datagrid.SelectedItem;
-                var selectedItem = datagrid.SelectedItem as IOMaterial;
-                // 更新出库数量
-                if (int.TryParse(textBox.Text, out int newCount))
-                {
-                    selectedItem.count = newCount;
-                }
-                else
-                {
-                    // 处理无效输入，比如非数字
-                    MessageBox.Show("非数字");
-                    textBox.Text = selectedItem.count.ToString();
-                }
-            }
-        }
-
-        private void NotesTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (textBox != null)
-            {
-                // 获取当前行的数据对象
-                //IOMaterial selectedItem = (IOMaterial)datagrid.SelectedItem;
-                var selectedItem = datagrid.SelectedItem as IOMaterial;
-                // 更新出库数量              
-                 selectedItem.notes = textBox.Text;               
-            }
-        }
     }
 }
