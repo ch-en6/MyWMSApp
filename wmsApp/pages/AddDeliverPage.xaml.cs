@@ -73,32 +73,41 @@ namespace wmsApp.pages
             {
                 // 获取 DataGrid 中每行对应的数据项
                 var rowData = item as IOMaterial; // 请替换成你实际的数据类型
-                MessageBox.Show(rowData.count.ToString());
-                MessageBox.Show(rowData.notes.ToString());
+
                 Result result = UserApi.getNowUser();
                 wms.pojo.User user = JsonHelper.JSONToObject<wms.pojo.User>(result.data.ToString());
 
                 // 创建一个 Deliver 对象并将数据添加到 List<Deliver> 中
                 Deliver deliver = new Deliver
                 {
-                    userId=user.id,
+                    userId = user.id,
                     materialId = rowData.id,
                     houseName = rowData.houseName,
                     deliverCount = rowData.count,
                     notes = rowData.notes,
                 };
 
-                // 将 Deliver 对象添加到 List<Deliver> 中
-                deliverList.Add(deliver);
-                Result deliverResult=DeliverApi.multiDelivery(deliverList);
-                if(deliverResult.success)
+                if (deliver.deliverCount < 1)
                 {
-                    MessageBox.Show("入库成功!");
+                    MessageBox.Show("入库数必须大于0！");
+                    break;
                 }
                 else
                 {
-                    MessageBox.Show("库存不足，入库失败");
+                    // 将 Deliver 对象添加到 List<Deliver> 中
+                    deliverList.Add(deliver);
                 }
+            }
+            Result deliverResult = DeliverApi.multiDelivery(deliverList);
+            if (deliverResult.success)
+            {
+                MessageBox.Show("出库成功!");
+                NavigationService.Navigate(new Uri("/pages/DeliverPage.xaml", UriKind.Relative));
+
+            }
+            else
+            {
+                MessageBox.Show("库存不足，出库失败");
             }
         }
 
@@ -118,7 +127,7 @@ namespace wmsApp.pages
                 else
                 {
                     // 处理无效输入，比如非数字
-                    MessageBox.Show("非数字");
+                    MessageBox.Show("出库数非数字！");
                     textBox.Text = selectedItem.count.ToString();
                 }
             }

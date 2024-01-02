@@ -34,13 +34,13 @@ namespace wms
         }
         public static Result updatePhone(String newPhone)
         {
-            var data = new
-            {
-                newPhone = newPhone
-            };
-            var jsonData = JsonConvert.SerializeObject(data);
-            return http.PostEncryptedData($"/userInfo/updatePhone", jsonData);
-            //return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePhone/{newPhone}"));
+            //var data = new
+            //{
+            //    newPhone = newPhone
+            //};
+            //var jsonData = JsonConvert.SerializeObject(data);
+            //return http.PostEncryptedData($"/userInfo/updatePhone", jsonData);
+            return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePhone/{newPhone}"));
         }
         public static Result updatePassword(string newPassword)
         {
@@ -360,10 +360,24 @@ namespace wms
             return http.PostEncryptedData($"/store/storeByYear", jsonData);
         }
 
+        //public static Result findNameBetweenDates(DateTime? startTime, DateTime? endTime)
+        //{
+        //    var data = new { startTime = startTime, endTime = endTime };
+        //    string json = JsonConvert.SerializeObject(data);
+        //    return http.PostEncryptedData($"/store/findNames", json);
+        //}
+
+        //public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)
+        //{
+        //    var data = new { startTime = startTime, endTime = endTime };
+        //    return http.PostEncryptedData($"/store/findCountByNames", JsonHelper.DateObjectToJson(data));
+        //}
+
         public static Result findNameBetweenDates(DateTime? startTime, DateTime? endTime)
         {
             var data = new { startTime = startTime, endTime = endTime };
-            return JsonHelper.JSONToObject<Result>(http.Post($"/store/findNames", JsonHelper.DateObjectToJson(data)));
+            string json = JsonConvert.SerializeObject(data);
+            return JsonHelper.JSONToObject<Result>(http.Post($"/store/findNames", json));
         }
 
         public static Result findCountByNameBetweenDates(DateTime? startTime, DateTime? endTime)
@@ -384,6 +398,7 @@ namespace wms
     public static Result findNameBetweenDates(DateTime? startTime, DateTime? endTime)
     {
         var data = new { startTime = startTime, endTime = endTime };
+  
         return JsonHelper.JSONToObject<Result>(http.Post($"/deliver/findNames", JsonHelper.DateObjectToJson(data)));
     }
 
@@ -397,7 +412,13 @@ namespace wms
 
         public static Result multiDelivery(List<Deliver> deliverList)
         {
-            return JsonHelper.JSONToObject<Result>(http.Post("/deliver/multiDelivery", JsonHelper.ObjectToJSON(deliverList)));
+        string listJson =JsonConvert.SerializeObject(deliverList);
+        var data = new
+        {
+            list = listJson
+        };
+
+            return http.PostEncryptedData("/deliver/multiDelivery", JsonHelper.ObjectToJSON(data));
         }
 
         public static Result searchAll(int page)

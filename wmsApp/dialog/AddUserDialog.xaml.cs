@@ -8,6 +8,9 @@ using WindowsFormsApp1.dto;
 using wms;
 using wms.pojo;
 using wmsApp.controls;
+using wmsApp.pages;
+using wmsApp.pojo;
+
 namespace wmsApp.dialog
 {
     public sealed partial class AddUserDialog : ContentDialog
@@ -40,24 +43,44 @@ namespace wmsApp.dialog
             string address = addressTextBox.Text;
             string phone = phoneTextBox.Text;
 
-            User user = new User(name, role, sex, date, idNumber, nativePlace, address, phone);
-            Result result = UserApi.save(user);
-
-            if (result != null)
+            if (string.IsNullOrEmpty(name) ||
+            string.IsNullOrEmpty(role) ||
+            string.IsNullOrEmpty(sex) ||
+            string.IsNullOrEmpty(selectedDate) ||
+            string.IsNullOrEmpty(idNumber) ||
+            string.IsNullOrEmpty(nativePlace) ||
+            string.IsNullOrEmpty(address) ||
+            string.IsNullOrEmpty(phone))
             {
-                if (result.success)
-                {
-                    MessageBox.Show("添加成功");
-                    // 关闭对话框
-                    args.Cancel = false;
-                }
+                // 设置 args.Cancel 属性为 true，防止用户关闭弹窗
+                args.Cancel = true;
+                MessageBox.Show("请填写完整的用户信息");
+                return;
+            }
+            else
+            {
+                User user = new User(name, role, sex, date, idNumber, nativePlace, address, phone);
+                Result result = UserApi.save(user);
 
-                else
+
+
+                if (result != null)
                 {
-                    MessageBox.Show(result.errorMsg);
-                    args.Cancel = true;
+                    if (result.success)
+                    {
+                        MessageBox.Show("添加成功");
+                        // 关闭对话框
+                        args.Cancel = false;
+                    }
+
+                    else
+                    {
+                        MessageBox.Show(result.errorMsg);
+                        args.Cancel = true;
+                    }
                 }
             }
+                       
         }
 
 

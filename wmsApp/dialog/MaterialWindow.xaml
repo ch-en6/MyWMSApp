@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:wmsApp.dialog"
         mc:Ignorable="d"
         Title="MaterialWindow" Height="450" Width="800"
-        xmlns:ui="http://schemas.modernwpf.com/2019">
+        xmlns:ui="http://schemas.modernwpf.com/2019" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="42"/>
