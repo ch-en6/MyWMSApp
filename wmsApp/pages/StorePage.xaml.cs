@@ -101,10 +101,9 @@ namespace wmsApp.pages
             storeNotes.Text = "";
         }
 
-        public async void Add_Click(object sender, RoutedEventArgs e)
+        public void Add_Click(object sender, RoutedEventArgs e)
         {
-            StoreDialog dialog = new StoreDialog();
-            await dialog.ShowAsync();
+            NavigationService.Navigate(new Uri("/pages/AddStorePage.xaml", UriKind.Relative));
         }
 
         public void Print_Click(object sender, RoutedEventArgs e)

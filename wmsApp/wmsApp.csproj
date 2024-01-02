@@ -81,9 +81,6 @@
     <Compile Include="dialog\DeliverWinForm.Designer.cs">
       <DependentUpon>DeliverWinForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="dialog\HouseManagementWindow.xaml.cs">
-      <DependentUpon>HouseManagementWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="dialog\MaterialDialog.xaml.cs">
       <DependentUpon>MaterialDialog.xaml</DependentUpon>
     </Compile>
@@ -145,14 +142,17 @@
     <Compile Include="pages\AddDeliverPage.xaml.cs">
       <DependentUpon>AddDeliverPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pages\AddStorePage.xaml.cs">
+      <DependentUpon>AddStorePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pages\DeliverPage.xaml.cs">
       <DependentUpon>DeliverPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="pages\InStatisticPage.xaml.cs">
-      <DependentUpon>InStatisticPage.xaml</DependentUpon>
+    <Compile Include="pages\HouseManagementPage.xaml.cs">
+      <DependentUpon>HouseManagementPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\MaterialPage.xaml.cs">
       <DependentUpon>MaterialPage.xaml</DependentUpon>
@@ -234,10 +234,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="dialog\HouseManagementWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="dialog\PrintAccountDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -289,6 +285,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="pages\AddStorePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="pages\DeliverPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -302,6 +302,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="pages\InStatisticPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\HouseManagementPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

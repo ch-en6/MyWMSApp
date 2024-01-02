@@ -27,14 +27,17 @@ namespace wmsApp.dialog
     public partial class MaterialWindow : Window
     {
         private AddDeliverPage AddDeliverPageInstance;
+        private AddStorePage AddStorePageInstance;
         int currentPage = 1;
         long totalPage = 0;
         int flag = 0;
+        int pageFlag = 0;
         public MaterialWindow(AddDeliverPage addDeliverPageInstance)
         {
 
             // 其他初始化逻辑
             InitializeComponent(); flag = 0;
+            pageFlag = 0;
             Result result = MaterialApi.search(currentPage);
             List<Material> materialList = JsonHelper.JsonToList<Material>(result.data.ToString());
             totalPage = result.total;
@@ -45,6 +48,20 @@ namespace wmsApp.dialog
             this.AddDeliverPageInstance = addDeliverPageInstance;
         }
 
+        public MaterialWindow(AddStorePage addStorePageInstance)
+        {
+            // 其他初始化逻辑
+            InitializeComponent(); flag = 0;
+            pageFlag = 1;
+            Result result = MaterialApi.search(currentPage);
+            List<Material> materialList = JsonHelper.JsonToList<Material>(result.data.ToString());
+            totalPage = result.total;
+
+            InitializeComponent();
+            PageNumberTextBlock.Text = currentPage.ToString();
+            datagrid.ItemsSource = materialList;
+            this.AddStorePageInstance = addStorePageInstance;
+        }
 
 
         private void Add_Click(object sender, RoutedEventArgs e)
@@ -62,16 +79,14 @@ namespace wmsApp.dialog
             int stock = selectedItem.stock;
 
             IOMaterial ioMaterial = new IOMaterial(id, type, name, houseName, stock,0,null);
-            AddDeliverPageInstance.AddNewRow(ioMaterial);
-        }
-
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-
-        }
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-
+            if(pageFlag == 0)
+            {
+                AddDeliverPageInstance.AddNewRow(ioMaterial);
+            }
+            else if(pageFlag == 1)
+            {
+                AddStorePageInstance.AddNewRow(ioMaterial);
+            }
         }
 
         public void updatePage()
@@ -222,13 +237,6 @@ namespace wmsApp.dialog
             PageNumberTextBlock.Text = currentPage.ToString();
             datagrid.ItemsSource = materialList;
         }
-
-
-
-
-
-
-
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {

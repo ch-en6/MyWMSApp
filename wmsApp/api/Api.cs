@@ -370,6 +370,17 @@ namespace wms
             return http.PostEncryptedData($"/store/storeByYear", jsonData);
         }
 
+        public static Result storeProcedure(List<Store> stores)
+        {
+            string storesJson = JsonConvert.SerializeObject(stores);
+            var data = new
+            {
+                storeList = storesJson
+            };
+            return http.PostEncryptedData($"/store/callStoreProcedure", JsonHelper.DateObjectToJson(data));
+        }
+    }
+
         public static Result findNameBetweenDates(DateTime? startTime, DateTime? endTime)
         {
             var data = new { startTime = startTime, endTime = endTime };
