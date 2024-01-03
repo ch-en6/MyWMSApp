@@ -67,6 +67,7 @@ namespace wmsApp.pages
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
             List<Deliver> deliverList = new List<Deliver>();
+            int flag = 0;
             // 遍历 DataGrid 中的每一行
             foreach (var item in datagrid.Items)
             {
@@ -88,8 +89,9 @@ namespace wmsApp.pages
 
                 if (deliver.deliverCount < 1)
                 {
+                    flag = 1;
                     MessageBox.Show("入库数必须大于0！");
-                    break;
+                    return;
                 }
                 else
                 {
@@ -97,17 +99,22 @@ namespace wmsApp.pages
                     deliverList.Add(deliver);
                 }
             }
-            Result deliverResult = DeliverApi.multiDelivery(deliverList);
-            if (deliverResult.success)
+            if (flag == 0)
             {
-                MessageBox.Show("出库成功!");
-                NavigationService.Navigate(new Uri("/pages/DeliverPage.xaml", UriKind.Relative));
+                Result deliverResult = DeliverApi.multiDelivery(deliverList);
 
+                if (deliverResult.success)
+                {
+                    MessageBox.Show("出库成功!");
+                    NavigationService.Navigate(new Uri("/pages/DeliverPage.xaml", UriKind.Relative));
+
+                }
+                else
+                {
+                    MessageBox.Show("库存不足，出库失败");
+                }
             }
-            else
-            {
-                MessageBox.Show("库存不足，出库失败");
-            }
+               
         }
 
         private void CountTextBox_LostFocus(object sender, RoutedEventArgs e)

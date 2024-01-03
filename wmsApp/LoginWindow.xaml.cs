@@ -19,7 +19,7 @@ namespace wmsApp
             InitializeComponent();
             UsernameTextBox.KeyDown += UsernameTextBox_KeyDown;
             PasswordBox.KeyDown += PasswordBox_KeyDown;
-          /*  Loaded += OnWindowLoaded;*/
+      
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -48,20 +48,6 @@ namespace wmsApp
             TokenManager.javaPublicKey = key;
 
         }
-
-/*        private void OnWindowLoaded(object sender, RoutedEventArgs e)
-        {
-            // 获取当前屏幕的工作区尺寸
-            double screenWidth = SystemParameters.WorkArea.Width;
-            double screenHeight = SystemParameters.WorkArea.Height;
-
-            // 设置窗口位置
-            Left = (screenWidth - ActualWidth) / 2;
-            Top = (screenHeight - ActualHeight) / 2;
-            WindowStartupLocation = WindowStartupLocation.Manual; // 设置窗口的启动位置为手动模式
-        }
-
-*/
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {

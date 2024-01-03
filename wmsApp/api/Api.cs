@@ -50,58 +50,16 @@ namespace wms
             };
             var jsonData = JsonConvert.SerializeObject(data);
             return http.PostEncryptedData($"/userInfo/updatePassword", jsonData);
-            //return JsonHelper.JSONToObject<Result>(http.Get($"/userInfo/updatePassword/{newPassword}"));
         }
 
     }
     class RsaApi
     {
         public static HttpHelper http = new HttpHelper();
-
-        /*        public static void test(string type)
-                {
-                    var data = new
-                    {
-                        typeName = type
-                    };
-                    string jsonData = JsonConvert.SerializeObject(data);
-                    MessageBox.Show(jsonData);
-                    MessageBox.Show(http.PostDncryptedData("/material/typeMaterial", jsonData).data.ToString());
-                }*/
-
         public static String getJavaPublicKey()
         {
             return http.Get("/rsa");
         }
-
-        public static void test()
-        {
-            User user = new User();
-            user.id = 1;
-            user.name = "hi";
-            List<User> list = new List<User>();
-
-            list.Add(user);
-            string listJson = JsonConvert.SerializeObject(list);
-            var data = new
-            {
-                list = listJson
-            };
-
-            string json = JsonConvert.SerializeObject(data);
-            Result result = http.PostEncryptedData("/rsa/test", json);
-            MessageBox.Show(result.data.ToString());
-
-        }
-
-        public static void modify()
-        {
-            DateTime date = new DateTime(2023, 12, 2);
-            Store store = new Store(1, 1437831, "华南888仓", date, 320231202000001, 10, 1, "123");
-            Result result = http.PostEncryptedData("/store/update", JsonHelper.DateObjectTOJson(store));
-            MessageBox.Show(result.success.ToString());
-        }
-
     }
     class UserApi
     {

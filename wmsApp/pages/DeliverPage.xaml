@@ -68,7 +68,8 @@
                     <ui:SymbolIcon Symbol="Delete"/>
                 </Button>
 
-                <Button x:Name="addButton" Grid.Row="2" Grid.Column="4" Margin="0,0,0,0" Height="33" Click="Add_Click" Content="创建出库单" >
+                <Button x:Name="addButton" Grid.Row="2" Grid.Column="3" Margin="15,0,0,0" Height="33" Click="Add_Click" >
+                    <ui:SymbolIcon Symbol="Add"/>
                 </Button>
 
                 <Button x:Name="printButton" Grid.Row="2" Grid.Column="3" Margin="65,0,0,0" Height="33" Click="Print_Click">
@@ -99,16 +100,7 @@
                         <DataGridTextColumn Header="操作人员ID" Binding="{Binding userId}" />
                         <DataGridTextColumn Header="备注" Binding="{Binding notes}" />
 
-                        <DataGridTemplateColumn Header="操作">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button Content="修改" Click="UpdateMaterialButton_Click" Margin="1, 3, 6, 3"/>
-                                        <Button Content="删除" Click="DeleteMaterialButton_Click" Margin="1, 3, 6, 3"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                        
                     </DataGrid.Columns>
 
                 </DataGrid>

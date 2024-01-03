@@ -54,6 +54,7 @@ namespace wmsApp.pages
             if (!result.success)
             {
                 ModernMessageBox.showMessage(result.errorMsg);
+                return;
             }
             user = JsonHelper.JSONToObject<User>(result.data.ToString());
             DataContext = user;

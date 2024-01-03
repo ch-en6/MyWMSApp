@@ -14,9 +14,7 @@ using System.Windows.Shapes;
 
 namespace wmsApp
 {
-    /// <summary>
-    /// UpgradeWindow.xaml 的交互逻辑
-    /// </summary>
+
     public partial class UpgradeWindow : Window
     {
         public UpgradeWindow()

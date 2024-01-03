@@ -125,7 +125,7 @@ namespace wmsApp.pages
                 if (store.storeCount < 1)
                 {
                     MessageBox.Show("入库数必须大于0！");
-                    break;
+                    return;
                 }
                 else
                 {

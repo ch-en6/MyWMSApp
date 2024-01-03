@@ -32,7 +32,7 @@
                     <DataGridTextColumn Header="物料名称" Binding="{Binding name}"></DataGridTextColumn>
                     <DataGridTextColumn Header="仓库名称"  Binding="{Binding houseName}"></DataGridTextColumn>
                     <DataGridTextColumn Header="现有库存"  Binding="{Binding stock}"></DataGridTextColumn>
-                    <DataGridTemplateColumn Header="出库数量" Width="Auto">
+                    <DataGridTemplateColumn Header="入库数量" Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding count}" Margin="5" Width="50" LostFocus="CountTextBox_LostFocus"/>
